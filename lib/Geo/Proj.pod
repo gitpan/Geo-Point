@@ -1,0 +1,283 @@
+
+=head1 NAME
+
+Geo::Proj - Handling projections
+
+
+
+=head1 SYNOPSIS
+
+ use Geo::Proj;
+
+ my $wgs84 = Geo::Proj->new   # predefined if import()
+  ( nick  => 'wgs84'
+  , proj4 => '+proj=latlong +datum=WGS84 +ellps=WGS84'
+  );
+
+ my $clrk = Geo::Proj->new
+  ( nick  => 'clark66'
+  , proj4 => [proj => "merc", ellps => "clrk66", lon_0 => -96]
+  );
+
+ my $point_wgs84= Geo::Point->latlong(56.12, 4.40, 'wgs84');
+ my $point_wgs84= Geo::Point->latlong(56.12, 4.40, $wgs84);
+
+ my $point_clrk = $point_wgs84->to($clrk);
+ my $point_clrk = Geo::Proj->to($clrk, $point_wgs84);
+ my $point_clrk = Geo::Proj->to('clark66', $point_wgs84);
+
+
+=head1 DESCRIPTION
+
+A point on Earth's surface can be represented in many different coordinate
+systems.  The Geo::Proj4 module wraps the popular Open Source C<libproj>
+library to convert between those coordinate systems; a very complex job.
+
+Within a program, however, you like some extra abstraction from that
+library: to be able to simply label a point to its system, and then
+forget about all transformations which may be necessary.  The label (or
+C<nick>) hides all complicated parameters for the actual projection .
+
+WARNING 1: this class will collect all nicks, which means that calling
+L<new()|Geo::Proj/"Constructors"> with the same label twice will have the second ignored.
+
+WARNING 2: the wgs84 nickname is predefined, but only if this module is
+'used' with import.  So if you decide to use 'require' to dynamically load
+this module, then don't forget to call 'import()' yourself, or define the
+wgs84 projection yourself.
+
+
+
+=head1 METHODS
+
+
+=head2 Constructors
+
+
+Geo::Proj-E<gt>B<new>([NICK], OPTIONS)
+
+=over 4
+
+Create a new object.
+
+ Option  Defined in       Default     
+ name                     <from proj4>
+ nick                     <required>  
+ proj4                    <required>  
+ srid                     C<undef>    
+
+. name STRING
+
+. nick LABEL
+
+=over 4
+
+The abbrevated name for this projection.
+
+=back
+
+. proj4 OBJECT|ARRAY|STRING
+
+=over 4
+
+The ARRAY or STRING will by used to create a Geo::Proj4 object
+by calling Geo::Proj4 subroutine new.  You may also specify such an
+prepared OBJECT.
+
+=back
+
+. srid INTEGER
+
+=over 4
+
+SRID stands for "Spatial Reference System ID", which is just an index
+in a table of spatial descriptions as used by SQL. Only INTEGER values
+larger than 0 are permitted.
+
+=back
+
+=back
+
+=head2 Attributes
+
+
+$obj-E<gt>B<name>
+
+=over 4
+
+The full, official name of the projection
+
+=back
+
+$obj-E<gt>B<nick>
+
+=over 4
+
+Simple abbreviating of the projection.
+
+=back
+
+$obj-E<gt>B<proj4>([NICK|PROJ4])
+
+Geo::Proj-E<gt>B<proj4>([NICK|PROJ4])
+
+=over 4
+
+Returns the projection library handle (a Geo::Proj4) to be used by this
+component.  As class method, the NICK is specified for a lookup.  In case
+a PROJ4 is specified, that is returned.
+
+I<Example:> 
+
+ my $wgs84 = Geo::Proj->new(nick => 'wgs84', ...);
+ my $wgs84_proj4 = Geo::Proj->proj4('wgs84');
+ my $wgs84_proj4 = Geo::Proj->proj4($wgs84);
+ my $wgs84_proj4 = $wgs84->proj4;
+
+=back
+
+$obj-E<gt>B<srid>
+
+=over 4
+
+The "Spatial Reference System ID" if known.
+
+=back
+
+=head2 Projecting
+
+
+Geo::Proj-E<gt>B<defaultProjection>([NICK|PROJ])
+
+=over 4
+
+The NICK must be defined with L<new()|Geo::Proj/"Constructors">.  Returned is a L<Geo::Proj|Geo::Proj>
+object. The initial default is 'wgs84'.
+
+=back
+
+Geo::Proj-E<gt>B<dumpProjections>([FILEHANDLE])
+
+=over 4
+
+Print details about the defined projections to the FILEHANDLE, which
+defaults to the selected.  Especially useful for debugging.
+
+=back
+
+Geo::Proj-E<gt>B<listProjections>
+
+=over 4
+
+Returns a sorted lost of projection nicks.
+
+=back
+
+Geo::Proj-E<gt>B<projection>(NICK|PROJ)
+
+=over 4
+
+Returns the L<Geo::Proj|Geo::Proj> object, defined with NICK.  In case such an
+object is passed in as PROJ, it is returned unaffected.  This method is
+used where in other methods NICKS or PROJ can be used as arguments.
+
+I<Example:> 
+
+ my $wgs84 = Geo::Proj->projection('wgs84');
+ my $again = Geo::Proj->projection($wgs84);
+
+=back
+
+$obj-E<gt>B<to>([PROJ|NICK], PROJ|NICK, POINT|ARRAY_OF_POINTS)
+
+Geo::Proj-E<gt>B<to>([PROJ|NICK], PROJ|NICK, POINT|ARRAY_OF_POINTS)
+
+=over 4
+
+Expects an Geo::Proj to project the POINT or POINTS to.  The work
+is done by Geo::Proj4 subroutine transform.  As class method, you have to
+specify two nicks or projections.
+
+I<Example:> 
+
+ my $p2 = $wgs84->to('utm-wgs84-31', $p1);
+ my $p2 = $wgs84->to($utm, $p1);
+ my $p2 = Geo::Proj->to('wgs84', 'utm-wgs84-31', $p1);
+
+=back
+
+=head2 UTM
+
+
+Geo::Proj-E<gt>B<UTMprojection>(DATUM|PROJ|undef, ZONE)
+
+=over 4
+
+The PROJ is a L<Geo::Proj|Geo::Proj> which is used to collect the datum
+information from if no DATUM was specified explicitly.  It may also be
+a string which is the name of a datum, as known by proj4.  Undef will
+be replaced by the default projection.
+
+I<Example:> 
+
+ my $proj = Geo::Proj->UTMprojection('WGS84', 31) or die;
+ print $proj->nick;    # for instance utm-wgs84-31
+
+=back
+
+$obj-E<gt>B<bestUTMprojection>(POINT, [PROJ|NICK])
+
+Geo::Proj-E<gt>B<bestUTMprojection>(POINT, [PROJ|NICK])
+
+=over 4
+
+Returns the best UTM projection for some POINT.  As class method, you
+specify the nickname or the object for the point.
+
+I<Example:> 
+
+ my $point = Geo::Point->longlat(2.234, 52.12);
+ my $proj  = Geo::Proj->bestUTMprojection($point);
+ print $proj->nick;    # for instance utm-wgs84-31
+
+=back
+
+$obj-E<gt>B<zoneForUTM>(POINT)
+
+Geo::Proj-E<gt>B<zoneForUTM>(POINT)
+
+=over 4
+
+Provided some point, figure-out which zone is most optimal for representing
+the point.  In LIST context, zone number, zone letter, and meridian are
+returned as separate scalars.  In LIST context, the zone number and letter
+are returned as one..
+
+This code is stolen from L<Geo::Coordinates::UTM>, because that module
+immediately starts to do computations with this knowledge, which is not
+wanted here.  Probably a lot of zones are missing.
+
+=back
+
+
+
+
+
+
+
+
+=head1 REFERENCES
+
+See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more details.
+
+=head1 COPYRIGHTS
+
+Module version 0.001.
+Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
+other contributors.
+
+Copyright (c) 2004-2005 by the author(s). All rights reserved.  This program
+is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
+
+

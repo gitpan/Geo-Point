@@ -1,0 +1,421 @@
+
+=head1 NAME
+
+Geo::Line - a sequence of connected points
+
+
+=head1 INHERITANCE
+
+ Geo::Line
+   is a Geo::Shape
+
+ Geo::Line
+   is a Math::Polygon
+
+
+=head1 SYNOPSIS
+
+ !!!! BETA code, see README !!!!
+ my $line  = Geo::Line->new(points => [$p1, $p2]);
+ my $line  = Geo::Line->line($p1, $p2);
+
+ my $ring  = Geo::Line->ring($p1, $p2, $p3, $p1);
+ my $ring  = Geo::Line->ring($p1, $p2, $p3);
+
+ my $plane = Geo::Line->filled($p1, $p2, $p3, $p1);
+ my $plane = Geo::Line->filled($p1, $p2, $p3);
+
+
+=head1 DESCRIPTION
+
+A 2-dimensional sequence of connected points.  The points will be forced
+to use the same projection.
+
+
+
+=head1 METHODS
+
+
+=head2 Constructors
+
+
+Geo::Line-E<gt>B<bboxFromString>(STRING, {PROJECTION])
+
+=over 4
+
+Create a square from the STRING.  The coordinates can be separated by
+a comma (preferrably), or blanks.  When the coordinates end on NSEW, the
+order does not matter, otherwise lat-long or xy order is presumed.
+
+This routine is very smart.  It understands 
+ PROJLABEL: <4 coordinates in any order, but with NSEW>
+ ...
+
+I<Example:> bbox from string
+
+
+ my $x = '5n 2n 3e e12';       # coordinates in any order
+ my $x = '5e , 2n, 3n, e12';    # coordinates in any order
+ my $x = '2.12-23.1E, N1-4';   # stretches
+ my $x = 'wgs84: 2-5e, 1-8n';  # starts with projection
+ my $x = 'wgs84: e2d12' -3d, n1, n7d12'34"';
+
+ my ($xmin, $ymin, $xmax, $ymax, $proj)
+    = Geo::Line->bboxFromString($x);
+
+ my $p = Geo::Line->ringFromString($x);
+
+ # When parsing user applications, you probably want:
+ my $p = eval { Geo::Line->bboxFromString($x) };
+ warn $@ if $@;
+
+=back
+
+$obj-E<gt>B<filled>(POINTS, OPTIONS)
+
+Geo::Line-E<gt>B<filled>(POINTS, OPTIONS)
+
+=over 4
+
+The POINTS form a L<ring()|Geo::Line/"Constructors"> and the filled is part of the geometrical
+shape.
+
+=back
+
+$obj-E<gt>B<line>(POINTS, OPTIONS)
+
+Geo::Line-E<gt>B<line>(POINTS, OPTIONS)
+
+=over 4
+
+construct a line, which will probably not have the same begin and end
+point.  The POINTS are passed as L<new(points)|Geo::Line/"Constructors">, and the other OPTIONS
+are passed to L<new()|Geo::Line/"Constructors"> as well.
+
+=back
+
+$obj-E<gt>B<new>([OPTIONS], [POINTS], [OPTIONS])
+
+Geo::Line-E<gt>B<new>([OPTIONS], [POINTS], [OPTIONS])
+
+=over 4
+
+When called as instance method, the projection, ring, and filled attributes
+are taken from the initiator.
+
+ Option  Defined in       Default                                                      
+ filled                   <false>                                                      
+ points                   <data>                                                       
+ proj    L<Geo::Shape>    <see L<Geo::Proj::defaultProjection()|Geo::Proj/"Projecting">
+ ring                     <false>                                                      
+
+. filled BOOLEAN
+
+=over 4
+
+Implies ring.  The filled of the ring is included in the geometrical
+shape.
+
+=back
+
+. points ARRAY-OF-POINTS|ARRAY-OF-COORDINATES
+
+=over 4
+
+With this option, you can specify either L<Geo::Point|Geo::Point> objects, or
+coordinate pairs which will get transformed into such objects.  WARNING:
+in that case, the coordinates must be in xy order.
+
+=back
+
+. proj LABEL
+
+. ring BOOLEAN
+
+=over 4
+
+The first point is the last point.  When specified, you have to make
+sure that this is the case.  If L<ring()|Geo::Line/"Constructors"> is used to create this object,
+that routine will check/repair it for you.
+
+=back
+
+I<Example:> 
+
+ my $point = Geo::Point->xy(1, 2);
+ my $line  = Geo::Line->new
+   ( points => [$point, [3,4], [5,6], $point]
+   , ring   => 1
+   )'
+
+=back
+
+$obj-E<gt>B<ring>(POINTS, OPTIONS)
+
+Geo::Line-E<gt>B<ring>(POINTS, OPTIONS)
+
+=over 4
+
+The first and last point will be made the same: if not yet, than a reference
+to the first point is appended to the list.  A "ring" does not cover the
+internal.
+
+=back
+
+Geo::Line-E<gt>B<ringFromString>(STRING, [PROJECTION])
+
+=over 4
+
+Calls L<bboxFromString()|Geo::Line/"Constructors"> and then produces a ring object from than.
+Don't forget the C<eval> when you call this method.
+
+=back
+
+=head2 Attributes
+
+
+$obj-E<gt>B<geopoint>(INDEX, [INDEX, ..])
+
+=over 4
+
+Returns the L<Geo::Point|Geo::Point> for the point with the specified INDEX or
+indices.
+
+=back
+
+$obj-E<gt>B<geopoints>
+
+=over 4
+
+In LIST context, this returns all points as separate scalars: each is a
+L<Geo::Point|Geo::Point> with projection information.  In SCALAR context, a
+reference to the coordinates is returned.
+
+With Geo::Line subroutine points, you get arrays with XY coordinates returned, but
+without the projection information.  That will be much faster, but
+not sufficient for some uses.
+
+=back
+
+$obj-E<gt>B<isFilled>
+
+=over 4
+
+Returns a true value is the internals of the ring of points are declared
+to belong to the shape.
+
+=back
+
+$obj-E<gt>B<isRing>
+
+=over 4
+
+Returns a true value if the sequence of points are a ring or filled: the
+first point is the last.
+
+=back
+
+$obj-E<gt>B<proj>
+
+=over 4
+
+See L<Geo::Shape/"Attributes">
+
+=back
+
+=head2 Projections
+
+
+$obj-E<gt>B<in>(LABEL|'utm')
+
+=over 4
+
+See L<Geo::Shape/"Projections">
+
+=back
+
+$obj-E<gt>B<projectOn>(NICK, POINTS)
+
+=over 4
+
+See L<Geo::Shape/"Projections">
+
+=back
+
+=head2 Geometry
+
+
+$obj-E<gt>B<area>
+
+=over 4
+
+Returns the area enclosed by the polygon.  Only useful when the points
+are in some orthogonal projection.
+
+=back
+
+$obj-E<gt>B<bbox>
+
+=over 4
+
+The bounding box coordinates.  These are more useful for rings than for
+open line pieces.
+
+=back
+
+$obj-E<gt>B<bboxCenter>
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+$obj-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+
+Geo::Line-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+$obj-E<gt>B<clip>((XMIN,XMAX,YMIN,YMAX)|OBJECT)
+
+=over 4
+
+Clip the shape to the bounding box of OBJECT, or the boxing parameters
+specified.  A list of L<Geo::Line|Geo::Line> objects is returned if anything is
+inside the object.
+
+On the moment Math::Polygon subroutine lineClip and
+Math::Polygon subroutine fillClip1 are used to do the job.  In the future,
+that may change.
+
+=back
+
+$obj-E<gt>B<distance>(OBJECT, [UNIT])
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+$obj-E<gt>B<equal>(OBJECT, [TOLERANCE])
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+$obj-E<gt>B<length>
+
+=over 4
+
+The length of the line, only useful in a orthogonal coordinate system
+(projection).  See also L<perimeter()|Geo::Line/"Geometry">.
+
+=back
+
+$obj-E<gt>B<perimeter>
+
+=over 4
+
+The length of the line on the ring.  A check is performed that the ring
+is closed, but further this returns the result of L<length()|Geo::Line/"Geometry">
+
+=back
+
+$obj-E<gt>B<sameAs>(OTHER, TOLERANCE)
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+=head2 Display
+
+
+$obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+
+Geo::Line-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+
+=over 4
+
+See L<Geo::Shape/"Display">
+
+=back
+
+$obj-E<gt>B<deg2dms>(DEGREES, POS, NEG)
+
+Geo::Line-E<gt>B<deg2dms>(DEGREES, POS, NEG)
+
+=over 4
+
+See L<Geo::Shape/"Display">
+
+=back
+
+$obj-E<gt>B<dms2deg>(DMS)
+
+Geo::Line-E<gt>B<dms2deg>(DMS)
+
+=over 4
+
+See L<Geo::Shape/"Display">
+
+=back
+
+$obj-E<gt>B<string>([PROJECTION])
+
+=over 4
+
+Returns a string representation of the line, which is also used for
+stringification.
+
+I<Example:> 
+
+
+=back
+
+
+
+=head1 DIAGNOSTICS
+
+I<Error:> Area requires a ring of points.
+
+If you think you have a ring of points (a polygon), than do specify
+that when that object is instantiated (L<ring()|Geo::Line/"Constructors"> or L<new(ring)|Geo::Line/"Constructors">).
+
+I<Error:> Distance calculation not implemented between a $kind and a $kind
+
+Only a subset of all objects can be used in the distance calculation.
+The limitation is purely caused by lack of time to implement this.
+
+I<Error:> in() not implemented for a $class
+
+
+
+
+
+
+
+=head1 REFERENCES
+
+See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more details.
+
+=head1 COPYRIGHTS
+
+Module version 0.001.
+Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
+other contributors.
+
+Copyright (c) 2004-2005 by the author(s). All rights reserved.  This program
+is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
+
+

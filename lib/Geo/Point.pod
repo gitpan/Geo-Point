@@ -1,0 +1,533 @@
+
+=head1 NAME
+
+Geo::Point - a point on the globe
+
+
+=head1 INHERITANCE
+
+ Geo::Point
+   is a Geo::Shape
+
+
+=head1 SYNOPSIS
+
+ use Geo::Point;
+
+ my $p = Geo::Point->latlong(1,2);
+ my $p = Geo::Point->longlat(2,1);
+
+ my $w = Geo::Proj->new(wgs84 => ...);
+ my $p = Geo::Point->latlong(1,2, 'wgs84');
+
+ my ($lat, $long) = $p->latlong;
+ my ($x, $y) = $p->xy;
+ my ($x, $y) = $p->in('utm-wgs84-31N');
+
+ my $p = Geo::Point->xy(1,2);
+
+
+=head1 DESCRIPTION
+
+One location on the globe, in any coordinate system.  This package tries
+to hide the maths and the coordinate system in which the point is
+represented.
+
+One of the most confusing things when handling geometrical data, is
+that sometimes latlong, sometimes xy are used: horizontal and vertical
+organization reversed.  This packages tries to hide this from your
+program by providing abstract accessors L<latlong()|Geo::Point/"Constructors">, L<longlat()|Geo::Point/"Constructors">,
+L<xy()|Geo::Point/"Constructors">, and L<yx()|Geo::Point/"Constructors">.
+
+
+
+=head1 METHODS
+
+
+=head2 Constructors
+
+
+Geo::Point-E<gt>B<fromString>(STRING, {PROJECTION])
+
+=over 4
+
+Create a new point from a STRING.  The coordinates can be separated by
+a comma (preferrably), or blanks.  When the coordinates end on NSEW, the
+order does not matter, otherwise lat-long or xy order is presumed.
+
+This routine is very smart.  It understands:
+ PROJLABEL VALUE VALUE
+ PROJLABEL: VALUE VALUE
+ PROJLABEL, VALUE, VALUE
+ PROJLABEL: VALUE, VALUE
+ VALUE VALUE
+ VALUE, VALUE
+ utm: ZONE, VALUE, VALUE   # also without commas and ':'
+ utm: VALUE, VALUE, ZONE   # also without commas and ':'
+ utm: VALUE, VALUE         # also without commas and ':'
+ ZONE, VALUE, VALUE        # also without commas and ':'
+ VALUE, VALUE, ZONE        # also without commas and ':'
+
+The VALUE must be suitable for projection.  If only two values are
+provided, a C<d>, single or double quote, or trailing/leading C<e>, C<w>,
+C<n>, C<s> (either lower or upper-case) will force a latlong projection.
+Those coordinates must follow the rules of L<dms2deg()|Geo::Shape/"Display">.
+
+I<Example:> point from string
+
+
+ my $x = 'utm 31n 12311.123 34242.12'; # utm zone 31N
+ my $x = '12311.123 34242.12 31';      # utm zone 31
+ my $x = '123.123E 12.34';             # wgs84  latlong
+ my $x = 'clrk66 123.123 12.34';       # clrk66 latlong
+ my $x = '12d34'123.1W 11.1123';       # wgs84  longlat
+
+ my $p = Geo::Point->fromString($x);
+
+ # When parsing user applications, you probably want:
+ my $p = eval { Geo::Point->fromString($x) };
+ warn $@ if $@;
+
+=back
+
+$obj-E<gt>B<latlong>([LAT, LONG, [PROJ] ] | [PROJ])
+
+Geo::Point-E<gt>B<latlong>([LAT, LONG, [PROJ] ] | [PROJ])
+
+=over 4
+
+When called as class method, you create a new point.  Provide a LATitude
+and LONGitude. The optional PROJection tells in which coordinate system.
+
+As instance method, the latitude and longitude are reported.  You
+can ask it to be translated into the PROJ coordinate system first.
+
+When PROJ is undefined, none is presumed. The project must be specified
+as string, which referse to a projection defined by L<Geo::Proj|Geo::Proj>.
+See also L<longlat()|Geo::Point/"Constructors">, L<xy()|Geo::Point/"Constructors">, and L<yx()|Geo::Point/"Constructors">.
+
+I<Example:> latlong as class method
+
+
+ my $wgs84 = Geo::Proj->new(wgs84 => ...);
+ my $gp    = Geo::Point->latlong(52.3213, 5.53, 'wgs84');
+
+I<Example:> latlong as instance method
+
+
+ my ($lat, $long) = $gp->latlong('wgs84');
+
+=back
+
+$obj-E<gt>B<longlat>([LONG, LAT, [PROJ] ] | [PROJ])
+
+Geo::Point-E<gt>B<longlat>([LONG, LAT, [PROJ] ] | [PROJ])
+
+=over 4
+
+Like L<latlong()|Geo::Point/"Constructors">, but with the coordinates reversed.  Some applications
+prefer this.
+
+=back
+
+Geo::Point-E<gt>B<new>(OPTIONS)
+
+=over 4
+
+ Option     Defined in       Default                                                      
+ lat                         undef                                                        
+ latitude                    undef                                                        
+ long                        undef                                                        
+ longitude                   undef                                                        
+ proj       L<Geo::Shape>    <see L<Geo::Proj::defaultProjection()|Geo::Proj/"Projecting">
+ x                           undef                                                        
+ y                           undef                                                        
+
+. lat COORDINATE
+
+. latitude COORDINATE
+
+. long COORDINATE
+
+. longitude COORDINATE
+
+. proj LABEL
+
+. x COORDINATE
+
+. y COORDINATE
+
+=back
+
+Geo::Point-E<gt>B<xy>([X, Y, [PROJ] ] | [PROJ])
+
+=over 4
+
+Like L<latlong()|Geo::Point/"Constructors"> but now for carthesian projections.  Usually, the coordinate
+order is reversed.  See also L<yx()|Geo::Point/"Constructors">.
+
+=back
+
+Geo::Point-E<gt>B<yx>([Y, X, [PROJ] ] | [PROJ])
+
+=over 4
+
+Like L<latlong()|Geo::Point/"Constructors"> but now for carthesian projections.  Usually, the
+coordinate order is reversed.  See also L<xy()|Geo::Point/"Constructors">.
+
+=back
+
+=head2 Attributes
+
+
+$obj-E<gt>B<proj>
+
+=over 4
+
+See L<Geo::Shape/"Attributes">
+
+=back
+
+=head2 Accessors
+
+The accessors only work correctly when you are sure that the point is
+in the right coordinate systems.
+
+$obj-E<gt>B<lat>
+
+=over 4
+
+=back
+
+$obj-E<gt>B<latitude>
+
+=over 4
+
+=back
+
+$obj-E<gt>B<long>
+
+=over 4
+
+=back
+
+$obj-E<gt>B<longitude>
+
+=over 4
+
+=back
+
+$obj-E<gt>B<x>
+
+=over 4
+
+=back
+
+$obj-E<gt>B<y>
+
+=over 4
+
+=back
+
+=head2 Projections
+
+
+$obj-E<gt>B<in>(LABEL|'utm')
+
+=over 4
+
+See L<Geo::Shape/"Projections">
+
+=back
+
+$obj-E<gt>B<projectOn>(NICK, POINTS)
+
+=over 4
+
+See L<Geo::Shape/"Projections">
+
+=back
+
+=head2 Geometry
+
+
+$obj-E<gt>B<area>
+
+=over 4
+
+Always returns zero.
+
+=back
+
+$obj-E<gt>B<bbox>
+
+=over 4
+
+The bounding box of a point contains twice itself.
+
+=back
+
+$obj-E<gt>B<bboxCenter>
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+$obj-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+
+Geo::Point-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+$obj-E<gt>B<distance>(OBJECT, [UNIT])
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+$obj-E<gt>B<distancePointPoint>(GEODIST, UNITS, POINT)
+
+=over 4
+
+Compute the distance between the current point and some other POINT in
+UNITS.  The GEODIST object will do the calculations.  See L<distance()|Geo::Shape/"Geometry">.
+
+=back
+
+$obj-E<gt>B<equal>(OBJECT, [TOLERANCE])
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+$obj-E<gt>B<inBBox>(OBJECT)
+
+=over 4
+
+Returns a true value if this point is inside the bounding box of
+the specified OBJECT.  The borders of the bbox are included.  This is
+relatively fast to check, even for complex objects.  When the projections
+differ, the point is translated into the OBJECT's coordinate system,
+because that one must stay square.
+
+=back
+
+$obj-E<gt>B<perimeter>
+
+=over 4
+
+Always returns zero.
+
+=back
+
+$obj-E<gt>B<sameAs>(OTHER, TOLERANCE)
+
+=over 4
+
+=back
+
+=head2 Display
+
+
+$obj-E<gt>B<coords>
+
+=over 4
+
+Returns the coordinates in their usual order, formatted as string
+with a joining blank;
+
+=back
+
+$obj-E<gt>B<coordsUsualOrder>
+
+=over 4
+
+Returns the coordinates in the order which is usual for the projection
+used.
+
+=back
+
+$obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+
+Geo::Point-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+
+=over 4
+
+See L<Geo::Shape/"Display">
+
+=back
+
+$obj-E<gt>B<deg2dms>(DEGREES, POS, NEG)
+
+Geo::Point-E<gt>B<deg2dms>(DEGREES, POS, NEG)
+
+=over 4
+
+See L<Geo::Shape/"Display">
+
+=back
+
+$obj-E<gt>B<dm>([PROJECTION])
+
+=over 4
+
+Like L<dms()|Geo::Point/"Display">, but doesn't show seconds.
+
+=back
+
+$obj-E<gt>B<dmHTML>([PROJECTION])
+
+=over 4
+
+Like L<dmsHTML()|Geo::Point/"Display">, but does not show seconds.
+
+=back
+
+$obj-E<gt>B<dms>([PROJECTION])
+
+=over 4
+
+Show the point as DMS value-pair.  You must be sure that the coordinate
+is a projection for which is it usefull to represent the values in DMS.
+In SCALAR context, one string is returned.  In LIST context, the values
+are returned separately in latlong order.
+
+Be warned, that the returned string may contain single and double quote
+characters, which may confuse HTML (see L<dmsHTML()|Geo::Point/"Display">).
+
+=back
+
+$obj-E<gt>B<dms2deg>(DMS)
+
+Geo::Point-E<gt>B<dms2deg>(DMS)
+
+=over 4
+
+See L<Geo::Shape/"Display">
+
+=back
+
+$obj-E<gt>B<dmsHTML>([PROJECTION])
+
+=over 4
+
+Like L<dms()|Geo::Point/"Display">, but all character which are troublesome for HTML are
+translated into character codes.
+
+=back
+
+$obj-E<gt>B<moveWest>
+
+=over 4
+
+Move a point from the eastern calculations into the western calculations,
+resulting in a value below -180.  This is usefull when this point is part
+of a larger construct, like the corners of a satellite image, which are
+both sides of the -180 meridian.
+
+I<Example:> moving West
+
+
+ my $point = Geo::Point->latlong(24, 179);
+ $point->moveWest;
+ print $point->long;   # -181;
+
+=back
+
+$obj-E<gt>B<string>([PROJECTION])
+
+=over 4
+
+Returns a string representation of the point, which is also used for
+stringification.  The default projection is the one of the point.
+
+I<Example:> 
+
+ print "Point: ",$gp->string, "\n";
+ print "Point: $gp\n";   # same
+
+ print "Point: ",$gp->string('clrk66'), "\n";
+
+=back
+
+
+
+=head1 DIAGNOSTICS
+
+I<Error:> Can only compare a point to an other Geo::Point
+
+
+I<Error:> Distance calculation not implemented between a $kind and a $kind
+
+Only a subset of all objects can be used in the distance calculation.
+The limitation is purely caused by lack of time to implement this.
+
+I<Error:> Illegal UTM zone in $string
+
+A UTM zone can be detected at the beginning or at the end of the
+input.  It contains a number (from 1 upto 60) and an optional
+latitude indication (C upto X, except I and O).
+
+I<Error:> Too few values in $string (got @parts)
+
+Most projection require two parameters, but utm requires three (with zone).
+
+I<Error:> Too many values in $string (got @parts)
+
+Most projection require two parameters, but utm requires three (with zone).
+
+I<Error:> UTM requires 3 values: easting, northing, and zone
+
+
+I<Error:> Undefined projection $proj for $string
+
+The projection you used (or is set as default) is not defined.  See
+L<Geo::Proj::new()|Geo::Proj/"Constructors"> about how to defined them.
+
+I<Error:> dms latitude coordinate not understood: $string
+
+See L<dms2deg()|Geo::Shape/"Display"> for permitted formats.
+
+I<Error:> dms longitude coordinate not understood: $string
+
+See L<dms2deg()|Geo::Shape/"Display"> for permitted formats.
+
+I<Error:> illegal character in x coordinate $x
+
+
+I<Error:> illegal character in y coordinate $y
+
+
+I<Error:> in() not implemented for a $class
+
+
+
+
+
+
+
+=head1 REFERENCES
+
+See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more details.
+
+=head1 COPYRIGHTS
+
+Module version 0.001.
+Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
+other contributors.
+
+Copyright (c) 2004-2005 by the author(s). All rights reserved.  This program
+is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
+
+

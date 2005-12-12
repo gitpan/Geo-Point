@@ -1,0 +1,269 @@
+
+=head1 NAME
+
+Geo::Surface - A surface description.
+
+
+=head1 INHERITANCE
+
+ Geo::Surface
+   is a Geo::Shape
+
+
+=head1 SYNOPSIS
+
+ !!!! ALPHA code, see README !!!!
+ my $island1 = Geo::Line->filled(...);
+ my $island2 = Geo::Surface->new(...);
+ my $islands = Geo::Surface->new($island1, $island2)
+
+
+=head1 DESCRIPTION
+
+In this context, a "surface" is defined as a set of filled areas with
+possible enclosures in one projection system.  One set of islands
+can be kept as one surface, or the shapefile data of a country.
+
+
+
+=head1 METHODS
+
+
+=head2 Constructors
+
+
+Geo::Surface-E<gt>B<new>([COMPONENTS], [OPTIONS])
+
+=over 4
+
+When called as instance method, some defaults are copied from the
+object where the call is made upon.
+
+COMPONENTS are Math::Polygon, Math::Polygon::Surface,
+L<Geo::Line|Geo::Line>, L<Geo::Surface|Geo::Surface> objects.  When an ARRAY is specfied as
+COMPONENT, it will be used to instantiate a Math::Polygon::Surface
+object.  In case of a L<Geo::Surface|Geo::Surface>, the included polygons are
+translated to the specified projection.
+
+ Option  Defined in     Default                                                      
+ proj    L<Geo::Shape>  <see L<Geo::Proj::defaultProjection()|Geo::Proj/"Projecting">
+
+. proj LABEL
+
+I<Example:> 
+
+
+=back
+
+=head2 Attributes
+
+
+$obj-E<gt>B<component>(INDEX, [INDEX, ...])
+
+=over 4
+
+Returns the component (or components) with the specified INDEX(es). One
+Math::Polygon::Surface in scalar context, and multiple in list context.
+
+=back
+
+$obj-E<gt>B<components>
+
+=over 4
+
+Returns a list of Math::Polygon::Surface objects, together forming
+the surface.
+
+=back
+
+$obj-E<gt>B<nrComponents>
+
+=over 4
+
+Returns the number of components.
+
+=back
+
+$obj-E<gt>B<proj>
+
+=over 4
+
+See L<Geo::Shape/"Attributes">
+
+=back
+
+=head2 Projections
+
+
+$obj-E<gt>B<in>(LABEL|'utm')
+
+=over 4
+
+See L<Geo::Shape/"Projections">
+
+=back
+
+$obj-E<gt>B<projectOn>(NICK, POINTS)
+
+=over 4
+
+See L<Geo::Shape/"Projections">
+
+=back
+
+=head2 Geometry
+
+
+$obj-E<gt>B<area>
+
+=over 4
+
+Returns the area enclosed by the combined components.  Only useful when
+the points are in some orthogonal projection.
+
+=back
+
+$obj-E<gt>B<bbox>
+
+=over 4
+
+The bounding box of the combined polygons.
+
+=back
+
+$obj-E<gt>B<bboxCenter>
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+$obj-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+
+Geo::Surface-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+$obj-E<gt>B<distance>(OBJECT, [UNIT])
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+$obj-E<gt>B<equal>(OTHER, [TOLERANCE])
+
+=over 4
+
+Detailed calculation whether two surfaces are equal is a lot of
+work.  Therefore, only exactly equal surface descriptions are
+considered equivalent.
+
+=back
+
+$obj-E<gt>B<perimeter>
+
+=over 4
+
+The length of the outer polygons of all components. Only useful in a
+orthogonal coordinate systems.
+
+=back
+
+$obj-E<gt>B<sameAs>(OTHER, TOLERANCE)
+
+=over 4
+
+See L<Geo::Shape/"Geometry">
+
+=back
+
+=head2 Display
+
+
+$obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+
+Geo::Surface-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+
+=over 4
+
+See L<Geo::Shape/"Display">
+
+=back
+
+$obj-E<gt>B<deg2dms>(DEGREES, POS, NEG)
+
+Geo::Surface-E<gt>B<deg2dms>(DEGREES, POS, NEG)
+
+=over 4
+
+See L<Geo::Shape/"Display">
+
+=back
+
+$obj-E<gt>B<dms2deg>(DMS)
+
+Geo::Surface-E<gt>B<dms2deg>(DMS)
+
+=over 4
+
+See L<Geo::Shape/"Display">
+
+=back
+
+$obj-E<gt>B<string>([PROJECTION])
+
+=over 4
+
+Returns a string representation of the line, which is also used for
+stringification.
+
+I<Example:> 
+
+
+=back
+
+
+
+=head1 DIAGNOSTICS
+
+I<Error:> Distance calculation not implemented between a $kind and a $kind
+
+Only a subset of all objects can be used in the distance calculation.
+The limitation is purely caused by lack of time to implement this.
+
+I<Warning:> Geo::Line is should be filled
+
+When L<Geo::Line|Geo::Line> objects are used to compose a surface, each of them
+must be filled.  Representation of rivers and such do not belong in a
+surface description.
+
+I<Error:> in() not implemented for a $class
+
+
+
+
+
+
+
+=head1 REFERENCES
+
+See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more details.
+
+=head1 COPYRIGHTS
+
+Module version 0.001.
+Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
+other contributors.
+
+Copyright (c) 2004-2005 by the author(s). All rights reserved.  This program
+is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
+
+
