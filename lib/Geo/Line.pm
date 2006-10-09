@@ -4,7 +4,7 @@ use warnings;
 
 package Geo::Line;
 use vars '$VERSION';
-$VERSION = '0.001';
+$VERSION = '0.03';
 use base qw/Geo::Shape Math::Polygon/;
 
 use Carp;

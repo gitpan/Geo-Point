@@ -103,11 +103,11 @@ Geo::Line-E<gt>B<new>([OPTIONS], [POINTS], [OPTIONS])
 When called as instance method, the projection, ring, and filled attributes
 are taken from the initiator.
 
- Option  Defined in       Default                                                      
- filled                   <false>                                                      
- points                   <data>                                                       
- proj    L<Geo::Shape>    <see L<Geo::Proj::defaultProjection()|Geo::Proj/"Projecting">
- ring                     <false>                                                      
+ Option--Defined in     --Default
+ filled                   <false>
+ points                   <data>
+ proj    Geo::Shape       <see Geo::Proj::defaultProjection()
+ ring                     <false>
 
 . filled BOOLEAN
 
@@ -384,6 +384,7 @@ I<Example:>
 
 
 
+
 =head1 DIAGNOSTICS
 
 I<Error:> Area requires a ring of points.
@@ -410,7 +411,7 @@ See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more deta
 
 =head1 COPYRIGHTS
 
-Module version 0.001.
+Module version 0.03.
 Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
 other contributors.
 

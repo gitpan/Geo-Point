@@ -4,7 +4,7 @@ use warnings;
 
 package Geo::Shape;
 use vars '$VERSION';
-$VERSION = '0.001';
+$VERSION = '0.03';
 
 use Geo::Proj;      # defines wgs84
 use Geo::Point      ();
@@ -15,21 +15,22 @@ use Geo::Space      ();
 use Carp            qw/croak confess/;
 
 
-use overload '""'   => 'string'
-           , '=='   => 'equal'
-           , bool   => sub {1};
+use overload '""'     => 'string'
+           , '=='     => 'equal'
+           , bool     => sub {1}
+           , fallback => 1;
 
 
 sub new(@) { (bless {}, shift)->init( {@_} ) }
 
 sub init($)
 {   my ($self, $args) = @_;
-    $self->{G2_proj} = $args->{proj} || Geo::Proj->defaultProjection;
+    $self->{G_proj} = $args->{proj} || Geo::Proj->defaultProjection;
     $self;
 }
 
 
-sub proj()  {shift->{G2_proj} }
+sub proj()  {shift->{G_proj} }
 
 
 sub in($) { croak "ERROR: in() not implemented for a ".ref(shift) }
@@ -37,10 +38,10 @@ sub in($) { croak "ERROR: in() not implemented for a ".ref(shift) }
 
 sub projectOn($@)
 {   # fast check: nothing to be done
-    return () if @_<2 || $_[0]->{G2_proj} eq $_[1];
+    return () if @_<2 || $_[0]->{G_proj} eq $_[1];
 
     my ($self, $projnew) = (shift, shift);
-    my $projold = $self->{G2_proj};
+    my $projold = $self->{G_proj};
 
     return wantarray ? @_ : $_[0]
         if $projold eq $projnew;

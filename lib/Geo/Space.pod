@@ -38,13 +38,13 @@ Geo::Space-E<gt>B<new>([COMPONENTS], [OPTIONS])
 =over 4
 
 When called as instance method, some defaults are copied from the
-object where the call is made upon.
+object where the call is made upon.  Usually called as class method.
 
 COMPONENTS are Math::Polygon, Math::Polygon::Surface,
 L<Geo::Point|Geo::Point>, L<Geo::Line|Geo::Line>, L<Geo::Surface|Geo::Surface>, L<Geo::Space|Geo::Space> objects.
 
- Option  Defined in     Default                                                      
- proj    L<Geo::Shape>  <see L<Geo::Proj::defaultProjection()|Geo::Proj/"Projecting">
+ Option--Defined in--Default
+ proj    Geo::Shape  <see Geo::Proj::defaultProjection()
 
 . proj LABEL
 
@@ -268,6 +268,7 @@ I<Example:>
 
 
 
+
 =head1 DIAGNOSTICS
 
 I<Error:> Distance calculation not implemented between a $kind and a $kind
@@ -289,7 +290,7 @@ See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more deta
 
 =head1 COPYRIGHTS
 
-Module version 0.001.
+Module version 0.03.
 Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
 other contributors.
 

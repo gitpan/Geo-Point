@@ -4,11 +4,10 @@ use warnings;
 
 package Geo::Point;
 use vars '$VERSION';
-$VERSION = '0.001';
+$VERSION = '0.03';
 use base 'Geo::Shape';
 
-use Geo::Proj   ();
-
+use Geo::Proj;
 use Carp        qw/confess croak/;
 
 
@@ -16,8 +15,8 @@ sub init($)
 {   my ($self, $args) = @_;
 
     $self->SUPER::init($args);
-    $self->{G2P_x} = $args->{x} || $args->{long} || $args->{longitude};
-    $self->{G2P_y} = $args->{y} || $args->{lat}  || $args->{latitude};
+    $self->{GP_x} = $args->{x} || $args->{long} || $args->{longitude};
+    $self->{GP_y} = $args->{y} || $args->{lat}  || $args->{latitude};
     $self;
 }
 
@@ -26,7 +25,7 @@ sub latlong(@)
 {   my $thing = shift;
 
     if(ref $thing)   # instance method
-    {   return ($thing->{G2P_y}, $thing->{G2P_x}) unless @_ > 2;
+    {   return ($thing->{GP_y}, $thing->{GP_x}) unless @_ > 2;
 
         my $proj = pop @_;
         return $thing->in($proj)->latlong;
@@ -41,7 +40,7 @@ sub longlat(@)
 {   my $thing = shift;
 
     if(ref $thing)   # instance method
-    {   return ($thing->{G2P_x}, $thing->{G2P_y}) unless @_ > 2;
+    {   return ($thing->{GP_x}, $thing->{GP_y}) unless @_ > 2;
         my $proj = pop @_;
         return $thing->in($proj)->longlat;
     }
@@ -55,7 +54,7 @@ sub xy(@)
 {   my $thing = shift;
 
     if(ref $thing)   # instance method
-    {   return ($thing->{G2P_x}, $thing->{G2P_y}) unless @_ > 2;
+    {   return ($thing->{GP_x}, $thing->{GP_y}) unless @_ > 2;
 
         my $proj = pop @_;
         return $thing->in($proj)->xy;
@@ -70,7 +69,7 @@ sub yx(@)
 {   my $thing = shift;
 
     if(ref $thing)   # instance method
-    {   return ($thing->{G2P_y}, $thing->{G2P_x}) unless @_ > 2;
+    {   return ($thing->{GP_y}, $thing->{GP_x}) unless @_ > 2;
 
         my $proj = pop @_;
         return $thing->in($proj)->yx;
@@ -171,13 +170,13 @@ sub fromString($;$)
 }
 
 
-sub longitude() {shift->{G2P_x}}
-sub long()      {shift->{G2P_x}}
-sub latitude()  {shift->{G2P_y}}
-sub lat()       {shift->{G2P_y}}
+sub longitude() {shift->{GP_x}}
+sub long()      {shift->{GP_x}}
+sub latitude()  {shift->{GP_y}}
+sub lat()       {shift->{GP_y}}
 
-sub x()         {shift->{G2P_x}}
-sub y()         {shift->{G2P_y}}
+sub x()         {shift->{GP_x}}
+sub y()         {shift->{GP_y}}
 
 
 
@@ -185,14 +184,14 @@ sub in($)
 {   my ($self, $newproj) = @_;
 
     # Dirty hacks violate OO, to improve the speed.
-    return $self if $newproj eq $self->{G2_proj};
+    return $self if $newproj eq $self->{G_proj};
 
-    my ($n, $p) = $self->projectOn($newproj, [$self->{G2P_x}, $self->{G2P_y}]);
+    my ($n, $p) = $self->projectOn($newproj, [$self->{GP_x}, $self->{GP_y}]);
     $p ? ref($self)->new(x => $p->[0], y => $p->[1], proj => $n) : $self;
 }
 
 
-sub bbox() { @{(shift)}[ qw/G2P_x G2P_y G2P_x G2P_y/ ] }
+sub bbox() { @{(shift)}[ qw/GP_x GP_y GP_x GP_y/ ] }
 
 
 sub area() { 0 }
@@ -314,7 +313,7 @@ sub dmHTML(;$)
 
 sub moveWest()
 {   my $self = shift;
-    $self->{G2P_x} -= 360 if $self->{G2P_x} > 0;
+    $self->{GP_x} -= 360 if $self->{GP_x} > 0;
 }
 
 

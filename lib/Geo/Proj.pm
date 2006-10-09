@@ -4,13 +4,14 @@ use warnings;
 
 package Geo::Proj;
 use vars '$VERSION';
-$VERSION = '0.001';
+$VERSION = '0.03';
 
 use Geo::Proj4   ();
 use Carp         qw/croak/;
 
 
-use overload '""' => sub { shift->nick };
+use overload '""'     => sub { shift->nick }
+           , fallback => 1;
 
 
 sub import()
@@ -58,8 +59,7 @@ sub init($)
             unless $proj4;
     }
     $self->{GP_proj4} = $proj4;
-
-    $self->{GP_name} = $args->{name};
+    $self->{GP_name}  = $args->{name};
     $self;
 }
 
@@ -85,8 +85,7 @@ sub proj4(;$)
 {   my $thing = shift;
     return $thing->{GP_proj4} unless @_;
 
-#warn "W=$_[0]#", caller;
-    my $proj = $thing->projection(shift) or return undef;
+    my $proj  = $thing->projection(shift) or return undef;
     $proj->proj4;
 }
 
@@ -96,13 +95,19 @@ sub srid() {shift->{GP_srid}}
 
 sub projection($)
 {   my $which = $_[1];
+use Carp;
+$which or confess;
     ref $which && $which->isa(__PACKAGE__) ? $which : $projections{$which};
 }
 
 
 sub defaultProjection(;$)
 {   my $thing = shift;
-    @_ ? ($defproj = $thing->projection(shift)) : $defproj;
+    if(@_)
+    {   my $proj = shift;
+        $defproj = ref $proj ? $proj->nick : $proj;
+    }
+    $defproj;
 }
 
 

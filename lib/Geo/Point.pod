@@ -134,14 +134,14 @@ Geo::Point-E<gt>B<new>(OPTIONS)
 
 =over 4
 
- Option     Defined in       Default                                                      
- lat                         undef                                                        
- latitude                    undef                                                        
- long                        undef                                                        
- longitude                   undef                                                        
- proj       L<Geo::Shape>    <see L<Geo::Proj::defaultProjection()|Geo::Proj/"Projecting">
- x                           undef                                                        
- y                           undef                                                        
+ Option   --Defined in     --Default
+ lat                         undef
+ latitude                    undef
+ long                        undef
+ longitude                   undef
+ proj       Geo::Shape       <see Geo::Proj::defaultProjection()
+ x                           undef
+ y                           undef
 
 . lat COORDINATE
 
@@ -462,6 +462,7 @@ I<Example:>
 
 
 
+
 =head1 DIAGNOSTICS
 
 I<Error:> Can only compare a point to an other Geo::Point
@@ -522,7 +523,7 @@ See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more deta
 
 =head1 COPYRIGHTS
 
-Module version 0.001.
+Module version 0.03.
 Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
 other contributors.
 

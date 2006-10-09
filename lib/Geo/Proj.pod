@@ -60,11 +60,11 @@ Geo::Proj-E<gt>B<new>([NICK], OPTIONS)
 
 Create a new object.
 
- Option  Defined in       Default     
+ Option--Defined in     --Default
  name                     <from proj4>
- nick                     <required>  
- proj4                    <required>  
- srid                     C<undef>    
+ nick                     <required>
+ proj4                    <required>
+ srid                     undef
 
 . name STRING
 
@@ -151,8 +151,9 @@ Geo::Proj-E<gt>B<defaultProjection>([NICK|PROJ])
 
 =over 4
 
-The NICK must be defined with L<new()|Geo::Proj/"Constructors">.  Returned is a L<Geo::Proj|Geo::Proj>
-object. The initial default is 'wgs84'.
+The NICK must be defined with L<new()|Geo::Proj/"Constructors">.  Returned is the nickname for
+a projection.  The default is the first name created, which probably
+is 'wgs84' (when import() had a chance)
 
 =back
 
@@ -266,13 +267,14 @@ wanted here.  Probably a lot of zones are missing.
 
 
 
+
 =head1 REFERENCES
 
 See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.001.
+Module version 0.03.
 Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
 other contributors.
 

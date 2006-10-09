@@ -36,8 +36,8 @@ Geo::Shape-E<gt>B<new>(OPTIONS)
 
 Create a new object.
 
- Option  Defined in  Default                                                      
- proj                <see L<Geo::Proj::defaultProjection()|Geo::Proj/"Projecting">
+ Option--Defined in--Default
+ proj                <see Geo::Proj::defaultProjection()
 
 . proj LABEL
 
@@ -198,7 +198,7 @@ Like L<deg2dms()|Geo::Shape/"Display"> but without showing seconds.
 I<Example:> 
 
  print $point->deg2dm(0.12, 'e', 'w');
- print Geo::->deg2dm(0.12, 'e', 'w');
+ print Geo::Shape->deg2dm(0.12, 'e', 'w');
 
 =back
 
@@ -211,7 +211,7 @@ Geo::Shape-E<gt>B<deg2dms>(DEGREES, POS, NEG)
 I<Example:> 
 
  print $point->deg2dms(0.12, 'e', 'w');
- print Geo::->deg2dms(0.12, 'e', 'w');
+ print Geo::Shape->deg2dms(0.12, 'e', 'w');
 
 =back
 
@@ -225,6 +225,7 @@ Accepts for instance 3d12'24.123, 3d12"E, 3.12314w, n2.14, s3d12",
 -12d34, and returns floating point degrees.
 
 =back
+
 
 
 
@@ -249,7 +250,7 @@ See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more deta
 
 =head1 COPYRIGHTS
 
-Module version 0.001.
+Module version 0.03.
 Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
 other contributors.
 
