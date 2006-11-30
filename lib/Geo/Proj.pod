@@ -274,12 +274,12 @@ See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more deta
 
 =head1 COPYRIGHTS
 
-Module version 0.03.
+Module version 0.04.
 Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2004-2005 by the author(s). All rights reserved.  This program
-is free software; you can redistribute it and/or modify it under the
-same terms as Perl itself.
+Copyright (c) 2004-2006 by the author(s). All rights reserved.
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
 
 

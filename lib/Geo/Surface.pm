@@ -4,7 +4,7 @@ use warnings;
 
 package Geo::Surface;
 use vars '$VERSION';
-$VERSION = '0.03';
+$VERSION = '0.04';
 use base 'Geo::Shape';
 
 use Math::Polygon::Surface ();

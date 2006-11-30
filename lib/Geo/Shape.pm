@@ -4,7 +4,7 @@ use warnings;
 
 package Geo::Shape;
 use vars '$VERSION';
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 use Geo::Proj;      # defines wgs84
 use Geo::Point      ();

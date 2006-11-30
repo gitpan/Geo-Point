@@ -1,6 +1,5 @@
 ChangeLog
 MANIFEST
-META.yml                                 Module meta-data (added by MakeMaker)
 Makefile.PL
 README
 lib/Geo/Line.pm
@@ -22,3 +21,4 @@ t/20pstr.t
 t/21lstr.t
 t/22rstr.t
 version
+META.yml                                 Module meta-data (added by MakeMaker)

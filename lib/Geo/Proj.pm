@@ -4,7 +4,7 @@ use warnings;
 
 package Geo::Proj;
 use vars '$VERSION';
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 use Geo::Proj4   ();
 use Carp         qw/croak/;
@@ -95,8 +95,6 @@ sub srid() {shift->{GP_srid}}
 
 sub projection($)
 {   my $which = $_[1];
-use Carp;
-$which or confess;
     ref $which && $which->isa(__PACKAGE__) ? $which : $projections{$which};
 }
 

@@ -4,7 +4,7 @@ use warnings;
 
 package Geo::Point;
 use vars '$VERSION';
-$VERSION = '0.03';
+$VERSION = '0.04';
 use base 'Geo::Shape';
 
 use Geo::Proj;
@@ -179,7 +179,6 @@ sub x()         {shift->{GP_x}}
 sub y()         {shift->{GP_y}}
 
 
-
 sub in($)
 {   my ($self, $newproj) = @_;
 
@@ -188,6 +187,20 @@ sub in($)
 
     my ($n, $p) = $self->projectOn($newproj, [$self->{GP_x}, $self->{GP_y}]);
     $p ? ref($self)->new(x => $p->[0], y => $p->[1], proj => $n) : $self;
+}
+
+
+sub normalize()
+{   my $self = shift;
+    my $p    = Geo::Proj->projection($self->proj);
+    $p && $p->proj4->isLatlong or return $self;
+    my ($x, $y) = @$self{'GP_x','GP_y'};
+    $x += 360 while $x < -180;
+    $x -= 360 while $x >  180;
+    $y += 180 while $y <  -90;
+    $y -= 180 while $y >   90;
+    @$self{'GP_x','GP_y'} = ($x, $y);
+    $self;
 }
 
 
