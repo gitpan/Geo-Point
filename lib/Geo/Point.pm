@@ -1,10 +1,14 @@
+# Copyrights 2005-2007 by Mark Overmeer.
+# For other contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc 0.99.
 
 use strict;
 use warnings;
 
 package Geo::Point;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'Geo::Shape';
 
 use Geo::Proj;
@@ -121,7 +125,7 @@ sub fromString($;$)
         }
 
         if(!defined $zone || $zone==0 || $zone > 60)
-        {   die "ERROR: Illegal UTM zone in $string";
+        {   die "ERROR: illegal UTM zone in $string";
         }
 
         $proj = Geo::Proj->UTMprojection(undef, $zone);
@@ -129,13 +133,13 @@ sub fromString($;$)
     }
     else
     {   $proj = Geo::Proj->projection($nick)
-            or croak "ERROR: Undefined projection $nick";
+            or croak "ERROR: undefined projection $nick";
     }
 
-    croak "ERROR: Too few values in '$string' (got ".@parts.", expect 2)\n"
+    croak "ERROR: too few values in '$string' (got ".@parts.", expect 2)\n"
        if @parts < 2;
 
-    croak "ERROR: Too many values in '$string' (got ".@parts.", expect 2)\n"
+    croak "ERROR: too many values in '$string' (got ".@parts.", expect 2)\n"
        if @parts > 2;
 
     if($proj->proj4->isLatlong)
@@ -228,7 +232,7 @@ sub distancePointPoint($$$)
 sub sameAs($$)
 {   my ($self, $other, $e) = (shift, shift);
 
-    croak "ERROR: Can only compare a point to an other Geo::Point"
+    croak "ERROR: can only compare a point to an other Geo::Point"
         unless $other->isa('Geo::Point');
 
     # may be latlong or xy, doesn't matter: $e is corrected for that

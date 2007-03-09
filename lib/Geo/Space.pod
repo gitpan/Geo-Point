@@ -1,14 +1,11 @@
-
 =head1 NAME
 
 Geo::Space - A collection of various  items
-
 
 =head1 INHERITANCE
 
  Geo::Space
    is a Geo::Shape
-
 
 =head1 SYNOPSIS
 
@@ -17,19 +14,14 @@ Geo::Space - A collection of various  items
  my $island2 = Geo::Space->new(...);
  my $islands = Geo::Space->new($island1, $island2)
 
-
 =head1 DESCRIPTION
 
 Where a L<Geo::Surface|Geo::Surface> can only contains sets of nested polygons, the
 Space can contain anything you like: lines, points, and unrelated polygons.
 
-
-
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 $obj-E<gt>B<new>([COMPONENTS], [OPTIONS])
 
@@ -40,7 +32,7 @@ Geo::Space-E<gt>B<new>([COMPONENTS], [OPTIONS])
 When called as instance method, some defaults are copied from the
 object where the call is made upon.  Usually called as class method.
 
-COMPONENTS are Math::Polygon, Math::Polygon::Surface,
+COMPONENTS are L<Math::Polygon|Math::Polygon>, L<Math::Polygon::Surface|Math::Polygon::Surface>,
 L<Geo::Point|Geo::Point>, L<Geo::Line|Geo::Line>, L<Geo::Surface|Geo::Surface>, L<Geo::Space|Geo::Space> objects.
 
  Option--Defined in--Default
@@ -51,7 +43,6 @@ L<Geo::Point|Geo::Point>, L<Geo::Line|Geo::Line>, L<Geo::Surface|Geo::Surface>, 
 =back
 
 =head2 Attributes
-
 
 $obj-E<gt>B<component>(INDEX, [INDEX, ...])
 
@@ -131,7 +122,6 @@ See L<Geo::Shape/"Attributes">
 
 =head2 Projections
 
-
 $obj-E<gt>B<in>(LABEL|'utm')
 
 =over 4
@@ -149,7 +139,6 @@ See L<Geo::Shape/"Projections">
 =back
 
 =head2 Geometry
-
 
 $obj-E<gt>B<area>
 
@@ -223,7 +212,6 @@ See L<Geo::Shape/"Geometry">
 
 =head2 Display
 
-
 $obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
 
 Geo::Space-E<gt>B<deg2dm>(DEGREES, POS, NEG)
@@ -263,39 +251,27 @@ stringification.
 
 I<Example:> 
 
-
 =back
-
-
-
 
 =head1 DIAGNOSTICS
 
-I<Error:> Distance calculation not implemented between a $kind and a $kind
+I<Error:> distance calculation not implemented between a $kind and a $kind
 
 Only a subset of all objects can be used in the distance calculation.
 The limitation is purely caused by lack of time to implement this.
 
 I<Error:> in() not implemented for a $class
 
+=head1 SEE ALSO
 
+This module is part of Geo-Point distribution version 0.05,
+built on March 09, 2007. Website: F<http://perl.overmeer.net/geo/>
 
+=head1 LICENSE
 
+Copyrights 2005-2007 by Mark Overmeer.For other contributors see ChangeLog.
 
-
-
-=head1 REFERENCES
-
-See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more details.
-
-=head1 COPYRIGHTS
-
-Module version 0.04.
-Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
-other contributors.
-
-Copyright (c) 2004-2006 by the author(s). All rights reserved.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
-
+See F<http://www.perl.com/perl/misc/Artistic.html>
 

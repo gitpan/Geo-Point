@@ -1,10 +1,14 @@
+# Copyrights 2005-2007 by Mark Overmeer.
+# For other contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc 0.99.
 
 use strict;
 use warnings;
 
 package Geo::Line;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base qw/Geo::Shape Math::Polygon/;
 
 use Carp;
@@ -210,7 +214,7 @@ sub bbox() { shift->Math::Polygon::bbox }
 sub area()
 {   my $self = shift;
 
-    croak "ERROR: Area requires a ring of points."
+    croak "ERROR: area requires a ring of points"
        unless $self->isRing;
 
     $self->Math::Polygon::area;
@@ -220,7 +224,7 @@ sub area()
 sub perimeter()
 {   my $self = shift;
 
-    croak "ERROR: Perimeter requires a ring of points."
+    croak "ERROR: perimeter requires a ring of points."
        unless $self->isRing;
 
     $self->Math::Polygon::perimeter;

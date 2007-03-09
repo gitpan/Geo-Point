@@ -1,9 +1,6 @@
-
 =head1 NAME
 
 Geo::Shape - base class for 2-dimensional points on the earth surface
-
-
 
 =head1 SYNOPSIS
 
@@ -16,19 +13,14 @@ Geo::Shape - base class for 2-dimensional points on the earth surface
  my $p3 = $p1->in('wgs84');                  # conversion
  my $p4 = $p1->in('utm');                    # conversion
 
-
 =head1 DESCRIPTION
 
 Base class for the many geo-spatial objects defined by the GeoPoint
 distribution.
 
-
-
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 Geo::Shape-E<gt>B<new>(OPTIONS)
 
@@ -36,15 +28,14 @@ Geo::Shape-E<gt>B<new>(OPTIONS)
 
 Create a new object.
 
- Option--Defined in--Default
- proj                <see Geo::Proj::defaultProjection()
+ Option--Default
+ proj    <see Geo::Proj::defaultProjection()
 
 . proj LABEL
 
 =back
 
 =head2 Attributes
-
 
 $obj-E<gt>B<proj>
 
@@ -55,7 +46,6 @@ Returns the nick of the projection used by the component.
 =back
 
 =head2 Projections
-
 
 $obj-E<gt>B<in>(LABEL|'utm')
 
@@ -96,7 +86,6 @@ some cases (for instance UTM) it may be different.
 =back
 
 =head2 Geometry
-
 
 $obj-E<gt>B<area>
 
@@ -186,7 +175,6 @@ projection as the object at hand.
 
 =head2 Display
 
-
 $obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
 
 Geo::Shape-E<gt>B<deg2dm>(DEGREES, POS, NEG)
@@ -226,36 +214,25 @@ Accepts for instance 3d12'24.123, 3d12"E, 3.12314w, n2.14, s3d12",
 
 =back
 
-
-
-
 =head1 DIAGNOSTICS
 
-I<Error:> Distance calculation not implemented between a $kind and a $kind
+I<Error:> distance calculation not implemented between a $kind and a $kind
 
 Only a subset of all objects can be used in the distance calculation.
 The limitation is purely caused by lack of time to implement this.
 
 I<Error:> in() not implemented for a $class
 
+=head1 SEE ALSO
 
+This module is part of Geo-Point distribution version 0.05,
+built on March 09, 2007. Website: F<http://perl.overmeer.net/geo/>
 
+=head1 LICENSE
 
+Copyrights 2005-2007 by Mark Overmeer.For other contributors see ChangeLog.
 
-
-
-=head1 REFERENCES
-
-See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more details.
-
-=head1 COPYRIGHTS
-
-Module version 0.04.
-Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
-other contributors.
-
-Copyright (c) 2004-2006 by the author(s). All rights reserved.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
-
+See F<http://www.perl.com/perl/misc/Artistic.html>
 

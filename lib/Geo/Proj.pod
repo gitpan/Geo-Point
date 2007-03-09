@@ -1,9 +1,6 @@
-
 =head1 NAME
 
 Geo::Proj - Handling projections
-
-
 
 =head1 SYNOPSIS
 
@@ -26,11 +23,10 @@ Geo::Proj - Handling projections
  my $point_clrk = Geo::Proj->to($clrk, $point_wgs84);
  my $point_clrk = Geo::Proj->to('clark66', $point_wgs84);
 
-
 =head1 DESCRIPTION
 
 A point on Earth's surface can be represented in many different coordinate
-systems.  The Geo::Proj4 module wraps the popular Open Source C<libproj>
+systems.  The L<Geo::Proj4|Geo::Proj4> module wraps the popular Open Source C<libproj>
 library to convert between those coordinate systems; a very complex job.
 
 Within a program, however, you like some extra abstraction from that
@@ -46,13 +42,9 @@ WARNING 2: the wgs84 nickname is predefined, but only if this module is
 this module, then don't forget to call 'import()' yourself, or define the
 wgs84 projection yourself.
 
-
-
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 Geo::Proj-E<gt>B<new>([NICK], OPTIONS)
 
@@ -60,11 +52,11 @@ Geo::Proj-E<gt>B<new>([NICK], OPTIONS)
 
 Create a new object.
 
- Option--Defined in     --Default
- name                     <from proj4>
- nick                     <required>
- proj4                    <required>
- srid                     undef
+ Option--Default
+ name    <from proj4>
+ nick    <required>
+ proj4   <required>
+ srid    undef
 
 . name STRING
 
@@ -80,8 +72,8 @@ The abbrevated name for this projection.
 
 =over 4
 
-The ARRAY or STRING will by used to create a Geo::Proj4 object
-by calling Geo::Proj4 subroutine new.  You may also specify such an
+The ARRAY or STRING will by used to create a L<Geo::Proj4|Geo::Proj4> object
+by calling L<Geo::Proj4::new()|Geo::Proj4/"Instantiation">.  You may also specify such an
 prepared OBJECT.
 
 =back
@@ -99,7 +91,6 @@ larger than 0 are permitted.
 =back
 
 =head2 Attributes
-
 
 $obj-E<gt>B<name>
 
@@ -123,7 +114,7 @@ Geo::Proj-E<gt>B<proj4>([NICK|PROJ4])
 
 =over 4
 
-Returns the projection library handle (a Geo::Proj4) to be used by this
+Returns the projection library handle (a L<Geo::Proj4|Geo::Proj4>) to be used by this
 component.  As class method, the NICK is specified for a lookup.  In case
 a PROJ4 is specified, that is returned.
 
@@ -145,7 +136,6 @@ The "Spatial Reference System ID" if known.
 =back
 
 =head2 Projecting
-
 
 Geo::Proj-E<gt>B<defaultProjection>([NICK|PROJ])
 
@@ -196,7 +186,7 @@ Geo::Proj-E<gt>B<to>([PROJ|NICK], PROJ|NICK, POINT|ARRAY_OF_POINTS)
 =over 4
 
 Expects an Geo::Proj to project the POINT or POINTS to.  The work
-is done by Geo::Proj4 subroutine transform.  As class method, you have to
+is done by L<Geo::Proj4::transform()|Geo::Proj4/"Converters">.  As class method, you have to
 specify two nicks or projections.
 
 I<Example:> 
@@ -208,7 +198,6 @@ I<Example:>
 =back
 
 =head2 UTM
-
 
 Geo::Proj-E<gt>B<UTMprojection>(DATUM|PROJ|undef, ZONE)
 
@@ -260,26 +249,16 @@ wanted here.  Probably a lot of zones are missing.
 
 =back
 
+=head1 SEE ALSO
 
+This module is part of Geo-Point distribution version 0.05,
+built on March 09, 2007. Website: F<http://perl.overmeer.net/geo/>
 
+=head1 LICENSE
 
+Copyrights 2005-2007 by Mark Overmeer.For other contributors see ChangeLog.
 
-
-
-
-
-=head1 REFERENCES
-
-See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more details.
-
-=head1 COPYRIGHTS
-
-Module version 0.04.
-Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
-other contributors.
-
-Copyright (c) 2004-2006 by the author(s). All rights reserved.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
-
+See F<http://www.perl.com/perl/misc/Artistic.html>
 

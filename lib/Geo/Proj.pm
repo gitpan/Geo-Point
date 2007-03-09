@@ -1,10 +1,14 @@
+# Copyrights 2005-2007 by Mark Overmeer.
+# For other contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc 0.99.
 
 use strict;
 use warnings;
 
 package Geo::Proj;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 use Geo::Proj4   ();
 use Carp         qw/croak/;

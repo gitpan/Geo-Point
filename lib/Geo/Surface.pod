@@ -1,14 +1,11 @@
-
 =head1 NAME
 
 Geo::Surface - A surface description.
-
 
 =head1 INHERITANCE
 
  Geo::Surface
    is a Geo::Shape
-
 
 =head1 SYNOPSIS
 
@@ -17,20 +14,15 @@ Geo::Surface - A surface description.
  my $island2 = Geo::Surface->new(...);
  my $islands = Geo::Surface->new($island1, $island2)
 
-
 =head1 DESCRIPTION
 
 In this context, a "surface" is defined as a set of filled areas with
 possible enclosures in one projection system.  One set of islands
 can be kept as one surface, or the shapefile data of a country.
 
-
-
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 Geo::Surface-E<gt>B<new>([COMPONENTS], [OPTIONS])
 
@@ -39,9 +31,9 @@ Geo::Surface-E<gt>B<new>([COMPONENTS], [OPTIONS])
 When called as instance method, some defaults are copied from the
 object where the call is made upon.
 
-COMPONENTS are Math::Polygon, Math::Polygon::Surface,
+COMPONENTS are L<Math::Polygon|Math::Polygon>, L<Math::Polygon::Surface|Math::Polygon::Surface>,
 L<Geo::Line|Geo::Line>, L<Geo::Surface|Geo::Surface> objects.  When an ARRAY is specfied as
-COMPONENT, it will be used to instantiate a Math::Polygon::Surface
+COMPONENT, it will be used to instantiate a L<Math::Polygon::Surface|Math::Polygon::Surface>
 object.  In case of a L<Geo::Surface|Geo::Surface>, the included polygons are
 translated to the specified projection.
 
@@ -50,20 +42,16 @@ translated to the specified projection.
 
 . proj LABEL
 
-I<Example:> 
-
-
 =back
 
 =head2 Attributes
-
 
 $obj-E<gt>B<component>(INDEX, [INDEX, ...])
 
 =over 4
 
 Returns the component (or components) with the specified INDEX(es). One
-Math::Polygon::Surface in scalar context, and multiple in list context.
+L<Math::Polygon::Surface|Math::Polygon::Surface> in scalar context, and multiple in list context.
 
 =back
 
@@ -71,7 +59,7 @@ $obj-E<gt>B<components>
 
 =over 4
 
-Returns a list of Math::Polygon::Surface objects, together forming
+Returns a list of L<Math::Polygon::Surface|Math::Polygon::Surface> objects, together forming
 the surface.
 
 =back
@@ -94,7 +82,6 @@ See L<Geo::Shape/"Attributes">
 
 =head2 Projections
 
-
 $obj-E<gt>B<in>(LABEL|'utm')
 
 =over 4
@@ -112,7 +99,6 @@ See L<Geo::Shape/"Projections">
 =back
 
 =head2 Geometry
-
 
 $obj-E<gt>B<area>
 
@@ -186,7 +172,6 @@ See L<Geo::Shape/"Geometry">
 
 =head2 Display
 
-
 $obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
 
 Geo::Surface-E<gt>B<deg2dm>(DEGREES, POS, NEG)
@@ -226,18 +211,9 @@ stringification.
 
 I<Example:> 
 
-
 =back
 
-
-
-
 =head1 DIAGNOSTICS
-
-I<Error:> Distance calculation not implemented between a $kind and a $kind
-
-Only a subset of all objects can be used in the distance calculation.
-The limitation is purely caused by lack of time to implement this.
 
 I<Warning:> Geo::Line is should be filled
 
@@ -245,26 +221,25 @@ When L<Geo::Line|Geo::Line> objects are used to compose a surface, each of them
 must be filled.  Representation of rivers and such do not belong in a
 surface description.
 
+I<Error:> distance calculation not implemented between a $kind and a $kind
+
+Only a subset of all objects can be used in the distance calculation.
+The limitation is purely caused by lack of time to implement this.
+
 I<Error:> in() not implemented for a $class
 
+I<Error:> not known what to do with $component
 
+=head1 SEE ALSO
 
+This module is part of Geo-Point distribution version 0.05,
+built on March 09, 2007. Website: F<http://perl.overmeer.net/geo/>
 
+=head1 LICENSE
 
+Copyrights 2005-2007 by Mark Overmeer.For other contributors see ChangeLog.
 
-
-=head1 REFERENCES
-
-See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more details.
-
-=head1 COPYRIGHTS
-
-Module version 0.04.
-Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
-other contributors.
-
-Copyright (c) 2004-2006 by the author(s). All rights reserved.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
-
+See F<http://www.perl.com/perl/misc/Artistic.html>
 

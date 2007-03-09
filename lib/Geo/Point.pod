@@ -1,14 +1,11 @@
-
 =head1 NAME
 
 Geo::Point - a point on the globe
-
 
 =head1 INHERITANCE
 
  Geo::Point
    is a Geo::Shape
-
 
 =head1 SYNOPSIS
 
@@ -26,7 +23,6 @@ Geo::Point - a point on the globe
 
  my $p = Geo::Point->xy(1,2);
 
-
 =head1 DESCRIPTION
 
 One location on the globe, in any coordinate system.  This package tries
@@ -39,13 +35,9 @@ organization reversed.  This packages tries to hide this from your
 program by providing abstract accessors L<latlong()|Geo::Point/"Constructors">, L<longlat()|Geo::Point/"Constructors">,
 L<xy()|Geo::Point/"Constructors">, and L<yx()|Geo::Point/"Constructors">.
 
-
-
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 Geo::Point-E<gt>B<fromString>(STRING, {PROJECTION])
 
@@ -74,7 +66,6 @@ C<n>, C<s> (either lower or upper-case) will force a latlong projection.
 Those coordinates must follow the rules of L<dms2deg()|Geo::Shape/"Display">.
 
 I<Example:> point from string
-
 
  my $x = 'utm 31n 12311.123 34242.12'; # utm zone 31N
  my $x = '12311.123 34242.12 31';      # utm zone 31
@@ -108,12 +99,10 @@ See also L<longlat()|Geo::Point/"Constructors">, L<xy()|Geo::Point/"Constructors
 
 I<Example:> latlong as class method
 
-
  my $wgs84 = Geo::Proj->new(wgs84 => ...);
  my $gp    = Geo::Point->latlong(52.3213, 5.53, 'wgs84');
 
 I<Example:> latlong as instance method
-
 
  my ($lat, $long) = $gp->latlong('wgs84');
 
@@ -179,7 +168,6 @@ coordinate order is reversed.  See also L<xy()|Geo::Point/"Constructors">.
 
 =head2 Attributes
 
-
 $obj-E<gt>B<proj>
 
 =over 4
@@ -231,7 +219,6 @@ $obj-E<gt>B<y>
 
 =head2 Projections
 
-
 $obj-E<gt>B<in>(LABEL|'utm')
 
 =over 4
@@ -258,7 +245,6 @@ See L<Geo::Shape/"Projections">
 =back
 
 =head2 Geometry
-
 
 $obj-E<gt>B<area>
 
@@ -346,7 +332,6 @@ $obj-E<gt>B<sameAs>(OTHER, TOLERANCE)
 =back
 
 =head2 Display
-
 
 $obj-E<gt>B<coords>
 
@@ -446,7 +431,6 @@ both sides of the -180 meridian.
 
 I<Example:> moving West
 
-
  my $point = Geo::Point->latlong(24, 179);
  $point->moveWest;
  print $point->long;   # -181;
@@ -469,40 +453,16 @@ I<Example:>
 
 =back
 
-
-
-
 =head1 DIAGNOSTICS
-
-I<Error:> Can only compare a point to an other Geo::Point
-
-
-I<Error:> Distance calculation not implemented between a $kind and a $kind
-
-Only a subset of all objects can be used in the distance calculation.
-The limitation is purely caused by lack of time to implement this.
-
-I<Error:> Illegal UTM zone in $string
-
-A UTM zone can be detected at the beginning or at the end of the
-input.  It contains a number (from 1 upto 60) and an optional
-latitude indication (C upto X, except I and O).
-
-I<Error:> Too few values in $string (got @parts)
-
-Most projection require two parameters, but utm requires three (with zone).
-
-I<Error:> Too many values in $string (got @parts)
-
-Most projection require two parameters, but utm requires three (with zone).
 
 I<Error:> UTM requires 3 values: easting, northing, and zone
 
+I<Error:> can only compare a point to an other Geo::Point
 
-I<Error:> Undefined projection $proj for $string
+I<Error:> distance calculation not implemented between a $kind and a $kind
 
-The projection you used (or is set as default) is not defined.  See
-L<Geo::Proj::new()|Geo::Proj/"Constructors"> about how to defined them.
+Only a subset of all objects can be used in the distance calculation.
+The limitation is purely caused by lack of time to implement this.
 
 I<Error:> dms latitude coordinate not understood: $string
 
@@ -512,32 +472,41 @@ I<Error:> dms longitude coordinate not understood: $string
 
 See L<dms2deg()|Geo::Shape/"Display"> for permitted formats.
 
-I<Error:> illegal character in x coordinate $x
+I<Error:> illegal UTM zone in $string
 
+A UTM zone can be detected at the beginning or at the end of the
+input.  It contains a number (from 1 upto 60) and an optional
+latitude indication (C upto X, except I and O).
+
+I<Error:> illegal character in x coordinate $x
 
 I<Error:> illegal character in y coordinate $y
 
-
 I<Error:> in() not implemented for a $class
 
+I<Error:> too few values in $string (got @parts)
 
+Most projection require two parameters, but utm requires three (with zone).
 
+I<Error:> too many values in $string (got @parts)
 
+Most projection require two parameters, but utm requires three (with zone).
 
+I<Error:> undefined projection $proj for $string
 
+The projection you used (or is set as default) is not defined.  See
+L<Geo::Proj::new()|Geo::Proj/"Constructors"> about how to defined them.
 
-=head1 REFERENCES
+=head1 SEE ALSO
 
-See the Geo::Point website at L<http://perl.overmeer.net/geopoint> for more details.
+This module is part of Geo-Point distribution version 0.05,
+built on March 09, 2007. Website: F<http://perl.overmeer.net/geo/>
 
-=head1 COPYRIGHTS
+=head1 LICENSE
 
-Module version 0.04.
-Written by Mark Overmeer (geopoint@overmeer.net).  See the ChangeLog for
-other contributors.
+Copyrights 2005-2007 by Mark Overmeer.For other contributors see ChangeLog.
 
-Copyright (c) 2004-2006 by the author(s). All rights reserved.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
-
+See F<http://www.perl.com/perl/misc/Artistic.html>
 

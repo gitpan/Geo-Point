@@ -1,10 +1,14 @@
+# Copyrights 2005-2007 by Mark Overmeer.
+# For other contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc 0.99.
 
 use strict;
 use warnings;
 
 package Geo::Surface;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'Geo::Shape';
 
 use Math::Polygon::Surface ();

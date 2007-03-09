@@ -1,10 +1,14 @@
+# Copyrights 2005-2007 by Mark Overmeer.
+# For other contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc 0.99.
 
 use strict;
 use warnings;
 
 package Geo::Shape;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 use Geo::Proj;      # defines wgs84
 use Geo::Point      ();
@@ -76,7 +80,7 @@ sub distance($;$)
     {   return $self->distancePointPoint($geodist, $unit, $other);
     }
 
-    die "ERROR: Distance calculation not implemented between a "
+    die "ERROR: distance calculation not implemented between a "
       . ref($self) . " and a " . ref($other);
 }
 
