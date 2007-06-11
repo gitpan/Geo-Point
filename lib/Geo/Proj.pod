@@ -58,9 +58,9 @@ Create a new object.
  proj4   <required>
  srid    undef
 
-. name STRING
+. name => STRING
 
-. nick LABEL
+. nick => LABEL
 
 =over 4
 
@@ -68,7 +68,7 @@ The abbrevated name for this projection.
 
 =back
 
-. proj4 OBJECT|ARRAY|STRING
+. proj4 => OBJECT|ARRAY|STRING
 
 =over 4
 
@@ -78,7 +78,7 @@ prepared OBJECT.
 
 =back
 
-. srid INTEGER
+. srid => INTEGER
 
 =over 4
 
@@ -251,12 +251,12 @@ wanted here.  Probably a lot of zones are missing.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.05,
-built on March 09, 2007. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.06,
+built on June 11, 2007. Website: F<http://perl.overmeer.net/geo/>
 
 =head1 LICENSE
 
-Copyrights 2005-2007 by Mark Overmeer.For other contributors see ChangeLog.
+Copyrights 2005-2007 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

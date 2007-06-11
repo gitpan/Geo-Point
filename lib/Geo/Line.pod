@@ -102,11 +102,11 @@ are taken from the initiator.
  proj       Geo::Shape       <see Geo::Proj::defaultProjection()
  ring                        <false>
 
-. bbox ARRAY
+. bbox => ARRAY
 
-. clockwise BOOLEAN
+. clockwise => BOOLEAN
 
-. filled BOOLEAN
+. filled => BOOLEAN
 
 =over 4
 
@@ -115,7 +115,7 @@ shape.
 
 =back
 
-. points ARRAY-OF-POINTS|ARRAY-OF-COORDINATES
+. points => ARRAY-OF-POINTS|ARRAY-OF-COORDINATES
 
 =over 4
 
@@ -125,9 +125,9 @@ in that case, the coordinates must be in xy order.
 
 =back
 
-. proj LABEL
+. proj => LABEL
 
-. ring BOOLEAN
+. ring => BOOLEAN
 
 =over 4
 
@@ -564,12 +564,12 @@ I<Error:> perimeter requires a ring of points
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.05,
-built on March 09, 2007. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.06,
+built on June 11, 2007. Website: F<http://perl.overmeer.net/geo/>
 
 =head1 LICENSE
 
-Copyrights 2005-2007 by Mark Overmeer.For other contributors see ChangeLog.
+Copyrights 2005-2007 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

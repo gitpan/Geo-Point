@@ -1,14 +1,14 @@
 # Copyrights 2005-2007 by Mark Overmeer.
-# For other contributors see ChangeLog.
+#  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 0.99.
+# Pod stripped from pm file by OODoc 1.00.
 
 use strict;
 use warnings;
 
 package Geo::Line;
 use vars '$VERSION';
-$VERSION = '0.05';
+$VERSION = '0.06';
 use base qw/Geo::Shape Math::Polygon/;
 
 use Carp;
