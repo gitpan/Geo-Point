@@ -12,7 +12,6 @@ Geo::Line - a sequence of connected points
 
 =head1 SYNOPSIS
 
- !!!! BETA code, see README !!!!
  my $line  = Geo::Line->new(points => [$p1, $p2]);
  my $line  = Geo::Line->line($p1, $p2);
 
@@ -43,7 +42,7 @@ This routine is very smart.  It understands
  PROJLABEL: <4 coordinates in any order, but with NSEW>
  ...
 
-I<Example:> bbox from string
+example: bbox from string
 
  my $x = '5n 2n 3e e12';       # coordinates in any order
  my $x = '5e , 2n, 3n, e12';    # coordinates in any order
@@ -137,7 +136,7 @@ that routine will check/repair it for you.
 
 =back
 
-I<Example:> 
+example: 
 
  my $point = Geo::Point->xy(1, 2);
  my $line  = Geo::Line->new
@@ -542,34 +541,50 @@ $obj-E<gt>B<string>([PROJECTION])
 Returns a string representation of the line, which is also used for
 stringification.
 
-I<Example:> 
+example: 
 
 =back
 
 =head1 DIAGNOSTICS
 
-I<Error:> area requires a ring of points
+Error: area requires a ring of points
+
+=over 4
 
 If you think you have a ring of points (a polygon), than do specify
 that when that object is instantiated (L<ring()|Geo::Line/"Constructors"> or L<new(ring)|Geo::Line/"Constructors">).
 
-I<Error:> distance calculation not implemented between a $kind and a $kind
+=back
+
+Error: distance calculation not implemented between a $kind and a $kind
+
+=over 4
 
 Only a subset of all objects can be used in the distance calculation.
 The limitation is purely caused by lack of time to implement this.
 
-I<Error:> in() not implemented for a $class
+=back
 
-I<Error:> perimeter requires a ring of points
+Error: in() not implemented for a $class
+
+=over 4
+
+=back
+
+Error: perimeter requires a ring of points
+
+=over 4
+
+=back
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.06,
-built on June 11, 2007. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.07,
+built on February 12, 2008. Website: F<http://perl.overmeer.net/geo/>
 
 =head1 LICENSE
 
-Copyrights 2005-2007 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2005-2008 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

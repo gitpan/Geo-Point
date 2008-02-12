@@ -2,9 +2,16 @@
 
 Geo::Shape - base class for 2-dimensional points on the earth surface
 
+=head1 INHERITANCE
+
+ Geo::Shape is extended by
+   Geo::Line
+   Geo::Point
+   Geo::Space
+   Geo::Surface
+
 =head1 SYNOPSIS
 
- !!!! BETA code, see README !!!!
  use Geo::Shape;
 
  my $p1 = Geo::Point->new(lat => 2.17, ...);
@@ -58,7 +65,7 @@ the LABEL.  The projection is defined with L<new()|Geo::Shape/"Constructors">.  
 In LIST context, the coordinates are returned.  In SCALAR context,
 a new object is returned.
 
-I<Example:> 
+example: 
 
   my $gp       = Geo::Point->latlong(1,2);
 
@@ -183,7 +190,7 @@ Geo::Shape-E<gt>B<deg2dm>(DEGREES, POS, NEG)
 
 Like L<deg2dms()|Geo::Shape/"Display"> but without showing seconds.
 
-I<Example:> 
+example: 
 
  print $point->deg2dm(0.12, 'e', 'w');
  print Geo::Shape->deg2dm(0.12, 'e', 'w');
@@ -196,7 +203,7 @@ Geo::Shape-E<gt>B<deg2dms>(DEGREES, POS, NEG)
 
 =over 4
 
-I<Example:> 
+example: 
 
  print $point->deg2dms(0.12, 'e', 'w');
  print Geo::Shape->deg2dms(0.12, 'e', 'w');
@@ -216,21 +223,29 @@ Accepts for instance 3d12'24.123, 3d12"E, 3.12314w, n2.14, s3d12",
 
 =head1 DIAGNOSTICS
 
-I<Error:> distance calculation not implemented between a $kind and a $kind
+Error: distance calculation not implemented between a $kind and a $kind
+
+=over 4
 
 Only a subset of all objects can be used in the distance calculation.
 The limitation is purely caused by lack of time to implement this.
 
-I<Error:> in() not implemented for a $class
+=back
+
+Error: in() not implemented for a $class
+
+=over 4
+
+=back
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.06,
-built on June 11, 2007. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.07,
+built on February 12, 2008. Website: F<http://perl.overmeer.net/geo/>
 
 =head1 LICENSE
 
-Copyrights 2005-2007 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2005-2008 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

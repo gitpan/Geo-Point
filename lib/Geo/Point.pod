@@ -65,7 +65,7 @@ provided, a C<d>, single or double quote, or trailing/leading C<e>, C<w>,
 C<n>, C<s> (either lower or upper-case) will force a latlong projection.
 Those coordinates must follow the rules of L<dms2deg()|Geo::Shape/"Display">.
 
-I<Example:> point from string
+example: point from string
 
  my $x = 'utm 31n 12311.123 34242.12'; # utm zone 31N
  my $x = '12311.123 34242.12 31';      # utm zone 31
@@ -97,12 +97,12 @@ When PROJ is undefined, none is presumed. The project must be specified
 as string, which referse to a projection defined by L<Geo::Proj|Geo::Proj>.
 See also L<longlat()|Geo::Point/"Constructors">, L<xy()|Geo::Point/"Constructors">, and L<yx()|Geo::Point/"Constructors">.
 
-I<Example:> latlong as class method
+example: latlong as class method
 
  my $wgs84 = Geo::Proj->new(wgs84 => ...);
  my $gp    = Geo::Point->latlong(52.3213, 5.53, 'wgs84');
 
-I<Example:> latlong as instance method
+example: latlong as instance method
 
  my ($lat, $long) = $gp->latlong('wgs84');
 
@@ -429,7 +429,7 @@ resulting in a value below -180.  This is usefull when this point is part
 of a larger construct, like the corners of a satellite image, which are
 both sides of the -180 meridian.
 
-I<Example:> moving West
+example: moving West
 
  my $point = Geo::Point->latlong(24, 179);
  $point->moveWest;
@@ -437,74 +437,122 @@ I<Example:> moving West
 
 =back
 
-$obj-E<gt>B<string>([PROJECTION])
+$obj-E<gt>B<toString>([PROJECTION])
 
 =over 4
 
 Returns a string representation of the point, which is also used for
 stringification.  The default projection is the one of the point.
 
-I<Example:> 
+example: 
 
- print "Point: ",$gp->string, "\n";
+ print "Point: ",$gp->toString, "\n";
  print "Point: $gp\n";   # same
 
- print "Point: ",$gp->string('clrk66'), "\n";
+ print "Point: ",$gp->toString('clrk66'), "\n";
 
 =back
 
 =head1 DIAGNOSTICS
 
-I<Error:> UTM requires 3 values: easting, northing, and zone
+Error: UTM requires 3 values: easting, northing, and zone
 
-I<Error:> can only compare a point to an other Geo::Point
+=over 4
 
-I<Error:> distance calculation not implemented between a $kind and a $kind
+=back
+
+Error: can only compare a point to an other Geo::Point
+
+=over 4
+
+=back
+
+Error: distance calculation not implemented between a $kind and a $kind
+
+=over 4
 
 Only a subset of all objects can be used in the distance calculation.
 The limitation is purely caused by lack of time to implement this.
 
-I<Error:> dms latitude coordinate not understood: $string
+=back
+
+Error: dms latitude coordinate not understood: $string
+
+=over 4
 
 See L<dms2deg()|Geo::Shape/"Display"> for permitted formats.
 
-I<Error:> dms longitude coordinate not understood: $string
+=back
+
+Error: dms longitude coordinate not understood: $string
+
+=over 4
 
 See L<dms2deg()|Geo::Shape/"Display"> for permitted formats.
 
-I<Error:> illegal UTM zone in $string
+=back
+
+Error: illegal UTM zone in $string
+
+=over 4
 
 A UTM zone can be detected at the beginning or at the end of the
 input.  It contains a number (from 1 upto 60) and an optional
 latitude indication (C upto X, except I and O).
 
-I<Error:> illegal character in x coordinate $x
+=back
 
-I<Error:> illegal character in y coordinate $y
+Error: illegal character in x coordinate $x
 
-I<Error:> in() not implemented for a $class
+=over 4
 
-I<Error:> too few values in $string (got @parts)
+=back
+
+Error: illegal character in y coordinate $y
+
+=over 4
+
+=back
+
+Error: in() not implemented for a $class
+
+=over 4
+
+=back
+
+Error: too few values in $string (got @parts)
+
+=over 4
 
 Most projection require two parameters, but utm requires three (with zone).
 
-I<Error:> too many values in $string (got @parts)
+=back
+
+Error: too many values in $string (got @parts)
+
+=over 4
 
 Most projection require two parameters, but utm requires three (with zone).
 
-I<Error:> undefined projection $proj for $string
+=back
+
+Error: undefined projection $proj for $string
+
+=over 4
 
 The projection you used (or is set as default) is not defined.  See
 L<Geo::Proj::new()|Geo::Proj/"Constructors"> about how to defined them.
 
+=back
+
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.06,
-built on June 11, 2007. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.07,
+built on February 12, 2008. Website: F<http://perl.overmeer.net/geo/>
 
 =head1 LICENSE
 
-Copyrights 2005-2007 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2005-2008 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

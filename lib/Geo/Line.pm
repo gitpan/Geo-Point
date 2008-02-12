@@ -1,21 +1,19 @@
-# Copyrights 2005-2007 by Mark Overmeer.
+# Copyrights 2005-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.00.
+# Pod stripped from pm file by OODoc 1.03.
 
 use strict;
 use warnings;
 
 package Geo::Line;
 use vars '$VERSION';
-$VERSION = '0.06';
+$VERSION = '0.07';
 use base qw/Geo::Shape Math::Polygon/;
 
 use Carp;
 use List::Util    qw/min max/;
 use Scalar::Util  qw/refaddr/;
-
-use Math::Polygon ();
 
 
 sub new(@)
@@ -56,6 +54,8 @@ sub ring(@)
 {   my $thing = shift;
     my @points;
     push @points, shift while @_ && ref $_[0];
+    croak "ERROR: a ring or filled needs at least two points\n"
+        if @points <= 2;
 
     # close ring
     my ($first, $last) = @points[0, -1];
@@ -186,7 +186,7 @@ sub isRing()
 }
 
 
-sub isFilled() {shift->{GL_fill}}
+sub isFilled() { shift->{GL_fill} }
 
 
 sub in($)
@@ -242,7 +242,7 @@ sub clip(@)
 }
 
 
-sub string(;$)
+sub toString(;$)
 {   my ($self, $proj) = @_;
     my $line;
     if(defined $proj)
@@ -259,5 +259,6 @@ sub string(;$)
 
     "$type\[$proj](".$line->Math::Polygon::string.')';
 }
+*string = \&toString;
 
 1;

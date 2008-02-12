@@ -1,14 +1,14 @@
-# Copyrights 2005-2007 by Mark Overmeer.
+# Copyrights 2005-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.00.
+# Pod stripped from pm file by OODoc 1.03.
 
 use strict;
 use warnings;
 
 package Geo::Surface;
 use vars '$VERSION';
-$VERSION = '0.06';
+$VERSION = '0.07';
 use base 'Geo::Shape';
 
 use Math::Polygon::Surface ();
@@ -24,8 +24,13 @@ sub new(@)
     push @components, shift while ref $_[0];
     my %args  = @_;
 
+    my $class;
     if(ref $thing)    # instance method
     {   $args{proj} ||= $thing->proj;
+        $class = ref $thing;
+    }
+    else
+    {   $class = $thing;
     }
 
     my $proj = $args{proj};
@@ -34,18 +39,23 @@ sub new(@)
 
     my @surfaces;
     foreach my $component (@components)
-    {   if(ref $component eq 'ARRAY')
-        {   push @surfaces, Math::Polygon::Surface->new(@$component);
+    {
+        if(ref $component eq 'ARRAY')
+        {   $component = $class->new(@$component);
         }
-        elsif($component->isa('Math::Polygon'))
-        {   push @surfaces, Math::Polygon::Surface->new($component);
+        elsif(ref $component eq 'Math::Polygon')
+        {   $component = Geo::Line->filled($component->points);
         }
-        elsif($component->isa('Math::Polygon::Surface'))
+        elsif(ref $component eq 'Math::Polygon::Surface')
+        {   bless $component, $class;
+        }
+
+        if($component->isa('Geo::Point'))
         {   push @surfaces, $component;
-        }
+        }   
         elsif($component->isa('Geo::Line'))
         {   carp "Warning: Geo::Line is should be filled."
-                 unless $component->filled;
+                unless $component->isFilled;
             push @surfaces, defined $proj ? $component->in($proj) : $component;
         }
         elsif($component->isa('Geo::Surface'))
@@ -133,7 +143,7 @@ sub area() { sum map { $_->area } shift->components }
 sub perimeter() { sum map { $_->perimeter } shift->components }
 
 
-sub string(;$)
+sub toString(;$)
 {   my ($self, $proj) = @_;
     my $surface;
     if(defined $proj)
@@ -145,8 +155,9 @@ sub string(;$)
     }
 
       "surface[$proj]\n  ("
-    . join(")\n  (", map {$_->string} $surface->components)
+    . join(")\n  (", map {$_->toString} $surface->components)
     . ")\n";
 }
+*string = \&toString;
 
 1;

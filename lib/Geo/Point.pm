@@ -1,14 +1,14 @@
-# Copyrights 2005-2007 by Mark Overmeer.
+# Copyrights 2005-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.00.
+# Pod stripped from pm file by OODoc 1.03.
 
 use strict;
 use warnings;
 
 package Geo::Point;
 use vars '$VERSION';
-$VERSION = '0.06';
+$VERSION = '0.07';
 use base 'Geo::Shape';
 
 use Geo::Proj;
@@ -265,7 +265,7 @@ sub coords()
 }
 
 
-sub string(;$)
+sub toString(;$)
 {   my ($self, $proj) = @_;
     my $point;
 
@@ -279,6 +279,7 @@ sub string(;$)
 
     "point[$proj](" .$point->coords.')';
 }
+*string = \&toString;
 
 
 sub dms(;$)

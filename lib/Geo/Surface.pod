@@ -9,7 +9,6 @@ Geo::Surface - A surface description.
 
 =head1 SYNOPSIS
 
- !!!! ALPHA code, see README !!!!
  my $island1 = Geo::Line->filled(...);
  my $island2 = Geo::Surface->new(...);
  my $islands = Geo::Surface->new($island1, $island2)
@@ -202,42 +201,56 @@ See L<Geo::Shape/"Display">
 
 =back
 
-$obj-E<gt>B<string>([PROJECTION])
+$obj-E<gt>B<toString>([PROJECTION])
 
 =over 4
 
 Returns a string representation of the line, which is also used for
 stringification.
 
-I<Example:> 
-
 =back
 
 =head1 DIAGNOSTICS
 
-I<Warning:> Geo::Line is should be filled
+Warning: Geo::Line is should be filled
+
+=over 4
 
 When L<Geo::Line|Geo::Line> objects are used to compose a surface, each of them
 must be filled.  Representation of rivers and such do not belong in a
 surface description.
 
-I<Error:> distance calculation not implemented between a $kind and a $kind
+=back
+
+Error: distance calculation not implemented between a $kind and a $kind
+
+=over 4
 
 Only a subset of all objects can be used in the distance calculation.
 The limitation is purely caused by lack of time to implement this.
 
-I<Error:> in() not implemented for a $class
+=back
 
-I<Error:> not known what to do with $component
+Error: in() not implemented for a $class
+
+=over 4
+
+=back
+
+Error: not known what to do with $component
+
+=over 4
+
+=back
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.06,
-built on June 11, 2007. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.07,
+built on February 12, 2008. Website: F<http://perl.overmeer.net/geo/>
 
 =head1 LICENSE
 
-Copyrights 2005-2007 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2005-2008 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

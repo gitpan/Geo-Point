@@ -1,17 +1,18 @@
 --- #YAML:1.0
 name:                Geo-Point
-version:             0.06
+version:             0.07
 abstract:            Geographical structures
-license:             ~
-generated_by:        ExtUtils::MakeMaker version 6.32
+license:             perl
+author:              
+    - Mark Overmeer
+generated_by:        ExtUtils::MakeMaker version 6.42
 distribution_type:   module
 requires:     
     Geo::Distance:                 0.06
     Geo::Proj4:                    0.96
     Math::Polygon:                 0.003
+    Math::Trig:                    1
     Test::More:                    0.47
 meta-spec:
-    url:     http://module-build.sourceforge.net/META-spec-v1.2.html
-    version: 1.2
-author:
-    - Mark Overmeer
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3

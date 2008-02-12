@@ -1,20 +1,23 @@
-# Copyrights 2005-2007 by Mark Overmeer.
+# Copyrights 2005-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.00.
+# Pod stripped from pm file by OODoc 1.03.
 
 use strict;
 use warnings;
 
 package Geo::Shape;
 use vars '$VERSION';
-$VERSION = '0.06';
+$VERSION = '0.07';
 
 use Geo::Proj;      # defines wgs84
 use Geo::Point      ();
 use Geo::Line       ();
 use Geo::Surface    ();
 use Geo::Space      ();
+
+use Geo::Distance   ();
+use Math::Trig      qw/deg2rad/;
 
 use Carp            qw/croak confess/;
 
@@ -154,9 +157,9 @@ sub deg2dms($$$)
 
     my $g       = int($s + 0.00001);
     my $h       = int(($s - $g) * 1000 + 0.0001);
-      $h ? sprintf("%dd%d'%d.%03d\"$sign", $d, $m, $g, $h)
-    : $s ? sprintf("%dd%d'%d\"$sign", $d, $m, $g)
-    : $m ? sprintf("%dd%d'$sign", $d, $m)
+      $h ? sprintf("%dd%02d'%02d.%03d\"$sign", $d, $m, $g, $h)
+    : $s ? sprintf("%dd%02d'%02d\"$sign", $d, $m, $g)
+    : $m ? sprintf("%dd%02d'$sign", $d, $m)
     :      sprintf("%d$sign", $d);
 }
 
@@ -178,7 +181,7 @@ sub deg2dm($$$)
     my $frac    = ($degrees - $d) * 60;
     my $m       = int($frac + 0.00001);
 
-    $m ? sprintf("%dd%d'$sign", $d, $m)
+    $m ? sprintf("%dd%02d'$sign", $d, $m)
        : sprintf("%d$sign", $d);
 }
 
