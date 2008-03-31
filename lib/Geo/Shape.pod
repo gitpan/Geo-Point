@@ -240,8 +240,8 @@ Error: in() not implemented for a $class
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.07,
-built on February 12, 2008. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.08,
+built on March 31, 2008. Website: F<http://perl.overmeer.net/geo/>
 
 =head1 LICENSE
 

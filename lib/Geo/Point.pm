@@ -1,14 +1,14 @@
 # Copyrights 2005-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.03.
+# Pod stripped from pm file by OODoc 1.04.
 
 use strict;
 use warnings;
 
 package Geo::Point;
 use vars '$VERSION';
-$VERSION = '0.07';
+$VERSION = '0.08';
 use base 'Geo::Shape';
 
 use Geo::Proj;
@@ -19,8 +19,12 @@ sub init($)
 {   my ($self, $args) = @_;
 
     $self->SUPER::init($args);
-    $self->{GP_x} = $args->{x} || $args->{long} || $args->{longitude};
-    $self->{GP_y} = $args->{y} || $args->{lat}  || $args->{latitude};
+    $self->{GP_x} = defined $args->{x}    ? $args->{x}
+                  : defined $args->{long} ? $args->{long}
+                  :                         $args->{longitude};
+    $self->{GP_y} = defined $args->{y}    ? $args->{y}
+                  : defined $args->{lat}  ? $args->{lat}
+                  :                         $args->{latitude};
     $self;
 }
 
