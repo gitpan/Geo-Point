@@ -1,14 +1,15 @@
-# Copyrights 2005-2008 by Mark Overmeer.
+# Copyrights 2005-2009 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.04.
+# Pod stripped from pm file by OODoc 1.05.
 
 use strict;
 use warnings;
 
 package Geo::Proj;
 use vars '$VERSION';
-$VERSION = '0.08';
+$VERSION = '0.09';
+
 
 use Geo::Proj4   ();
 use Carp         qw/croak/;
@@ -99,7 +100,7 @@ sub srid() {shift->{GP_srid}}
 
 sub projection($)
 {   my $which = $_[1];
-    ref $which && $which->isa(__PACKAGE__) ? $which : $projections{$which};
+    UNIVERSAL::isa($which, __PACKAGE__) ? $which : $projections{$which};
 }
 
 
@@ -166,8 +167,8 @@ sub zoneForUTM($)
        )
      : undef;
 
-    my $meridian = int($long/6)*6 + 3;   # degrees
-    $zone ||= int($meridian/6)+1;
+    my $meridian = int($long/6)*6 + ($long < 0 ? -3 : +3);
+    $zone      ||= int($meridian/6) + 180/6 +1;
  
     my $letter
      = ($lat < -80 || $lat > 84) ? ''
@@ -180,9 +181,8 @@ sub zoneForUTM($)
 
 
 sub bestUTMprojection($;$)
-{   my $thing = shift;
-    my $point = shift;
-    my $proj  = $thing->proj4(@_ ? shift : $point->proj);
+{   my ($thing, $point) = (shift, shift);
+    my $proj  = @_ ? shift : $point->proj;
 
     my ($zone, $letter, $meridian) = $thing->zoneForUTM($point);
     $thing->UTMprojection($proj, $zone);
@@ -193,16 +193,14 @@ sub UTMprojection($$)
 {   my ($class, $base, $zone) = @_;
 
     $base   ||= $class->defaultProjection;
-    my $datum = lc( ref $base && $base->isa(__PACKAGE__)
-                  ? $base->proj4->datum
-                  : $base
-                  ) || 'wgs84';
+    my $datum = UNIVERSAL::isa($base, __PACKAGE__) ? $base->proj4->datum:$base;
+    $datum  ||= 'wgs84';
 
-    my $label = "utm-${datum}-$zone";
+    my $label = "utm-\L${datum}\E-$zone";
 
     Geo::Proj->new
      ( nick  => $label
-     , proj4 => "+proj=utm +datum=$datum zone=$zone"
+     , proj4 => "+proj=utm +datum=\U$datum\E zone=$zone"
      );
 }
 

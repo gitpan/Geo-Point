@@ -1,14 +1,15 @@
-# Copyrights 2005-2008 by Mark Overmeer.
+# Copyrights 2005-2009 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.04.
+# Pod stripped from pm file by OODoc 1.05.
 
 use strict;
 use warnings;
 
 package Geo::Space;
 use vars '$VERSION';
-$VERSION = '0.08';
+$VERSION = '0.09';
+
 use base 'Geo::Shape';
 
 use Math::Polygon::Calc    qw/polygon_bbox/;

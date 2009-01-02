@@ -1,14 +1,15 @@
-# Copyrights 2005-2008 by Mark Overmeer.
+# Copyrights 2005-2009 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.04.
+# Pod stripped from pm file by OODoc 1.05.
 
 use strict;
 use warnings;
 
 package Geo::Shape;
 use vars '$VERSION';
-$VERSION = '0.08';
+$VERSION = '0.09';
+
 
 use Geo::Proj;      # defines wgs84
 use Geo::Point      ();
@@ -28,7 +29,7 @@ use overload '""'     => 'string'
            , fallback => 1;
 
 
-sub new(@) { (bless {}, shift)->init( {@_} ) }
+sub new(@) { my $class = shift; (bless {}, $class)->init( {@_} ) }
 
 sub init($)
 {   my ($self, $args) = @_;
@@ -50,15 +51,20 @@ sub projectOn($@)
     my ($self, $projnew) = (shift, shift);
     my $projold = $self->{G_proj};
 
-    return wantarray ? @_ : $_[0]
+    return ($projnew, @_)
         if $projold eq $projnew;
 
     if($projnew eq 'utm')
-    {   $projnew = Geo::Proj->bestUTMprojection($projold, $_[0])->nick;
-        return () if $projnew eq $projold;
+    {   my $point = $_[0];
+        $point   = Geo::Point->xy(@$point, $projold)
+            if ref $point eq 'ARRAY';
+        $projnew = Geo::Proj->bestUTMprojection($point, $projold)->nick;
+        return ($projnew, @_)
+            if $projnew eq $projold;
     }
 
-    ($projnew, Geo::Proj->to($projold, $projnew, @_));
+    my $points = Geo::Proj->to($projold, $projnew, \@_);
+    ($projnew, @$points);
 }
 
 
