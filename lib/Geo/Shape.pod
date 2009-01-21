@@ -48,7 +48,16 @@ $obj-E<gt>B<proj>
 
 =over 4
 
-Returns the nick of the projection used by the component.
+Returns the nickname of the projection used by the component.  Be
+warned: this is not a L<Geo::Point|Geo::Point> object, but just a label.
+
+=back
+
+$obj-E<gt>B<proj4>
+
+=over 4
+
+Returns the proj4 object which handles the projection.
 
 =back
 
@@ -240,8 +249,8 @@ Error: in() not implemented for a $class
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.09,
-built on January 02, 2009. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.10,
+built on January 21, 2009. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,

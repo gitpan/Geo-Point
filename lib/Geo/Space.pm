@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Space;
 use vars '$VERSION';
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 use base 'Geo::Shape';
 

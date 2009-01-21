@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Proj;
 use vars '$VERSION';
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 
 use Geo::Proj4   ();
@@ -108,7 +108,7 @@ sub defaultProjection(;$)
 {   my $thing = shift;
     if(@_)
     {   my $proj = shift;
-        $defproj = ref $proj ? $proj->nick : $proj;
+        $defproj = ref $proj ? $proj : $thing->projection($proj);
     }
     $defproj;
 }
@@ -196,7 +196,7 @@ sub UTMprojection($$)
     my $datum = UNIVERSAL::isa($base, __PACKAGE__) ? $base->proj4->datum:$base;
     $datum  ||= 'wgs84';
 
-    my $label = "utm-\L${datum}\E-$zone";
+    my $label = "utm$zone-\L${datum}\E";
 
     Geo::Proj->new
      ( nick  => $label

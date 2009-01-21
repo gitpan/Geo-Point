@@ -250,6 +250,14 @@ See L<Geo::Shape/"Attributes">
 
 =back
 
+$obj-E<gt>B<proj4>
+
+=over 4
+
+See L<Geo::Shape/"Attributes">
+
+=back
+
 =head2 Projections
 
 $obj-E<gt>B<in>(LABEL|'utm')
@@ -579,8 +587,8 @@ Error: perimeter requires a ring of points
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.09,
-built on January 02, 2009. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.10,
+built on January 21, 2009. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,

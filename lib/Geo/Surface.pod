@@ -16,8 +16,9 @@ Geo::Surface - A surface description.
 =head1 DESCRIPTION
 
 In this context, a "surface" is defined as a set of filled areas with
-possible enclosures in one projection system.  One set of islands
-can be kept as one surface, or the shapefile data of a country.
+possible enclosures in one projection system.  Some set of islands
+can be kept as one surface.  Or the data of a country: mainland,
+islands and lakes.  Or multiple tiles of one image.
 
 =head1 METHODS
 
@@ -30,11 +31,14 @@ Geo::Surface-E<gt>B<new>([COMPONENTS], [OPTIONS])
 When called as instance method, some defaults are copied from the
 object where the call is made upon.
 
-COMPONENTS are L<Math::Polygon|Math::Polygon>, L<Math::Polygon::Surface|Math::Polygon::Surface>,
-L<Geo::Line|Geo::Line>, L<Geo::Surface|Geo::Surface> objects.  When an ARRAY is specfied as
-COMPONENT, it will be used to instantiate a L<Math::Polygon::Surface|Math::Polygon::Surface>
-object.  In case of a L<Geo::Surface|Geo::Surface>, the included polygons are
-translated to the specified projection.
+COMPONENTS are L<Math::Polygon|Math::Polygon>, L<Math::Polygon::Surface|Math::Polygon::Surface>, L<Geo::Line|Geo::Line>,
+and L<Geo::Surface|Geo::Surface> objects.  When an ARRAY is specfied as COMPONENT,
+it will be used to instantiate a L<Math::Polygon::Surface|Math::Polygon::Surface> object.
+In case of a L<Geo::Surface|Geo::Surface>, the included polygons are translated to
+the specified projection.
+
+If no projection is specified, then the projection of the first
+component will be used to project all components to.
 
  Option--Defined in--Default
  proj    Geo::Shape  <see Geo::Proj::defaultProjection()
@@ -72,6 +76,14 @@ Returns the number of components.
 =back
 
 $obj-E<gt>B<proj>
+
+=over 4
+
+See L<Geo::Shape/"Attributes">
+
+=back
+
+$obj-E<gt>B<proj4>
 
 =over 4
 
@@ -245,8 +257,8 @@ Error: not known what to do with $component
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.09,
-built on January 02, 2009. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.10,
+built on January 21, 2009. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,

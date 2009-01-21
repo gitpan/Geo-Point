@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Line;
 use vars '$VERSION';
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 use base qw/Geo::Shape Math::Polygon/;
 
@@ -29,10 +29,11 @@ sub new(@)
             $proj ||= $p->proj;
             $p      = [ $p->xy($proj) ];   # replace
         }
+        $args{proj} = $proj;
     }
 
-    return shift->Math::Polygon::new(%args)
-        unless ref $thing;
+    ref $thing
+        or return shift->Math::Polygon::new(%args);
 
     # instance method
     $thing->Math::Polygon::new

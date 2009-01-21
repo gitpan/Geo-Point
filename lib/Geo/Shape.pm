@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Shape;
 use vars '$VERSION';
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 
 use Geo::Proj;      # defines wgs84
@@ -19,7 +19,6 @@ use Geo::Space      ();
 
 use Geo::Distance   ();
 use Math::Trig      qw/deg2rad/;
-
 use Carp            qw/croak confess/;
 
 
@@ -33,12 +32,26 @@ sub new(@) { my $class = shift; (bless {}, $class)->init( {@_} ) }
 
 sub init($)
 {   my ($self, $args) = @_;
-    $self->{G_proj} = $args->{proj} || Geo::Proj->defaultProjection;
+    my $proj = $self->{G_proj}
+             = $args->{proj} || Geo::Proj->defaultProjection->nick;
+
+    croak "proj parameter must be a label, not a Geo::Proj object"
+        if UNIVERSAL::isa($proj, 'Geo::Proj');
+
     $self;
 }
 
+#---------------------------
+
 
 sub proj()  {shift->{G_proj} }
+
+
+sub proj4()
+{   Geo::Proj->proj4(shift->{G_proj});
+}
+
+#---------------------------
 
 
 sub in($) { croak "ERROR: in() not implemented for a ".ref(shift) }
@@ -66,6 +79,8 @@ sub projectOn($@)
     my $points = Geo::Proj->to($projold, $projnew, \@_);
     ($projnew, @$points);
 }
+
+#---------------------------
 
 
 my $geodist;

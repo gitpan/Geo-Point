@@ -143,9 +143,9 @@ Geo::Proj-E<gt>B<defaultProjection>([NICK|PROJ])
 
 =over 4
 
-The NICK must be defined with L<new()|Geo::Proj/"Constructors">.  Returned is the nickname for
-a projection.  The default is the first name created, which probably
-is 'wgs84' (when import() had a chance)
+The NICK must be defined with L<new()|Geo::Proj/"Constructors">.  Returned is the Geo::Proj object
+for the default projection.  The default is the first name created,
+which probably is 'wgs84' (when import() had a chance)
 
 =back
 
@@ -193,9 +193,9 @@ specify two nicks or projections.
 
 example: 
 
- my $p2 = $wgs84->to('utm-wgs84-31', $p1);
+ my $p2 = $wgs84->to('utm31-wgs84', $p1);
  my $p2 = $wgs84->to($utm, $p1);
- my $p2 = Geo::Proj->to('wgs84', 'utm-wgs84-31', $p1);
+ my $p2 = Geo::Proj->to('wgs84', 'utm31-wgs84', $p1);
 
 =back
 
@@ -213,7 +213,7 @@ be replaced by the default projection.
 example: 
 
  my $proj = Geo::Proj->UTMprojection('WGS84', 31) or die;
- print $proj->nick;    # for instance utm-wgs84-31
+ print $proj->nick;    # for instance utm31-wgs84
 
 =back
 
@@ -230,7 +230,7 @@ example:
 
  my $point = Geo::Point->longlat(2.234, 52.12);
  my $proj  = Geo::Proj->bestUTMprojection($point);
- print $proj->nick;    # for instance utm-wgs84-31
+ print $proj->nick;    # for instance utm31-wgs84
 
 =back
 
@@ -253,8 +253,8 @@ wanted here.  Probably a lot of zones are missing.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.09,
-built on January 02, 2009. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.10,
+built on January 21, 2009. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,

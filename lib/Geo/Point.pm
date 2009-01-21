@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Point;
 use vars '$VERSION';
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 use base 'Geo::Shape';
 
@@ -162,7 +162,7 @@ sub fromString($;$)
         defined $long
            or die "ERROR: dms longitude coordinate not understood: $longs\n";
 
-        return $class->new(lat => $lat, long => $long, proj => $proj);
+        return $class->new(lat => $lat, long => $long, proj => $nick);
     }
     else # type eq xy
     {   my ($x, $y) = @parts;
@@ -172,7 +172,7 @@ sub fromString($;$)
         die "ERROR: illegal character in y coordinate $y"
             unless $y =~ m/^\d+(?:\.\d+)$/;
 
-        return $class->new(x => $x, y => $y, proj => $proj);
+        return $class->new(x => $x, y => $y, proj => $nick);
     }
 
     ();

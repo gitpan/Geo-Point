@@ -8,13 +8,13 @@ use warnings;
 
 package Geo::Surface;
 use vars '$VERSION';
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 use base 'Geo::Shape';
 
 use Math::Polygon::Surface ();
 use Math::Polygon::Calc    qw/polygon_bbox/;
-use List::Util             qw/sum/;
+use List::Util             qw/sum first/;
 
 use Carp;
 
@@ -23,6 +23,8 @@ sub new(@)
 {   my $thing = shift;
     my @components;
     push @components, shift while ref $_[0];
+    @components or return ();
+
     my %args  = @_;
 
     my $class;
@@ -35,41 +37,33 @@ sub new(@)
     }
 
     my $proj = $args{proj};
-
-    return () unless @components;
+    unless($proj)
+    {   my $s = first { UNIVERSAL::isa($_, 'Geo::Shape') } @components;
+        $proj = $s->proj if $s;
+    }
 
     my @surfaces;
-    foreach my $component (@components)
+    foreach my $c (@components)
     {
-        if(ref $component eq 'ARRAY')
-        {   $component = $class->new(@$component);
+        if(ref $c eq 'ARRAY')
+        {   my $outer = Math::Polygon->new(points => $c);
+            push @surfaces, Math::Polygon::Surface->new(outer => $outer);
         }
-        elsif(ref $component eq 'Math::Polygon')
-        {   $component = Geo::Line->filled($component->points);
+        elsif(UNIVERSAL::isa($c, 'Math::Polygon'))
+        {   push @surfaces, Math::Polygon::Surface->new(outer => $c);
         }
-        elsif(ref $component eq 'Math::Polygon::Surface')
-        {   bless $component, $class;
+        elsif(UNIVERSAL::isa($c, 'Math::Polygon::Surface'))
+        {   push @surfaces, $c;
         }
-
-        if($component->isa('Geo::Point'))
-        {   push @surfaces, $component;
-        }   
-        elsif($component->isa('Geo::Line'))
-        {   carp "Warning: Geo::Line is should be filled."
-                unless $component->isFilled;
-            push @surfaces, defined $proj ? $component->in($proj) : $component;
+        elsif(UNIVERSAL::isa($c, 'Geo::Line'))
+        {   my $outer = $c->in($proj)->points;
+            push @surfaces, Math::Polygon::Surface->new(outer => $outer);
         }
-        elsif($component->isa('Geo::Surface'))
-        {   if(defined $proj)
-            {   push @surfaces,
-                    map {$component->in($proj)} $component->components;
-            }
-            else
-            {   push @surfaces, $component->components;
-            }
+        elsif($c->isa('Geo::Surface'))
+        {   push @surfaces, map {$c->in($proj)} $c->components;
         }
         else
-        {   confess "ERROR: Do not known what to do with $component";
+        {   confess "ERROR: Do not known what to do with $c";
         }
     }
 
@@ -155,9 +149,13 @@ sub toString(;$)
         $surface = $self;
     }
 
-      "surface[$proj]\n  ("
-    . join(")\n  (", map {$_->toString} $surface->components)
-    . ")\n";
+    my @polys;
+    foreach my $c ($surface->components)
+    {   push @polys, 'aap';
+    }
+
+    local $" = ")\n  (";
+    "surface[$proj]\n  (@polys)\n";
 }
 *string = \&toString;
 
