@@ -1,14 +1,14 @@
 # Copyrights 2005-2009 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.05.
+# Pod stripped from pm file by OODoc 1.06.
 
 use strict;
 use warnings;
 
 package Geo::Surface;
 use vars '$VERSION';
-$VERSION = '0.10';
+$VERSION = '0.90';
 
 use base 'Geo::Shape';
 
@@ -39,7 +39,7 @@ sub new(@)
     my $proj = $args{proj};
     unless($proj)
     {   my $s = first { UNIVERSAL::isa($_, 'Geo::Shape') } @components;
-        $proj = $s->proj if $s;
+        $args{proj} = $proj = $s->proj if $s;
     }
 
     my @surfaces;

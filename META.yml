@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Geo-Point
-version:             0.10
+version:             0.90
 abstract:            Geographical structures
 license:             perl
 author:              
@@ -9,7 +9,7 @@ generated_by:        ExtUtils::MakeMaker version 6.42
 distribution_type:   module
 requires:     
     Geo::Distance:                 0.06
-    Geo::Proj4:                    0.96
+    Geo::Proj4:                    1.01
     Math::Polygon:                 0.003
     Math::Trig:                    1
     Test::More:                    0.47

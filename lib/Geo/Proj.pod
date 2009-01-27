@@ -253,8 +253,8 @@ wanted here.  Probably a lot of zones are missing.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.10,
-built on January 21, 2009. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.90,
+built on January 27, 2009. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
@@ -264,6 +264,7 @@ L</Geo::GML>,
 L</Geo::ISO19139>,
 L</Geo::EOP>, and
 L</Geo::Format::Envisat>.
+L</Geo::Format::Landsat>.
 
 Please post questions or ideas to
 F<http://geo-perl@list.hut.fi|the mailinglist>

@@ -21,4 +21,5 @@ t/11point.t
 t/20pstr.t
 t/21lstr.t
 t/22rstr.t
+t/99pod.t
 t/pod.t
