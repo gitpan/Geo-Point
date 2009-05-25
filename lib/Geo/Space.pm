@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Space;
 use vars '$VERSION';
-$VERSION = '0.90';
+$VERSION = '0.91';
 
 use base 'Geo::Shape';
 
@@ -83,24 +83,6 @@ sub in($)
     (ref $self)->new(@t, proj => $projnew);
 }
 
-
-sub equal($;$)
-{   my ($self, $other, $tolerance) = @_;
-
-    my $nr   = $self->nrComponents;
-    return 0 if $nr != $other->nrComponents;
-
-    my $proj = $other->proj;
-    for(my $compnr = 0; $compnr < $nr; $compnr++)
-    {   my $own = $self->component($compnr);
-        my $his = $other->component($compnr);
-
-        $own->equal($his, $tolerance)
-            or return 0;
-    }
-
-    1;
-}
 
 sub bbox()
 {   my $self = shift;

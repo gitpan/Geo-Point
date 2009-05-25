@@ -160,32 +160,12 @@ added as well as the C<km> alias for kilometer.
 
 =back
 
-$obj-E<gt>B<equal>(OBJECT, [TOLERANCE])
-
-=over 4
-
-Same object, maybe defined as different object, maybe in a different
-coordinate system.  When the coordinate systems are equivalent, no
-conversions are done.  Otherwise, the second OBJECT is converted into
-the coordinate system of the callee.
-
-=back
-
 $obj-E<gt>B<perimeter>
 
 =over 4
 
 Returns the length of the outer border of the object's components.  For
 points, this returns zero.
-
-=back
-
-$obj-E<gt>B<sameAs>(OTHER, TOLERANCE)
-
-=over 4
-
-See L<equal()|Geo::Shape/"Geometry">.  This method expects the OTHER object to have the same
-projection as the object at hand.
 
 =back
 
@@ -249,8 +229,8 @@ Error: in() not implemented for a $class
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.90,
-built on January 27, 2009. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.91,
+built on May 25, 2009. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
@@ -258,12 +238,12 @@ L</Geo::WKT>,
 L</Math::Polygon>,
 L</Geo::GML>,
 L</Geo::ISO19139>,
-L</Geo::EOP>, and
-L</Geo::Format::Envisat>.
+L</Geo::EOP>,
+L</Geo::Format::Envisat>, and
 L</Geo::Format::Landsat>.
 
-Please post questions or ideas to
-F<http://geo-perl@list.hut.fi|the mailinglist>
+Please post questions or ideas to the mailinglist at
+F<http://geo-perl@list.hut.fi>
 
 =head1 LICENSE
 

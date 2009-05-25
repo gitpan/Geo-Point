@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Proj;
 use vars '$VERSION';
-$VERSION = '0.90';
+$VERSION = '0.91';
 
 
 use Geo::Proj4   ();

@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Surface;
 use vars '$VERSION';
-$VERSION = '0.90';
+$VERSION = '0.91';
 
 use base 'Geo::Shape';
 
@@ -21,9 +21,9 @@ use Carp;
 
 sub new(@)
 {   my $thing = shift;
-    my @components;
-    push @components, shift while ref $_[0];
-    @components or return ();
+    my @lines;
+    push @lines, shift while ref $_[0];
+    @lines or return ();
 
     my %args  = @_;
 
@@ -38,104 +38,79 @@ sub new(@)
 
     my $proj = $args{proj};
     unless($proj)
-    {   my $s = first { UNIVERSAL::isa($_, 'Geo::Shape') } @components;
+    {   my $s = first { UNIVERSAL::isa($_, 'Geo::Shape') } @lines;
         $args{proj} = $proj = $s->proj if $s;
     }
 
-    my @surfaces;
-    foreach my $c (@components)
-    {
-        if(ref $c eq 'ARRAY')
-        {   my $outer = Math::Polygon->new(points => $c);
-            push @surfaces, Math::Polygon::Surface->new(outer => $outer);
+    my $mps;
+    if(@lines==1 && UNIVERSAL::isa($_, 'Math::Polygon::Surface'))
+    {   $mps = shift @lines;
+    }
+    else
+    {   my @polys;
+        foreach (@lines)
+        {   push @polys
+              , UNIVERSAL::isa($_, 'Geo::Line'    ) ? [$_->in($proj)->points]
+              : UNIVERSAL::isa($_, 'Math::Polygon') ? $_
+              : UNIVERSAL::isa($_, 'ARRAY'        ) ? Math::Polygon->new(@$_)
+              : croak "ERROR: Do not known what to do with $_";
         }
-        elsif(UNIVERSAL::isa($c, 'Math::Polygon'))
-        {   push @surfaces, Math::Polygon::Surface->new(outer => $c);
-        }
-        elsif(UNIVERSAL::isa($c, 'Math::Polygon::Surface'))
-        {   push @surfaces, $c;
-        }
-        elsif(UNIVERSAL::isa($c, 'Geo::Line'))
-        {   my $outer = $c->in($proj)->points;
-            push @surfaces, Math::Polygon::Surface->new(outer => $outer);
-        }
-        elsif($c->isa('Geo::Surface'))
-        {   push @surfaces, map {$c->in($proj)} $c->components;
-        }
-        else
-        {   confess "ERROR: Do not known what to do with $c";
-        }
+        $mps = Math::Polygon::Surface->new(@polys);
     }
 
-    $args{components} = \@surfaces;
+    $args{_mps} = $mps;
     $thing->SUPER::new(%args);
 }
 
 sub init($)
 {   my ($self, $args) = @_;
     $self->SUPER::init($args);
-    $self->{GS_comp} = $args->{components};
+    $self->{GS_mps} = $args->{_mps};
     $self;
 }
 
 
-sub components() { @{shift->{GS_comp}} }
+sub outer() { shift->{GS_mps}->outer }
+sub inner() { shift->{GS_mps}->inner }
 
-
-sub component(@)
+sub geo_outer()
 {   my $self = shift;
-    wantarray ? $self->{GS_comp}[shift] : @{$self->{GS_comp}}[@_];
+    Geo::Line->new(points => [$self->outer->points], proj => $self->proj);
 }
 
-
-sub nrComponents() { scalar @{shift->{GS_comp}} }
+sub geo_inner()
+{   my $self = shift;
+    my $proj = $self->proj;
+    map { Geo::Line->new(points => [$_->points], proj => $proj) } $self->inner;
+}
 
 
 sub in($)
 {   my ($self, $projnew) = @_;
     return $self if ! defined $projnew || $projnew eq $self->proj;
 
-    my @surfaces;
-    foreach my $old ($self->components)
-    {   my @newrings;
-        foreach my $ring ($old->outer, $old->inner)
-        {   ($projnew, my @points) = $self->projectOn($projnew, $ring->points);
-            push @newrings, @points
-             ? (ref $ring)->new(proj => $projnew, points => \@points) : $ring;
-        }
-        push @surfaces, (ref $old)->new(@newrings, proj => $projnew);
+    my @newrings;
+    foreach my $ring ($self->outer, $self->inner)
+    {   (undef, my @points) = $self->projectOn($projnew, $ring->points);
+        push @newrings, \@points;
     }
-  
-    $self->new(@surfaces, proj => $projnew);
+    my $mp = Math::Polygon::Surface->new(@newrings);
+    (ref $self)->new($mp, proj => $projnew);
 }
 
 
-sub equal($;$)
-{   my ($self, $other, $tolerance) = @_;
+sub bbox() { polygon_bbox $_->outer->points }
 
-    my $nr   = $self->nrComponents;
-    return 0 if $nr != $other->nrComponents;
 
-    my $proj = $other->proj;
-    for(my $compnr = 0; $compnr < $nr; $compnr++)
-    {   my $own = $self->component($compnr);
-        my @own = $self->projectOn($proj, $own->points);
-
-        $other->component($compnr)->equal(\@own, $tolerance)
-            or return 0;
-    }
-
-    1;
+sub area()
+{   my $self = shift;
+    my $area = $self->outer->area;
+    $area   -= $_->area for $self->inner;
+    $area;
 }
 
 
-sub bbox() {  polygon_bbox map { $_->outer->points } shift->components }
-
-
-sub area() { sum map { $_->area } shift->components }
-
-
-sub perimeter() { sum map { $_->perimeter } shift->components }
+sub perimeter() { shift->outer->perimeter }
 
 
 sub toString(;$)
@@ -149,13 +124,9 @@ sub toString(;$)
         $surface = $self;
     }
 
-    my @polys;
-    foreach my $c ($surface->components)
-    {   push @polys, 'aap';
-    }
-
-    local $" = ")\n  (";
-    "surface[$proj]\n  (@polys)\n";
+    my $mps = $self->{GS_mps}->string;
+    $mps    =~ s/\n-/)\n -(/;
+    "surface[$proj]\n  ($mps)\n";
 }
 *string = \&toString;
 

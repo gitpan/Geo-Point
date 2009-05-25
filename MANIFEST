@@ -18,8 +18,8 @@ lib/Geo/Surface.pod
 t/09proj.t
 t/10dms.t
 t/11point.t
+t/12surface.t
 t/20pstr.t
 t/21lstr.t
 t/22rstr.t
 t/99pod.t
-t/pod.t

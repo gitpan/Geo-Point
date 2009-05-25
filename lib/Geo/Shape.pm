@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Shape;
 use vars '$VERSION';
-$VERSION = '0.90';
+$VERSION = '0.91';
 
 
 use Geo::Proj;      # defines wgs84
@@ -23,7 +23,6 @@ use Carp            qw/croak confess/;
 
 
 use overload '""'     => 'string'
-           , '=='     => 'equal'
            , bool     => sub {1}
            , fallback => 1;
 
@@ -107,14 +106,6 @@ sub distance($;$)
     die "ERROR: distance calculation not implemented between a "
       . ref($self) . " and a " . ref($other);
 }
-
-
-sub equal($;$)
-{ confess "INTERNAL: equal() not implemented for ".ref(shift) }
-
-
-sub sameAs($$)
-{ confess "INTERNAL: sameAs() not implemented for ".ref(shift) }
 
 
 sub bboxRing(@)

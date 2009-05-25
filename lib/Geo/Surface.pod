@@ -9,36 +9,31 @@ Geo::Surface - A surface description.
 
 =head1 SYNOPSIS
 
- my $island1 = Geo::Line->filled(...);
- my $island2 = Geo::Surface->new(...);
- my $islands = Geo::Surface->new($island1, $island2)
+ my $island = Geo::Surface->new($outer, $lake1, $lake2);
 
 =head1 DESCRIPTION
 
-In this context, a "surface" is defined as a set of filled areas with
-possible enclosures in one projection system.  Some set of islands
-can be kept as one surface.  Or the data of a country: mainland,
-islands and lakes.  Or multiple tiles of one image.
+In this context, a "surface" is defined as one filled area with
+possible enclosures in one projection system.
 
 =head1 METHODS
 
 =head2 Constructors
 
-Geo::Surface-E<gt>B<new>([COMPONENTS], [OPTIONS])
+Geo::Surface-E<gt>B<new>((SURFACE|(OUTER,INNER,...)), [OPTIONS])
 
 =over 4
 
 When called as instance method, some defaults are copied from the
 object where the call is made upon.
 
-COMPONENTS are L<Math::Polygon|Math::Polygon>, L<Math::Polygon::Surface|Math::Polygon::Surface>, L<Geo::Line|Geo::Line>,
-and L<Geo::Surface|Geo::Surface> objects.  When an ARRAY is specfied as COMPONENT,
-it will be used to instantiate a L<Math::Polygon::Surface|Math::Polygon::Surface> object.
-In case of a L<Geo::Surface|Geo::Surface>, the included polygons are translated to
-the specified projection.
+You may either provide a L<Math::Polygon::Surface|Math::Polygon::Surface> SURFACE, or a LIST
+of lines.  In the latter case, the first line is the OUTER polygon of
+the surface, and the other are all INNER enclosures: lakes.  Lines
+are and L<Geo::Line|Geo::Line>, L<Math::Polygon|Math::Polygon> objects, or ARRAY of points.
 
 If no projection is specified, then the projection of the first
-component will be used to project all components to.
+Geo-encoded line will be used.
 
  Option--Defined in--Default
  proj    Geo::Shape  <see Geo::Proj::defaultProjection()
@@ -49,29 +44,35 @@ component will be used to project all components to.
 
 =head2 Attributes
 
-$obj-E<gt>B<component>(INDEX, [INDEX, ...])
+$obj-E<gt>B<geo_inner>
 
 =over 4
 
-Returns the component (or components) with the specified INDEX(es). One
-L<Math::Polygon::Surface|Math::Polygon::Surface> in scalar context, and multiple in list context.
+Returns a LIST of enclosed polygons, converted to L<Geo::Line|Geo::Line> objects.
 
 =back
 
-$obj-E<gt>B<components>
+$obj-E<gt>B<geo_outer>
 
 =over 4
 
-Returns a list of L<Math::Polygon::Surface|Math::Polygon::Surface> objects, together forming
-the surface.
+Returns the outer polygon as L<Geo::Line|Geo::Line> object.
 
 =back
 
-$obj-E<gt>B<nrComponents>
+$obj-E<gt>B<inner>
 
 =over 4
 
-Returns the number of components.
+Returns a LIST of enclosed L<Math::Polygon|Math::Polygon> objects.
+
+=back
+
+$obj-E<gt>B<outer>
+
+=over 4
+
+Returns the outer L<Math::Polygon|Math::Polygon>.
 
 =back
 
@@ -115,8 +116,9 @@ $obj-E<gt>B<area>
 
 =over 4
 
-Returns the area enclosed by the combined components.  Only useful when
-the points are in some orthogonal projection.
+Returns the area enclosed by the outer polygon, minus the erea of
+the enclosures.  Only useful when the points are in some orthogonal
+projection.
 
 =back
 
@@ -124,7 +126,7 @@ $obj-E<gt>B<bbox>
 
 =over 4
 
-The bounding box of the combined polygons.
+The bounding box of outer surface polygon.
 
 =back
 
@@ -154,30 +156,12 @@ See L<Geo::Shape/"Geometry">
 
 =back
 
-$obj-E<gt>B<equal>(OTHER, [TOLERANCE])
-
-=over 4
-
-Detailed calculation whether two surfaces are equal is a lot of
-work.  Therefore, only exactly equal surface descriptions are
-considered equivalent.
-
-=back
-
 $obj-E<gt>B<perimeter>
 
 =over 4
 
-The length of the outer polygons of all components. Only useful in a
-orthogonal coordinate systems.
-
-=back
-
-$obj-E<gt>B<sameAs>(OTHER, TOLERANCE)
-
-=over 4
-
-See L<Geo::Shape/"Geometry">
+The length of the outer polygon. Only useful in a orthogonal
+coordinate systems.
 
 =back
 
@@ -257,8 +241,8 @@ Error: not known what to do with $component
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.90,
-built on January 27, 2009. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.91,
+built on May 25, 2009. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
@@ -266,12 +250,12 @@ L</Geo::WKT>,
 L</Math::Polygon>,
 L</Geo::GML>,
 L</Geo::ISO19139>,
-L</Geo::EOP>, and
-L</Geo::Format::Envisat>.
+L</Geo::EOP>,
+L</Geo::Format::Envisat>, and
 L</Geo::Format::Landsat>.
 
-Please post questions or ideas to
-F<http://geo-perl@list.hut.fi|the mailinglist>
+Please post questions or ideas to the mailinglist at
+F<http://geo-perl@list.hut.fi>
 
 =head1 LICENSE
 
