@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Point;
 use vars '$VERSION';
-$VERSION = '0.91';
+$VERSION = '0.92';
 
 use base 'Geo::Shape';
 

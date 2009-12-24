@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Proj;
 use vars '$VERSION';
-$VERSION = '0.91';
+$VERSION = '0.92';
 
 
 use Geo::Proj4   ();
@@ -138,7 +138,7 @@ sub to($@)
 {   my $thing   = shift;
     my $myproj4 = ref $thing ? $thing->proj4 : __PACKAGE__->proj4(shift);
     my $toproj4 = __PACKAGE__->proj4(shift);
-    $myproj4->transform($toproj4, @_);
+    $myproj4->transform($toproj4, shift);
 }
 
 

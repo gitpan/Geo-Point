@@ -2,8 +2,6 @@
 
 Geo::Proj - Handling projections
 
-=head1 INHERITANCE
-
 =head1 SYNOPSIS
 
  use Geo::Proj;
@@ -21,9 +19,9 @@ Geo::Proj - Handling projections
  my $point_wgs84= Geo::Point->latlong(56.12, 4.40, 'wgs84');
  my $point_wgs84= Geo::Point->latlong(56.12, 4.40, $wgs84);
 
- my $point_clrk = $point_wgs84->to($clrk);
- my $point_clrk = Geo::Proj->to($clrk, $point_wgs84);
- my $point_clrk = Geo::Proj->to('clark66', $point_wgs84);
+ my $point_clrk = $point_wgs84->in($clrk);
+ my $point_clrk = Geo::Proj->to($wgs84, $clrk, $point_wgs84);
+ my $point_clrk = Geo::Proj->to($wgs84, 'clark66', $point_wgs84);
 
 =head1 DESCRIPTION
 
@@ -181,15 +179,19 @@ example:
 
 =back
 
-$obj-E<gt>B<to>([PROJ|NICK], PROJ|NICK, POINT|ARRAY_OF_POINTS)
+$obj-E<gt>B<to>([PROJ|NICK], PROJ|NICK, POINT|ARRAY-OF-POINTS)
 
-Geo::Proj-E<gt>B<to>([PROJ|NICK], PROJ|NICK, POINT|ARRAY_OF_POINTS)
+Geo::Proj-E<gt>B<to>([PROJ|NICK], PROJ|NICK, POINT|ARRAY-OF-POINTS)
 
 =over 4
 
 Expects an Geo::Proj to project the POINT or POINTS to.  The work
 is done by L<Geo::Proj4::transform()|Geo::Proj4/"Converters">.  As class method, you have to
 specify two nicks or projections.
+
+Be warned that this L<to()|Geo::Proj/"Projecting"> method expects POINTs which are
+B<not> L<Geo::Point|Geo::Point> objects, but which themselves are an ARRAY
+containing X,Y and optionally a Z coordinate.
 
 example: 
 
@@ -253,8 +255,8 @@ wanted here.  Probably a lot of zones are missing.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.91,
-built on May 25, 2009. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.92,
+built on December 24, 2009. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
