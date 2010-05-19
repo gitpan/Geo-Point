@@ -1,4 +1,4 @@
-# Copyrights 2005-2009 by Mark Overmeer.
+# Copyrights 2005-2010 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
 # Pod stripped from pm file by OODoc 1.06.
@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Surface;
 use vars '$VERSION';
-$VERSION = '0.92';
+$VERSION = '0.93';
 
 use base 'Geo::Shape';
 
@@ -73,16 +73,20 @@ sub init($)
 sub outer() { shift->{GS_mps}->outer }
 sub inner() { shift->{GS_mps}->inner }
 
-sub geo_outer()
+sub geoOuter()
 {   my $self = shift;
     Geo::Line->new(points => [$self->outer->points], proj => $self->proj);
 }
 
-sub geo_inner()
+
+sub geoInner()
 {   my $self = shift;
     my $proj = $self->proj;
     map { Geo::Line->new(points => [$_->points], proj => $proj) } $self->inner;
 }
+
+*geo_outer = \&geoOuter;
+*geo_inner = \&geoInner;
 
 
 sub in($)

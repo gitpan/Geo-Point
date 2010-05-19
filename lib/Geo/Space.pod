@@ -35,7 +35,7 @@ COMPONENTS are L<Math::Polygon|Math::Polygon>, L<Math::Polygon::Surface|Math::Po
 L<Geo::Point|Geo::Point>, L<Geo::Line|Geo::Line>, L<Geo::Surface|Geo::Surface>, L<Geo::Space|Geo::Space> objects.
 
  Option--Defined in--Default
- proj    Geo::Shape  <see Geo::Proj::defaultProjection()
+ proj    Geo::Shape  see Geo::Proj::defaultProjection()
 
 . proj => LABEL
 
@@ -261,8 +261,8 @@ Error: in() not implemented for a $class
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.92,
-built on December 24, 2009. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.93,
+built on May 19, 2010. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
@@ -279,7 +279,7 @@ F<http://geo-perl@list.hut.fi>
 
 =head1 LICENSE
 
-Copyrights 2005-2009 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2005-2010 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
