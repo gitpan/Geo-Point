@@ -46,41 +46,33 @@ wgs84 projection yourself.
 
 =head2 Constructors
 
-Geo::Proj-E<gt>B<new>([NICK], OPTIONS)
-
 =over 4
+
+=item Geo::Proj-E<gt>B<new>([NICK], OPTIONS)
 
 Create a new object.
 
- Option--Default
- name    <from proj4>
- nick    <required>
- proj4   <required>
- srid    undef
+ -Option--Default
+  name    <from proj4>
+  nick    <required>
+  proj4   <required>
+  srid    undef
 
-. name => STRING
+=over 2
 
-. nick => LABEL
+=item name => STRING
 
-=over 4
+=item nick => LABEL
 
 The abbrevated name for this projection.
 
-=back
-
-. proj4 => OBJECT|ARRAY|STRING
-
-=over 4
+=item proj4 => OBJECT|ARRAY|STRING
 
 The ARRAY or STRING will by used to create a L<Geo::Proj4|Geo::Proj4> object
 by calling L<Geo::Proj4::new()|Geo::Proj4/"Instantiation">.  You may also specify such an
 prepared OBJECT.
 
-=back
-
-. srid => INTEGER
-
-=over 4
+=item srid => INTEGER
 
 SRID stands for "Spatial Reference System ID", which is just an index
 in a table of spatial descriptions as used by SQL. Only INTEGER values
@@ -92,27 +84,19 @@ larger than 0 are permitted.
 
 =head2 Attributes
 
-$obj-E<gt>B<name>
-
 =over 4
+
+=item $obj-E<gt>B<name>()
 
 The full, official name of the projection
 
-=back
-
-$obj-E<gt>B<nick>
-
-=over 4
+=item $obj-E<gt>B<nick>()
 
 Simple abbreviating of the projection.
 
-=back
+=item $obj-E<gt>B<proj4>([NICK|PROJ4])
 
-$obj-E<gt>B<proj4>([NICK|PROJ4])
-
-Geo::Proj-E<gt>B<proj4>([NICK|PROJ4])
-
-=over 4
+=item Geo::Proj-E<gt>B<proj4>([NICK|PROJ4])
 
 Returns the projection library handle (a L<Geo::Proj4|Geo::Proj4>) to be used by this
 component.  As class method, the NICK is specified for a lookup.  In case
@@ -125,11 +109,7 @@ example:
  my $wgs84_proj4 = Geo::Proj->proj4($wgs84);
  my $wgs84_proj4 = $wgs84->proj4;
 
-=back
-
-$obj-E<gt>B<srid>
-
-=over 4
+=item $obj-E<gt>B<srid>()
 
 The "Spatial Reference System ID" if known.
 
@@ -137,36 +117,24 @@ The "Spatial Reference System ID" if known.
 
 =head2 Projecting
 
-Geo::Proj-E<gt>B<defaultProjection>([NICK|PROJ])
-
 =over 4
+
+=item Geo::Proj-E<gt>B<defaultProjection>([NICK|PROJ])
 
 The NICK must be defined with L<new()|Geo::Proj/"Constructors">.  Returned is the Geo::Proj object
 for the default projection.  The default is the first name created,
 which probably is 'wgs84' (when import() had a chance)
 
-=back
-
-Geo::Proj-E<gt>B<dumpProjections>([FILEHANDLE])
-
-=over 4
+=item Geo::Proj-E<gt>B<dumpProjections>([FILEHANDLE])
 
 Print details about the defined projections to the FILEHANDLE, which
 defaults to the selected.  Especially useful for debugging.
 
-=back
-
-Geo::Proj-E<gt>B<listProjections>
-
-=over 4
+=item Geo::Proj-E<gt>B<listProjections>()
 
 Returns a sorted lost of projection nicks.
 
-=back
-
-Geo::Proj-E<gt>B<projection>(NICK|PROJ)
-
-=over 4
+=item Geo::Proj-E<gt>B<projection>(NICK|PROJ)
 
 Returns the L<Geo::Proj|Geo::Proj> object, defined with NICK.  In case such an
 object is passed in as PROJ, it is returned unaffected.  This method is
@@ -177,13 +145,9 @@ example:
  my $wgs84 = Geo::Proj->projection('wgs84');
  my $again = Geo::Proj->projection($wgs84);
 
-=back
+=item $obj-E<gt>B<to>([PROJ|NICK], PROJ|NICK, POINT|ARRAY-OF-POINTS)
 
-$obj-E<gt>B<to>([PROJ|NICK], PROJ|NICK, POINT|ARRAY-OF-POINTS)
-
-Geo::Proj-E<gt>B<to>([PROJ|NICK], PROJ|NICK, POINT|ARRAY-OF-POINTS)
-
-=over 4
+=item Geo::Proj-E<gt>B<to>([PROJ|NICK], PROJ|NICK, POINT|ARRAY-OF-POINTS)
 
 Expects an Geo::Proj to project the POINT or POINTS to.  The work
 is done by L<Geo::Proj4::transform()|Geo::Proj4/"Converters">.  As class method, you have to
@@ -203,9 +167,9 @@ example:
 
 =head2 UTM
 
-Geo::Proj-E<gt>B<UTMprojection>(DATUM|PROJ|undef, ZONE)
-
 =over 4
+
+=item Geo::Proj-E<gt>B<UTMprojection>(DATUM|PROJ|undef, ZONE)
 
 The PROJ is a L<Geo::Proj|Geo::Proj> which is used to collect the datum
 information from if no DATUM was specified explicitly.  It may also be
@@ -217,13 +181,9 @@ example:
  my $proj = Geo::Proj->UTMprojection('WGS84', 31) or die;
  print $proj->nick;    # for instance utm31-wgs84
 
-=back
+=item $obj-E<gt>B<bestUTMprojection>(POINT, [PROJ|NICK])
 
-$obj-E<gt>B<bestUTMprojection>(POINT, [PROJ|NICK])
-
-Geo::Proj-E<gt>B<bestUTMprojection>(POINT, [PROJ|NICK])
-
-=over 4
+=item Geo::Proj-E<gt>B<bestUTMprojection>(POINT, [PROJ|NICK])
 
 Returns the best UTM projection for some POINT.  As class method, you
 specify the nickname or the object for the point.
@@ -234,13 +194,9 @@ example:
  my $proj  = Geo::Proj->bestUTMprojection($point);
  print $proj->nick;    # for instance utm31-wgs84
 
-=back
+=item $obj-E<gt>B<zoneForUTM>(POINT)
 
-$obj-E<gt>B<zoneForUTM>(POINT)
-
-Geo::Proj-E<gt>B<zoneForUTM>(POINT)
-
-=over 4
+=item Geo::Proj-E<gt>B<zoneForUTM>(POINT)
 
 Provided some point, figure-out which zone is most optimal for representing
 the point.  In LIST context, zone number, zone letter, and meridian are
@@ -253,10 +209,20 @@ wanted here.  Probably a lot of zones are missing.
 
 =back
 
+=head1 OVERLOADING
+
+=over 4
+
+=item overload: B<'""' (stringification)>()
+
+Returns the nick-name for this projection.
+
+=back
+
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.93,
-built on May 19, 2010. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.94,
+built on December 21, 2012. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
@@ -273,7 +239,7 @@ F<http://geo-perl@list.hut.fi>
 
 =head1 LICENSE
 
-Copyrights 2005-2010 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2005-2012 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

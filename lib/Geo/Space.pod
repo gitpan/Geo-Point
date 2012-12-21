@@ -22,11 +22,11 @@ Space can contain anything you like: lines, points, and unrelated polygons.
 
 =head2 Constructors
 
-$obj-E<gt>B<new>([COMPONENTS], [OPTIONS])
-
-Geo::Space-E<gt>B<new>([COMPONENTS], [OPTIONS])
-
 =over 4
+
+=item $obj-E<gt>B<new>([COMPONENTS], [OPTIONS])
+
+=item Geo::Space-E<gt>B<new>([COMPONENTS], [OPTIONS])
 
 When called as instance method, some defaults are copied from the
 object where the call is made upon.  Usually called as class method.
@@ -34,94 +34,62 @@ object where the call is made upon.  Usually called as class method.
 COMPONENTS are L<Math::Polygon|Math::Polygon>, L<Math::Polygon::Surface|Math::Polygon::Surface>,
 L<Geo::Point|Geo::Point>, L<Geo::Line|Geo::Line>, L<Geo::Surface|Geo::Surface>, L<Geo::Space|Geo::Space> objects.
 
- Option--Defined in--Default
- proj    Geo::Shape  see Geo::Proj::defaultProjection()
+ -Option--Defined in--Default
+  proj    Geo::Shape  see Geo::Proj::defaultProjection()
 
-. proj => LABEL
+=over 2
+
+=item proj => LABEL
+
+=back
 
 =back
 
 =head2 Attributes
 
-$obj-E<gt>B<component>(INDEX, [INDEX, ...])
-
 =over 4
+
+=item $obj-E<gt>B<component>(INDEX, [INDEX, ...])
 
 Returns the component (or components) with the specified INDEX(es). One
 L<Geo::Shape|Geo::Shape> object in scalar context, and multiple in list context.
 
-=back
-
-$obj-E<gt>B<components>
-
-=over 4
+=item $obj-E<gt>B<components>()
 
 Returns a list of L<Geo::Shape|Geo::Shape> objects, all located in this space.
 
-=back
-
-$obj-E<gt>B<lines>
-
-=over 4
+=item $obj-E<gt>B<lines>()
 
 Returns a list of L<Geo::Line|Geo::Line> objects, which are defined as separate
 components.
 
-=back
-
-$obj-E<gt>B<nrComponents>
-
-=over 4
+=item $obj-E<gt>B<nrComponents>()
 
 Returns the number of components.
 
-=back
-
-$obj-E<gt>B<onlyLines>
-
-=over 4
+=item $obj-E<gt>B<onlyLines>()
 
 Returns true when all components are lines; L<Geo::Line|Geo::Line> objects.
 
-=back
-
-$obj-E<gt>B<onlyPoints>
-
-=over 4
+=item $obj-E<gt>B<onlyPoints>()
 
 Returns true when all components are points; L<Geo::Point|Geo::Point> objects.
 
-=back
-
-$obj-E<gt>B<onlyRings>
-
-=over 4
+=item $obj-E<gt>B<onlyRings>()
 
 Returns true when all components are closed lines; L<Geo::Line|Geo::Line> objects
 each defined as ring.
 
-=back
-
-$obj-E<gt>B<points>
-
-=over 4
+=item $obj-E<gt>B<points>()
 
 Returns a list of L<Geo::Point|Geo::Point> objects, which are defined as separate
 components.
 
-=back
-
-$obj-E<gt>B<proj>
-
-=over 4
+=item $obj-E<gt>B<proj>()
 
 See L<Geo::Shape/"Attributes">
 
-=back
-
-$obj-E<gt>B<proj4>
-
-=over 4
+=item $obj-E<gt>B<proj4>()
 
 See L<Geo::Shape/"Attributes">
 
@@ -129,17 +97,13 @@ See L<Geo::Shape/"Attributes">
 
 =head2 Projections
 
-$obj-E<gt>B<in>(LABEL|'utm')
-
 =over 4
+
+=item $obj-E<gt>B<in>(LABEL|'utm')
 
 See L<Geo::Shape/"Projections">
 
-=back
-
-$obj-E<gt>B<projectOn>(NICK, POINTS)
-
-=over 4
+=item $obj-E<gt>B<projectOn>(NICK, POINTS)
 
 See L<Geo::Shape/"Projections">
 
@@ -147,52 +111,32 @@ See L<Geo::Shape/"Projections">
 
 =head2 Geometry
 
-$obj-E<gt>B<area>
-
 =over 4
+
+=item $obj-E<gt>B<area>()
 
 Returns the area enclosed by the combined components.  Only useful when
 the points are in some orthogonal projection.
 
-=back
-
-$obj-E<gt>B<bbox>
-
-=over 4
+=item $obj-E<gt>B<bbox>()
 
 See L<Geo::Shape/"Geometry">
 
-=back
-
-$obj-E<gt>B<bboxCenter>
-
-=over 4
+=item $obj-E<gt>B<bboxCenter>()
 
 See L<Geo::Shape/"Geometry">
 
-=back
+=item $obj-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
 
-$obj-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
-
-Geo::Space-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
-
-=over 4
+=item Geo::Space-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
 
 See L<Geo::Shape/"Geometry">
 
-=back
-
-$obj-E<gt>B<distance>(OBJECT, [UNIT])
-
-=over 4
+=item $obj-E<gt>B<distance>(OBJECT, [UNIT])
 
 See L<Geo::Shape/"Geometry">
 
-=back
-
-$obj-E<gt>B<perimeter>
-
-=over 4
+=item $obj-E<gt>B<perimeter>()
 
 The length of the outer polygons of all components. Only useful in a
 orthogonal coordinate systems.
@@ -201,39 +145,27 @@ orthogonal coordinate systems.
 
 =head2 Display
 
-$obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
-
-Geo::Space-E<gt>B<deg2dm>(DEGREES, POS, NEG)
-
 =over 4
+
+=item $obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+
+=item Geo::Space-E<gt>B<deg2dm>(DEGREES, POS, NEG)
 
 See L<Geo::Shape/"Display">
 
-=back
+=item $obj-E<gt>B<deg2dms>(DEGREES, POS, NEG)
 
-$obj-E<gt>B<deg2dms>(DEGREES, POS, NEG)
-
-Geo::Space-E<gt>B<deg2dms>(DEGREES, POS, NEG)
-
-=over 4
+=item Geo::Space-E<gt>B<deg2dms>(DEGREES, POS, NEG)
 
 See L<Geo::Shape/"Display">
 
-=back
+=item $obj-E<gt>B<dms2deg>(DMS)
 
-$obj-E<gt>B<dms2deg>(DMS)
-
-Geo::Space-E<gt>B<dms2deg>(DMS)
-
-=over 4
+=item Geo::Space-E<gt>B<dms2deg>(DMS)
 
 See L<Geo::Shape/"Display">
 
-=back
-
-$obj-E<gt>B<toString>([PROJECTION])
-
-=over 4
+=item $obj-E<gt>B<toString>([PROJECTION])
 
 Returns a string representation of the line, which is also used for
 stringification.
@@ -242,27 +174,37 @@ example:
 
 =back
 
-=head1 DIAGNOSTICS
-
-Error: distance calculation not implemented between a $kind and a $kind
+=head1 OVERLOAD
 
 =over 4
+
+=item overload: B<'""' (stringification)>()
+
+See L<Geo::Shape/"OVERLOAD">
+
+=item overload: B<'bool' (truth value)>()
+
+See L<Geo::Shape/"OVERLOAD">
+
+=back
+
+=head1 DIAGNOSTICS
+
+=over 4
+
+=item Error: distance calculation not implemented between a $kind and a $kind
 
 Only a subset of all objects can be used in the distance calculation.
 The limitation is purely caused by lack of time to implement this.
 
-=back
-
-Error: in() not implemented for a $class
-
-=over 4
+=item Error: in() not implemented for a $class
 
 =back
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.93,
-built on May 19, 2010. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.94,
+built on December 21, 2012. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
@@ -279,7 +221,7 @@ F<http://geo-perl@list.hut.fi>
 
 =head1 LICENSE
 
-Copyrights 2005-2010 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2005-2012 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

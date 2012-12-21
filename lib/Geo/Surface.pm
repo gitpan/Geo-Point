@@ -1,14 +1,14 @@
-# Copyrights 2005-2010 by Mark Overmeer.
+# Copyrights 2005-2012 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.06.
+# Pod stripped from pm file by OODoc 2.00.
 
 use strict;
 use warnings;
 
 package Geo::Surface;
 use vars '$VERSION';
-$VERSION = '0.93';
+$VERSION = '0.94';
 
 use base 'Geo::Shape';
 
@@ -103,7 +103,7 @@ sub in($)
 }
 
 
-sub bbox() { polygon_bbox $_->outer->points }
+sub bbox() { polygon_bbox shift->outer->points }
 
 
 sub area()

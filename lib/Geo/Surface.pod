@@ -20,9 +20,9 @@ possible enclosures in one projection system.
 
 =head2 Constructors
 
-Geo::Surface-E<gt>B<new>((SURFACE|(OUTER,INNER,...)), [OPTIONS])
-
 =over 4
+
+=item Geo::Surface-E<gt>B<new>((SURFACE|(OUTER,INNER,...)), [OPTIONS])
 
 When called as instance method, some defaults are copied from the
 object where the call is made upon.
@@ -35,58 +35,42 @@ are and L<Geo::Line|Geo::Line>, L<Math::Polygon|Math::Polygon> objects, or ARRAY
 If no projection is specified, then the projection of the first
 Geo-encoded line will be used.
 
- Option--Defined in--Default
- proj    Geo::Shape  see Geo::Proj::defaultProjection()
+ -Option--Defined in--Default
+  proj    Geo::Shape  see Geo::Proj::defaultProjection()
 
-. proj => LABEL
+=over 2
+
+=item proj => LABEL
+
+=back
 
 =back
 
 =head2 Attributes
 
-$obj-E<gt>B<geoInner>
-
 =over 4
+
+=item $obj-E<gt>B<geoInner>()
 
 Returns a LIST of enclosed polygons, converted to L<Geo::Line|Geo::Line> objects.
 
-=back
-
-$obj-E<gt>B<geoOuter>
-
-=over 4
+=item $obj-E<gt>B<geoOuter>()
 
 Returns the outer polygon as L<Geo::Line|Geo::Line> object.
 
-=back
-
-$obj-E<gt>B<inner>
-
-=over 4
+=item $obj-E<gt>B<inner>()
 
 Returns a LIST of enclosed L<Math::Polygon|Math::Polygon> objects.
 
-=back
-
-$obj-E<gt>B<outer>
-
-=over 4
+=item $obj-E<gt>B<outer>()
 
 Returns the outer L<Math::Polygon|Math::Polygon>.
 
-=back
-
-$obj-E<gt>B<proj>
-
-=over 4
+=item $obj-E<gt>B<proj>()
 
 See L<Geo::Shape/"Attributes">
 
-=back
-
-$obj-E<gt>B<proj4>
-
-=over 4
+=item $obj-E<gt>B<proj4>()
 
 See L<Geo::Shape/"Attributes">
 
@@ -94,17 +78,13 @@ See L<Geo::Shape/"Attributes">
 
 =head2 Projections
 
-$obj-E<gt>B<in>(LABEL|'utm')
-
 =over 4
+
+=item $obj-E<gt>B<in>(LABEL|'utm')
 
 See L<Geo::Shape/"Projections">
 
-=back
-
-$obj-E<gt>B<projectOn>(NICK, POINTS)
-
-=over 4
+=item $obj-E<gt>B<projectOn>(NICK, POINTS)
 
 See L<Geo::Shape/"Projections">
 
@@ -112,53 +92,33 @@ See L<Geo::Shape/"Projections">
 
 =head2 Geometry
 
-$obj-E<gt>B<area>
-
 =over 4
+
+=item $obj-E<gt>B<area>()
 
 Returns the area enclosed by the outer polygon, minus the erea of
 the enclosures.  Only useful when the points are in some orthogonal
 projection.
 
-=back
-
-$obj-E<gt>B<bbox>
-
-=over 4
+=item $obj-E<gt>B<bbox>()
 
 The bounding box of outer surface polygon.
 
-=back
-
-$obj-E<gt>B<bboxCenter>
-
-=over 4
+=item $obj-E<gt>B<bboxCenter>()
 
 See L<Geo::Shape/"Geometry">
 
-=back
+=item $obj-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
 
-$obj-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
-
-Geo::Surface-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
-
-=over 4
+=item Geo::Surface-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
 
 See L<Geo::Shape/"Geometry">
 
-=back
-
-$obj-E<gt>B<distance>(OBJECT, [UNIT])
-
-=over 4
+=item $obj-E<gt>B<distance>(OBJECT, [UNIT])
 
 See L<Geo::Shape/"Geometry">
 
-=back
-
-$obj-E<gt>B<perimeter>
-
-=over 4
+=item $obj-E<gt>B<perimeter>()
 
 The length of the outer polygon. Only useful in a orthogonal
 coordinate systems.
@@ -167,82 +127,72 @@ coordinate systems.
 
 =head2 Display
 
-$obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
-
-Geo::Surface-E<gt>B<deg2dm>(DEGREES, POS, NEG)
-
 =over 4
+
+=item $obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+
+=item Geo::Surface-E<gt>B<deg2dm>(DEGREES, POS, NEG)
 
 See L<Geo::Shape/"Display">
 
-=back
+=item $obj-E<gt>B<deg2dms>(DEGREES, POS, NEG)
 
-$obj-E<gt>B<deg2dms>(DEGREES, POS, NEG)
-
-Geo::Surface-E<gt>B<deg2dms>(DEGREES, POS, NEG)
-
-=over 4
+=item Geo::Surface-E<gt>B<deg2dms>(DEGREES, POS, NEG)
 
 See L<Geo::Shape/"Display">
 
-=back
+=item $obj-E<gt>B<dms2deg>(DMS)
 
-$obj-E<gt>B<dms2deg>(DMS)
-
-Geo::Surface-E<gt>B<dms2deg>(DMS)
-
-=over 4
+=item Geo::Surface-E<gt>B<dms2deg>(DMS)
 
 See L<Geo::Shape/"Display">
 
-=back
-
-$obj-E<gt>B<toString>([PROJECTION])
-
-=over 4
+=item $obj-E<gt>B<toString>([PROJECTION])
 
 Returns a string representation of the line, which is also used for
 stringification.
 
 =back
 
-=head1 DIAGNOSTICS
-
-Warning: Geo::Line is should be filled
+=head1 OVERLOAD
 
 =over 4
+
+=item overload: B<'""' (stringification)>()
+
+See L<Geo::Shape/"OVERLOAD">
+
+=item overload: B<'bool' (truth value)>()
+
+See L<Geo::Shape/"OVERLOAD">
+
+=back
+
+=head1 DIAGNOSTICS
+
+=over 4
+
+=item Warning: Geo::Line is should be filled
 
 When L<Geo::Line|Geo::Line> objects are used to compose a surface, each of them
 must be filled.  Representation of rivers and such do not belong in a
 surface description.
 
-=back
-
-Error: distance calculation not implemented between a $kind and a $kind
-
-=over 4
+=item Error: distance calculation not implemented between a $kind and a $kind
 
 Only a subset of all objects can be used in the distance calculation.
 The limitation is purely caused by lack of time to implement this.
 
-=back
+=item Error: in() not implemented for a $class
 
-Error: in() not implemented for a $class
-
-=over 4
-
-=back
-
-Error: not known what to do with $component
-
-=over 4
+=item Error: not known what to do with $component
 
 =back
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.93,
-built on May 19, 2010. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.94,
+built on December 21, 2012. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
@@ -259,7 +209,7 @@ F<http://geo-perl@list.hut.fi>
 
 =head1 LICENSE
 
-Copyrights 2005-2010 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2005-2012 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
