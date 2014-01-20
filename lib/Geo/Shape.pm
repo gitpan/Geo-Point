@@ -1,14 +1,14 @@
-# Copyrights 2005-2012 by [Mark Overmeer].
+# Copyrights 2005-2014 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 2.00.
+# Pod stripped from pm file by OODoc 2.01.
 
 use strict;
 use warnings;
 
 package Geo::Shape;
 use vars '$VERSION';
-$VERSION = '0.94';
+$VERSION = '0.95';
 
 
 use Geo::Proj;      # defines wgs84
@@ -90,8 +90,8 @@ sub distance($;$)
     unless($geodist)
     {   $geodist = Geo::Distance->new;
         $geodist->formula('hsin');
-        $geodist->reg_unit(radians => 1);
-        $geodist->reg_unit(degrees => deg2rad(1));
+        $geodist->reg_unit(1 => 'radians');
+        $geodist->reg_unit(deg2rad(1) => 'degrees');
         $geodist->reg_unit(km => 1, 'kilometer');
     }
 

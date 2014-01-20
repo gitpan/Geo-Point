@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 NAME
 
 Geo::Space - A collection of various  items
@@ -18,20 +20,26 @@ Geo::Space - A collection of various  items
 Where a L<Geo::Surface|Geo::Surface> can only contains sets of nested polygons, the
 Space can contain anything you like: lines, points, and unrelated polygons.
 
+See L<documentation in the base class|Geo::Shape/"DESCRIPTION">.
+ 
 =head1 METHODS
 
+See L<documentation in the base class|Geo::Shape/"METHODS">.
+ 
 =head2 Constructors
 
+See L<documentation in the base class|Geo::Shape/"Constructors">.
+ 
 =over 4
 
-=item $obj-E<gt>B<new>([COMPONENTS], [OPTIONS])
+=item $obj-E<gt>B<new>([$components], [%options])
 
-=item Geo::Space-E<gt>B<new>([COMPONENTS], [OPTIONS])
+=item Geo::Space-E<gt>B<new>([$components], [%options])
 
 When called as instance method, some defaults are copied from the
 object where the call is made upon.  Usually called as class method.
 
-COMPONENTS are L<Math::Polygon|Math::Polygon>, L<Math::Polygon::Surface|Math::Polygon::Surface>,
+$components are L<Math::Polygon|Math::Polygon>, L<Math::Polygon::Surface|Math::Polygon::Surface>,
 L<Geo::Point|Geo::Point>, L<Geo::Line|Geo::Line>, L<Geo::Surface|Geo::Surface>, L<Geo::Space|Geo::Space> objects.
 
  -Option--Defined in--Default
@@ -47,11 +55,13 @@ L<Geo::Point|Geo::Point>, L<Geo::Line|Geo::Line>, L<Geo::Surface|Geo::Surface>, 
 
 =head2 Attributes
 
+See L<documentation in the base class|Geo::Shape/"Attributes">.
+ 
 =over 4
 
-=item $obj-E<gt>B<component>(INDEX, [INDEX, ...])
+=item $obj-E<gt>B<component>($index, [$index, ...])
 
-Returns the component (or components) with the specified INDEX(es). One
+Returns the component (or components) with the specified $index(es). One
 L<Geo::Shape|Geo::Shape> object in scalar context, and multiple in list context.
 
 =item $obj-E<gt>B<components>()
@@ -97,13 +107,15 @@ See L<Geo::Shape/"Attributes">
 
 =head2 Projections
 
+See L<documentation in the base class|Geo::Shape/"Projections">.
+ 
 =over 4
 
-=item $obj-E<gt>B<in>(LABEL|'utm')
+=item $obj-E<gt>B<in>($label|'utm')
 
 See L<Geo::Shape/"Projections">
 
-=item $obj-E<gt>B<projectOn>(NICK, POINTS)
+=item $obj-E<gt>B<projectOn>($nick, $points)
 
 See L<Geo::Shape/"Projections">
 
@@ -111,6 +123,8 @@ See L<Geo::Shape/"Projections">
 
 =head2 Geometry
 
+See L<documentation in the base class|Geo::Shape/"Geometry">.
+ 
 =over 4
 
 =item $obj-E<gt>B<area>()
@@ -126,13 +140,13 @@ See L<Geo::Shape/"Geometry">
 
 See L<Geo::Shape/"Geometry">
 
-=item $obj-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+=item $obj-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
-=item Geo::Space-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+=item Geo::Space-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
 See L<Geo::Shape/"Geometry">
 
-=item $obj-E<gt>B<distance>(OBJECT, [UNIT])
+=item $obj-E<gt>B<distance>($object, [$unit])
 
 See L<Geo::Shape/"Geometry">
 
@@ -145,27 +159,29 @@ orthogonal coordinate systems.
 
 =head2 Display
 
+See L<documentation in the base class|Geo::Shape/"Display">.
+ 
 =over 4
 
-=item $obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+=item $obj-E<gt>B<deg2dm>($degrees, $pos, $neg)
 
-=item Geo::Space-E<gt>B<deg2dm>(DEGREES, POS, NEG)
-
-See L<Geo::Shape/"Display">
-
-=item $obj-E<gt>B<deg2dms>(DEGREES, POS, NEG)
-
-=item Geo::Space-E<gt>B<deg2dms>(DEGREES, POS, NEG)
+=item Geo::Space-E<gt>B<deg2dm>($degrees, $pos, $neg)
 
 See L<Geo::Shape/"Display">
 
-=item $obj-E<gt>B<dms2deg>(DMS)
+=item $obj-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
-=item Geo::Space-E<gt>B<dms2deg>(DMS)
+=item Geo::Space-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
 See L<Geo::Shape/"Display">
 
-=item $obj-E<gt>B<toString>([PROJECTION])
+=item $obj-E<gt>B<dms2deg>($dms)
+
+=item Geo::Space-E<gt>B<dms2deg>($dms)
+
+See L<Geo::Shape/"Display">
+
+=item $obj-E<gt>B<toString>([$projection])
 
 Returns a string representation of the line, which is also used for
 stringification.
@@ -176,6 +192,8 @@ example:
 
 =head1 OVERLOAD
 
+See L<documentation in the base class|Geo::Shape/"OVERLOAD">.
+ 
 =over 4
 
 =item overload: B<'""' (stringification)>()
@@ -203,8 +221,8 @@ The limitation is purely caused by lack of time to implement this.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.94,
-built on December 21, 2012. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.95,
+built on January 20, 2014. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
@@ -221,7 +239,7 @@ F<http://geo-perl@list.hut.fi>
 
 =head1 LICENSE
 
-Copyrights 2005-2012 by [Mark Overmeer]. For other contributors see ChangeLog.
+Copyrights 2005-2014 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

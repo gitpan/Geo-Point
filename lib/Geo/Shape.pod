@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 NAME
 
 Geo::Shape - base class for 2-dimensional points on the earth surface
@@ -31,7 +33,7 @@ distribution.
 
 =over 4
 
-=item Geo::Shape-E<gt>B<new>(OPTIONS)
+=item Geo::Shape-E<gt>B<new>(%options)
 
 Create a new object.
 
@@ -65,10 +67,10 @@ Returns the proj4 object which handles the projection.
 
 =over 4
 
-=item $obj-E<gt>B<in>(LABEL|'utm')
+=item $obj-E<gt>B<in>($label|'utm')
 
 The coordinates of this point in a certain projection, refered to with
-the LABEL.  The projection is defined with L<new()|Geo::Shape/"Constructors">.  When simply
+the $label.  The projection is defined with L<new()|Geo::Shape/"Constructors">.  When simply
 'utm' is provided, the best UTM zone is selected.
 
 In LIST context, the coordinates are returned.  In SCALAR context,
@@ -87,12 +89,12 @@ example:
   my $label    = $p_utm->proj;
   my ($datum, $zone) = $label =~ m/^utm-(\w+)-(\d+)$/;
 
-=item $obj-E<gt>B<projectOn>(NICK, POINTS)
+=item $obj-E<gt>B<projectOn>($nick, $points)
 
-The POINTS are ARRAYS with each an X and Y coordinate of a single
-point in space.  A list of transformed POINTS is returned, which is empty
-if no change is needed.  The returned list is preceeded by a projection
-NICK which is the result, usually the same as the provided NICK, but in
+The $points are ARRAYS with each an X and Y coordinate of a single
+point in space.  A list of transformed $points is returned, which is empty
+if no change is needed.  The returned list is preceded by a projection
+$nick which is the result, usually the same as the provided $nick, but in
 some cases (for instance UTM) it may be different.
 
 =back
@@ -119,22 +121,22 @@ the center of the bounding box.  The values is cached, once computed.
 Be warned that the central point in one projection system may be quite
 different from the central point in some other projectionsystem .
 
-=item $obj-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+=item $obj-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
-=item Geo::Shape-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+=item Geo::Shape-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
 Returns a L<Geo::Line|Geo::Line> which describes the outer bounds of the
 object called upon, counter-clockwise and left-bottom first.  As class
 method, you need to specify the limits and the PROJection.
 
-=item $obj-E<gt>B<distance>(OBJECT, [UNIT])
+=item $obj-E<gt>B<distance>($object, [$unit])
 
 Calculate the distance between this object and some other object.
 For many combinations of objects this is not supported or only
 partially supported.
 
 This calculation is performed with L<Geo::Distance> in accurate mode.
-The default UNIT is kilometers.  Other units are provided in the manual
+The default $unit is kilometers.  Other units are provided in the manual
 page of L<Geo::Distance>.  As extra unit, C<degrees> and C<radians> are
 added as well as the C<km> alias for kilometer.
 
@@ -149,9 +151,9 @@ points, this returns zero.
 
 =over 4
 
-=item $obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+=item $obj-E<gt>B<deg2dm>($degrees, $pos, $neg)
 
-=item Geo::Shape-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+=item Geo::Shape-E<gt>B<deg2dm>($degrees, $pos, $neg)
 
 Like L<deg2dms()|Geo::Shape/"Display"> but without showing seconds.
 
@@ -160,18 +162,18 @@ example:
  print $point->deg2dm(0.12, 'e', 'w');
  print Geo::Shape->deg2dm(0.12, 'e', 'w');
 
-=item $obj-E<gt>B<deg2dms>(DEGREES, POS, NEG)
+=item $obj-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
-=item Geo::Shape-E<gt>B<deg2dms>(DEGREES, POS, NEG)
+=item Geo::Shape-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
 example: 
 
  print $point->deg2dms(0.12, 'e', 'w');
  print Geo::Shape->deg2dms(0.12, 'e', 'w');
 
-=item $obj-E<gt>B<dms2deg>(DMS)
+=item $obj-E<gt>B<dms2deg>($dms)
 
-=item Geo::Shape-E<gt>B<dms2deg>(DMS)
+=item Geo::Shape-E<gt>B<dms2deg>($dms)
 
 Accepts for instance 3d12'24.123, 3d12"E, 3.12314w, n2.14, s3d12",
 -12d34, and returns floating point degrees.
@@ -208,8 +210,8 @@ The limitation is purely caused by lack of time to implement this.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.94,
-built on December 21, 2012. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.95,
+built on January 20, 2014. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
@@ -226,7 +228,7 @@ F<http://geo-perl@list.hut.fi>
 
 =head1 LICENSE
 
-Copyrights 2005-2012 by [Mark Overmeer]. For other contributors see ChangeLog.
+Copyrights 2005-2014 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

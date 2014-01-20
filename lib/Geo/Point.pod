@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 NAME
 
 Geo::Point - a point on the globe
@@ -31,19 +33,25 @@ represented.
 
 One of the most confusing things when handling geometrical data, is
 that sometimes latlong, sometimes xy are used: horizontal and vertical
-organization reversed.  This packages tries to hide this from your
+organization reversed.  This package tries to hide this from your
 program by providing abstract accessors L<latlong()|Geo::Point/"Constructors">, L<longlat()|Geo::Point/"Constructors">,
 L<xy()|Geo::Point/"Constructors">, and L<yx()|Geo::Point/"Constructors">.
 
+See L<documentation in the base class|Geo::Shape/"DESCRIPTION">.
+ 
 =head1 METHODS
 
+See L<documentation in the base class|Geo::Shape/"METHODS">.
+ 
 =head2 Constructors
 
+See L<documentation in the base class|Geo::Shape/"Constructors">.
+ 
 =over 4
 
-=item Geo::Point-E<gt>B<fromString>(STRING, {PROJECTION])
+=item Geo::Point-E<gt>B<fromString>($string, [$projection])
 
-Create a new point from a STRING.  The coordinates can be separated by
+Create a new point from a $string.  The coordinates can be separated by
 a comma (preferrably), or blanks.  When the coordinates end on NSEW, the
 order does not matter, otherwise lat-long or xy order is presumed.
 
@@ -79,17 +87,17 @@ example: point from string
  my $p = eval { Geo::Point->fromString($x) };
  warn $@ if $@;
 
-=item $obj-E<gt>B<latlong>([LAT, LONG, [PROJ] ] | [PROJ])
+=item $obj-E<gt>B<latlong>([$lat, $long, [$proj] ] | [$proj])
 
-=item Geo::Point-E<gt>B<latlong>([LAT, LONG, [PROJ] ] | [PROJ])
+=item Geo::Point-E<gt>B<latlong>([$lat, $long, [$proj] ] | [$proj])
 
 When called as class method, you create a new point.  Provide a LATitude
 and LONGitude. The optional PROJection tells in which coordinate system.
 
 As instance method, the latitude and longitude are reported.  You
-can ask it to be translated into the PROJ coordinate system first.
+can ask it to be translated into the $proj coordinate system first.
 
-When PROJ is undefined, none is presumed. The project must be specified
+When $proj is undefined, none is presumed. The project must be specified
 as string, which referse to a projection defined by L<Geo::Proj|Geo::Proj>.
 See also L<longlat()|Geo::Point/"Constructors">, L<xy()|Geo::Point/"Constructors">, and L<yx()|Geo::Point/"Constructors">.
 
@@ -102,14 +110,14 @@ example: latlong as instance method
 
  my ($lat, $long) = $gp->latlong('wgs84');
 
-=item $obj-E<gt>B<longlat>([LONG, LAT, [PROJ] ] | [PROJ])
+=item $obj-E<gt>B<longlat>([$long, $lat, [$proj] ] | [$proj])
 
-=item Geo::Point-E<gt>B<longlat>([LONG, LAT, [PROJ] ] | [PROJ])
+=item Geo::Point-E<gt>B<longlat>([$long, $lat, [$proj] ] | [$proj])
 
 Like L<latlong()|Geo::Point/"Constructors">, but with the coordinates reversed.  Some applications
 prefer this.
 
-=item Geo::Point-E<gt>B<new>(OPTIONS)
+=item Geo::Point-E<gt>B<new>(%options)
 
  -Option   --Defined in     --Default
   lat                         undef
@@ -138,16 +146,16 @@ prefer this.
 
 =back
 
-=item $obj-E<gt>B<xy>([X, Y, [PROJ] ] | [PROJ])
+=item $obj-E<gt>B<xy>([$x, $y, [$proj] ] | [$proj])
 
-=item Geo::Point-E<gt>B<xy>([X, Y, [PROJ] ] | [PROJ])
+=item Geo::Point-E<gt>B<xy>([$x, $y, [$proj] ] | [$proj])
 
 Like L<latlong()|Geo::Point/"Constructors"> but now for carthesian projections.  Usually, the coordinate
 order is reversed.  See also L<yx()|Geo::Point/"Constructors">.
 
-=item $obj-E<gt>B<yx>([Y, X, [PROJ] ] | [PROJ])
+=item $obj-E<gt>B<yx>([$y, $x, [$proj] ] | [$proj])
 
-=item Geo::Point-E<gt>B<yx>([Y, X, [PROJ] ] | [PROJ])
+=item Geo::Point-E<gt>B<yx>([$y, $x, [$proj] ] | [$proj])
 
 Like L<latlong()|Geo::Point/"Constructors"> but now for carthesian projections.  Usually, the
 coordinate order is reversed.  See also L<xy()|Geo::Point/"Constructors">.
@@ -156,6 +164,8 @@ coordinate order is reversed.  See also L<xy()|Geo::Point/"Constructors">.
 
 =head2 Attributes
 
+See L<documentation in the base class|Geo::Shape/"Attributes">.
+ 
 =over 4
 
 =item $obj-E<gt>B<proj>()
@@ -191,9 +201,11 @@ in the right coordinate systems.
 
 =head2 Projections
 
+See L<documentation in the base class|Geo::Shape/"Projections">.
+ 
 =over 4
 
-=item $obj-E<gt>B<in>(LABEL|'utm')
+=item $obj-E<gt>B<in>($label|'utm')
 
 See L<Geo::Shape/"Projections">
 
@@ -202,7 +214,7 @@ See L<Geo::Shape/"Projections">
 Be sure the that coordinates are between -180/180 longitude, -90/90
 lattitude.  No changes for non-latlong projections.
 
-=item $obj-E<gt>B<projectOn>(NICK, POINTS)
+=item $obj-E<gt>B<projectOn>($nick, $points)
 
 See L<Geo::Shape/"Projections">
 
@@ -210,6 +222,8 @@ See L<Geo::Shape/"Projections">
 
 =head2 Geometry
 
+See L<documentation in the base class|Geo::Shape/"Geometry">.
+ 
 =over 4
 
 =item $obj-E<gt>B<area>()
@@ -224,39 +238,41 @@ The bounding box of a point contains twice itself.
 
 See L<Geo::Shape/"Geometry">
 
-=item $obj-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+=item $obj-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
-=item Geo::Point-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
-
-See L<Geo::Shape/"Geometry">
-
-=item $obj-E<gt>B<distance>(OBJECT, [UNIT])
+=item Geo::Point-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
 See L<Geo::Shape/"Geometry">
 
-=item $obj-E<gt>B<distancePointPoint>(GEODIST, UNITS, POINT)
+=item $obj-E<gt>B<distance>($object, [$unit])
 
-Compute the distance between the current point and some other POINT in
-UNITS.  The GEODIST object will do the calculations.  See L<distance()|Geo::Shape/"Geometry">.
+See L<Geo::Shape/"Geometry">
 
-=item $obj-E<gt>B<inBBox>(OBJECT)
+=item $obj-E<gt>B<distancePointPoint>($geodist, $units, $point)
+
+Compute the distance between the current point and some other $point in
+$units.  The $geodist object will do the calculations.  See L<distance()|Geo::Shape/"Geometry">.
+
+=item $obj-E<gt>B<inBBox>($object)
 
 Returns a true value if this point is inside the bounding box of
-the specified OBJECT.  The borders of the bbox are included.  This is
+the specified $object.  The borders of the bbox are included.  This is
 relatively fast to check, even for complex objects.  When the projections
-differ, the point is translated into the OBJECT's coordinate system,
+differ, the point is translated into the $object's coordinate system,
 because that one must stay square.
 
 =item $obj-E<gt>B<perimeter>()
 
 Always returns zero.
 
-=item $obj-E<gt>B<sameAs>(OTHER, TOLERANCE)
+=item $obj-E<gt>B<sameAs>($other, $tolerance)
 
 =back
 
 =head2 Display
 
+See L<documentation in the base class|Geo::Shape/"Display">.
+ 
 =over 4
 
 =item $obj-E<gt>B<coords>()
@@ -269,43 +285,43 @@ with a joining blank;
 Returns the coordinates in the order which is usual for the projection
 used.
 
-=item $obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+=item $obj-E<gt>B<deg2dm>($degrees, $pos, $neg)
 
-=item Geo::Point-E<gt>B<deg2dm>(DEGREES, POS, NEG)
-
-See L<Geo::Shape/"Display">
-
-=item $obj-E<gt>B<deg2dms>(DEGREES, POS, NEG)
-
-=item Geo::Point-E<gt>B<deg2dms>(DEGREES, POS, NEG)
+=item Geo::Point-E<gt>B<deg2dm>($degrees, $pos, $neg)
 
 See L<Geo::Shape/"Display">
 
-=item $obj-E<gt>B<dm>([PROJECTION])
+=item $obj-E<gt>B<deg2dms>($degrees, $pos, $neg)
+
+=item Geo::Point-E<gt>B<deg2dms>($degrees, $pos, $neg)
+
+See L<Geo::Shape/"Display">
+
+=item $obj-E<gt>B<dm>([$projection])
 
 Like L<dms()|Geo::Point/"Display">, but doesn't show seconds.
 
-=item $obj-E<gt>B<dmHTML>([PROJECTION])
+=item $obj-E<gt>B<dmHTML>([$projection])
 
 Like L<dmsHTML()|Geo::Point/"Display">, but does not show seconds.
 
-=item $obj-E<gt>B<dms>([PROJECTION])
+=item $obj-E<gt>B<dms>([$projection])
 
 Show the point as DMS value-pair.  You must be sure that the coordinate
-is a projection for which is it usefull to represent the values in DMS.
+is a projection for which is it useful to represent the values in DMS.
 In SCALAR context, one string is returned.  In LIST context, the values
 are returned separately in latlong order.
 
 Be warned, that the returned string may contain single and double quote
 characters, which may confuse HTML (see L<dmsHTML()|Geo::Point/"Display">).
 
-=item $obj-E<gt>B<dms2deg>(DMS)
+=item $obj-E<gt>B<dms2deg>($dms)
 
-=item Geo::Point-E<gt>B<dms2deg>(DMS)
+=item Geo::Point-E<gt>B<dms2deg>($dms)
 
 See L<Geo::Shape/"Display">
 
-=item $obj-E<gt>B<dmsHTML>([PROJECTION])
+=item $obj-E<gt>B<dmsHTML>([$projection])
 
 Like L<dms()|Geo::Point/"Display">, but all character which are troublesome for HTML are
 translated into character codes.
@@ -313,7 +329,7 @@ translated into character codes.
 =item $obj-E<gt>B<moveWest>()
 
 Move a point from the eastern calculations into the western calculations,
-resulting in a value below -180.  This is usefull when this point is part
+resulting in a value below -180.  This is useful when this point is part
 of a larger construct, like the corners of a satellite image, which are
 both sides of the -180 meridian.
 
@@ -323,7 +339,7 @@ example: moving West
  $point->moveWest;
  print $point->long;   # -181;
 
-=item $obj-E<gt>B<toString>([PROJECTION])
+=item $obj-E<gt>B<toString>([$projection])
 
 Returns a string representation of the point, which is also used for
 stringification.  The default projection is the one of the point.
@@ -339,6 +355,8 @@ example:
 
 =head1 OVERLOAD
 
+See L<documentation in the base class|Geo::Shape/"OVERLOAD">.
+ 
 =over 4
 
 =item overload: B<'""' (stringification)>()
@@ -357,7 +375,7 @@ See L<Geo::Shape/"OVERLOAD">
 
 =item Error: UTM requires 3 values: easting, northing, and zone
 
-=item Error: can only compare a point to an other Geo::Point
+=item Error: can only compare a point to another Geo::Point
 
 =item Error: distance calculation not implemented between a $kind and a $kind
 
@@ -401,8 +419,8 @@ L<Geo::Proj::new()|Geo::Proj/"Constructors"> about how to defined them.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.94,
-built on December 21, 2012. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.95,
+built on January 20, 2014. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
@@ -419,7 +437,7 @@ F<http://geo-perl@list.hut.fi>
 
 =head1 LICENSE
 
-Copyrights 2005-2012 by [Mark Overmeer]. For other contributors see ChangeLog.
+Copyrights 2005-2014 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

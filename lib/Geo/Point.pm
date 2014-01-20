@@ -1,14 +1,14 @@
-# Copyrights 2005-2012 by [Mark Overmeer].
+# Copyrights 2005-2014 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 2.00.
+# Pod stripped from pm file by OODoc 2.01.
 
 use strict;
 use warnings;
 
 package Geo::Point;
 use vars '$VERSION';
-$VERSION = '0.94';
+$VERSION = '0.95';
 
 use base 'Geo::Shape';
 
@@ -178,6 +178,7 @@ sub fromString($;$)
     ();
 }
 
+#----------------
 
 sub longitude() {shift->{GP_x}}
 sub long()      {shift->{GP_x}}
@@ -187,6 +188,7 @@ sub lat()       {shift->{GP_y}}
 sub x()         {shift->{GP_x}}
 sub y()         {shift->{GP_y}}
 
+#----------------
 
 sub in($)
 {   my ($self, $newproj) = @_;
@@ -212,6 +214,7 @@ sub normalize()
     $self;
 }
 
+#----------------
 
 sub bbox() { @{(shift)}[ qw/GP_x GP_y GP_x GP_y/ ] }
 
@@ -230,14 +233,14 @@ sub distancePointPoint($$$)
 
     my $here  = $self->in('wgs84');
     my $there = $other->in('wgs84');
-    $geodist->distance_calc($units, $here->latlong, $there->latlong);
+    $geodist->distance($units, $here->latlong, $there->latlong);
 }
 
 
 sub sameAs($$)
 {   my ($self, $other, $e) = (shift, shift);
 
-    croak "ERROR: can only compare a point to an other Geo::Point"
+    croak "ERROR: can only compare a point to another Geo::Point"
         unless $other->isa('Geo::Point');
 
     # may be latlong or xy, doesn't matter: $e is corrected for that
@@ -254,6 +257,7 @@ sub inBBox($)
     $xmin <= $x && $x <= $xmax && $ymin <= $y && $y <= $ymax
 }
 
+#----------------
 
 sub coordsUsualOrder()
 {   my $self = shift;

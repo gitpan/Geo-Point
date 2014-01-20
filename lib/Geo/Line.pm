@@ -1,14 +1,14 @@
-# Copyrights 2005-2012 by [Mark Overmeer].
+# Copyrights 2005-2014 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 2.00.
+# Pod stripped from pm file by OODoc 2.01.
 
 use strict;
 use warnings;
 
 package Geo::Line;
 use vars '$VERSION';
-$VERSION = '0.94';
+$VERSION = '0.95';
 
 use base qw/Geo::Shape Math::Polygon/;
 
@@ -35,7 +35,7 @@ sub new(@)
     ref $thing
         or return shift->Math::Polygon::new(%args);
 
-    # instance method
+    # instance method: clone!
     $thing->Math::Polygon::new
       ( ring   => $thing->{GL_ring}
       , filled => $thing->{GL_fill}
@@ -198,6 +198,7 @@ sub isRing()
 
 sub isFilled() { shift->{GL_fill} }
 
+#----------------
 
 sub in($)
 {   my ($self, $projnew) = @_;
@@ -209,6 +210,7 @@ sub in($)
     @points ? $self->new(points => \@points, proj => $realproj) : $self;
 }
 
+#----------------
 
 sub equal($;$)
 {   my $self  = shift;
@@ -253,6 +255,7 @@ sub clip(@)
     $self->isFilled ? $self->fillClip1(@bbox) : $self->lineClip(@bbox);
 }
 
+#----------------
 
 sub toString(;$)
 {   my ($self, $proj) = @_;

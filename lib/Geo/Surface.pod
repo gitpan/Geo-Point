@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 NAME
 
 Geo::Surface - A surface description.
@@ -16,20 +18,26 @@ Geo::Surface - A surface description.
 In this context, a "surface" is defined as one filled area with
 possible enclosures in one projection system.
 
+See L<documentation in the base class|Geo::Shape/"DESCRIPTION">.
+ 
 =head1 METHODS
 
+See L<documentation in the base class|Geo::Shape/"METHODS">.
+ 
 =head2 Constructors
 
+See L<documentation in the base class|Geo::Shape/"Constructors">.
+ 
 =over 4
 
-=item Geo::Surface-E<gt>B<new>((SURFACE|(OUTER,INNER,...)), [OPTIONS])
+=item Geo::Surface-E<gt>B<new>(<$surface|<$outer,$inner,...>>, [%options])
 
 When called as instance method, some defaults are copied from the
 object where the call is made upon.
 
-You may either provide a L<Math::Polygon::Surface|Math::Polygon::Surface> SURFACE, or a LIST
-of lines.  In the latter case, the first line is the OUTER polygon of
-the surface, and the other are all INNER enclosures: lakes.  Lines
+You may either provide a L<Math::Polygon::Surface|Math::Polygon::Surface> $surface, or a LIST
+of lines.  In the latter case, the first line is the $outer polygon of
+the surface, and the other are all $inner enclosures: lakes.  Lines
 are and L<Geo::Line|Geo::Line>, L<Math::Polygon|Math::Polygon> objects, or ARRAY of points.
 
 If no projection is specified, then the projection of the first
@@ -48,6 +56,8 @@ Geo-encoded line will be used.
 
 =head2 Attributes
 
+See L<documentation in the base class|Geo::Shape/"Attributes">.
+ 
 =over 4
 
 =item $obj-E<gt>B<geoInner>()
@@ -78,13 +88,15 @@ See L<Geo::Shape/"Attributes">
 
 =head2 Projections
 
+See L<documentation in the base class|Geo::Shape/"Projections">.
+ 
 =over 4
 
-=item $obj-E<gt>B<in>(LABEL|'utm')
+=item $obj-E<gt>B<in>($label|'utm')
 
 See L<Geo::Shape/"Projections">
 
-=item $obj-E<gt>B<projectOn>(NICK, POINTS)
+=item $obj-E<gt>B<projectOn>($nick, $points)
 
 See L<Geo::Shape/"Projections">
 
@@ -92,6 +104,8 @@ See L<Geo::Shape/"Projections">
 
 =head2 Geometry
 
+See L<documentation in the base class|Geo::Shape/"Geometry">.
+ 
 =over 4
 
 =item $obj-E<gt>B<area>()
@@ -108,13 +122,13 @@ The bounding box of outer surface polygon.
 
 See L<Geo::Shape/"Geometry">
 
-=item $obj-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+=item $obj-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
-=item Geo::Surface-E<gt>B<bboxRing>([XMIN, YMIN, XMAX, YMAX, [PROJ]])
+=item Geo::Surface-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
 See L<Geo::Shape/"Geometry">
 
-=item $obj-E<gt>B<distance>(OBJECT, [UNIT])
+=item $obj-E<gt>B<distance>($object, [$unit])
 
 See L<Geo::Shape/"Geometry">
 
@@ -127,27 +141,29 @@ coordinate systems.
 
 =head2 Display
 
+See L<documentation in the base class|Geo::Shape/"Display">.
+ 
 =over 4
 
-=item $obj-E<gt>B<deg2dm>(DEGREES, POS, NEG)
+=item $obj-E<gt>B<deg2dm>($degrees, $pos, $neg)
 
-=item Geo::Surface-E<gt>B<deg2dm>(DEGREES, POS, NEG)
-
-See L<Geo::Shape/"Display">
-
-=item $obj-E<gt>B<deg2dms>(DEGREES, POS, NEG)
-
-=item Geo::Surface-E<gt>B<deg2dms>(DEGREES, POS, NEG)
+=item Geo::Surface-E<gt>B<deg2dm>($degrees, $pos, $neg)
 
 See L<Geo::Shape/"Display">
 
-=item $obj-E<gt>B<dms2deg>(DMS)
+=item $obj-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
-=item Geo::Surface-E<gt>B<dms2deg>(DMS)
+=item Geo::Surface-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
 See L<Geo::Shape/"Display">
 
-=item $obj-E<gt>B<toString>([PROJECTION])
+=item $obj-E<gt>B<dms2deg>($dms)
+
+=item Geo::Surface-E<gt>B<dms2deg>($dms)
+
+See L<Geo::Shape/"Display">
+
+=item $obj-E<gt>B<toString>([$projection])
 
 Returns a string representation of the line, which is also used for
 stringification.
@@ -156,6 +172,8 @@ stringification.
 
 =head1 OVERLOAD
 
+See L<documentation in the base class|Geo::Shape/"OVERLOAD">.
+ 
 =over 4
 
 =item overload: B<'""' (stringification)>()
@@ -191,8 +209,8 @@ The limitation is purely caused by lack of time to implement this.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.94,
-built on December 21, 2012. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.95,
+built on January 20, 2014. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
@@ -209,7 +227,7 @@ F<http://geo-perl@list.hut.fi>
 
 =head1 LICENSE
 
-Copyrights 2005-2012 by [Mark Overmeer]. For other contributors see ChangeLog.
+Copyrights 2005-2014 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
