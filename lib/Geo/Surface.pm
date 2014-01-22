@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Surface;
 use vars '$VERSION';
-$VERSION = '0.95';
+$VERSION = '0.96';
 
 use base 'Geo::Shape';
 
@@ -88,6 +88,7 @@ sub geoInner()
 *geo_outer = \&geoOuter;
 *geo_inner = \&geoInner;
 
+#--------------
 
 sub in($)
 {   my ($self, $projnew) = @_;

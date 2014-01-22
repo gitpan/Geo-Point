@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Shape;
 use vars '$VERSION';
-$VERSION = '0.95';
+$VERSION = '0.96';
 
 
 use Geo::Proj;      # defines wgs84
@@ -32,7 +32,7 @@ sub new(@) { my $class = shift; (bless {}, $class)->init( {@_} ) }
 sub init($)
 {   my ($self, $args) = @_;
     my $proj = $self->{G_proj}
-             = $args->{proj} || Geo::Proj->defaultProjection->nick;
+      = $args->{proj} || Geo::Proj->defaultProjection->nick;
 
     croak "proj parameter must be a label, not a Geo::Proj object"
         if UNIVERSAL::isa($proj, 'Geo::Proj');
@@ -42,16 +42,10 @@ sub init($)
 
 #---------------------------
 
-
-sub proj()  {shift->{G_proj} }
-
-
-sub proj4()
-{   Geo::Proj->proj4(shift->{G_proj});
-}
+sub proj()  { shift->{G_proj} }
+sub proj4() { Geo::Proj->proj4(shift->{G_proj}) }
 
 #---------------------------
-
 
 sub in($) { croak "ERROR: in() not implemented for a ".ref(shift) }
 
@@ -80,7 +74,6 @@ sub projectOn($@)
 }
 
 #---------------------------
-
 
 my $geodist;
 sub distance($;$)
@@ -127,9 +120,7 @@ sub bboxRing(@)
 }
 
 
-sub bbox()
-{   confess "INTERNAL: bbox() not implemented for ".ref(shift);
-}
+sub bbox() { confess "INTERNAL: bbox() not implemented for ".ref(shift) }
 
 
 sub bboxCenter()
@@ -139,14 +130,10 @@ sub bboxCenter()
 }
 
 
-sub area()
-{   confess "INTERNAL: area() not implemented for ".ref(shift);
-}
+sub area() { confess "INTERNAL: area() not implemented for ".ref(shift) }
 
 
-sub perimeter()
-{   confess "INTERNAL: perimeter() not implemented for ".ref(shift);
-}
+sub perimeter() { confess "INTERNAL: perimeter() not implemented for ".ref(shift) }
 
 
 sub deg2dms($$$)
@@ -161,7 +148,6 @@ sub deg2dms($$$)
     }
 
     my $d       = int $degrees;
-
     my $frac    = ($degrees - $d) * 60;
     my $m       = int($frac + 0.00001);
     my $s       = ($frac - $m) * 60;
@@ -204,12 +190,12 @@ sub dms2deg($)
    my $o = 'E';
    $dms =~ s/^\s+//;
 
-   if($dms =~ s/([ewsn])\s*$//i)    { $o = uc($1) }
-   elsif($dms =~ s/^([ewsn])\s*//i) { $o = uc($1) }
+      if($dms =~ s/([ewsn])\s*$//i) { $o = uc $1 }
+   elsif($dms =~ s/^([ewsn])\s*//i) { $o = uc $1 }
 
-   if($dms =~ m/^( [+-]? \d+ (?: \.\d+)? )     [\x{B0}dD]?
-                 \s* (?: ( \d+ (?: \.\d+)? )   [\'mM\x{92}]? )?
-                 \s* (?: ( \d+ (?: \.\d+)? )   [\"sS]? )?
+   if($dms =~ m/^( [+-]? \d+ (?: \.\d+)? )   [\x{B0}dD]?
+               \s* (?: ( \d+ (?: \.\d+)? )   [\'mM\x{92}]? )?
+               \s* (?: ( \d+ (?: \.\d+)? )   [\"sS]? )?
                /xi
      )
    {   my ($d, $m, $s) = ($1, $2||0, $3||0);

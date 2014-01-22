@@ -20,21 +20,21 @@ Geo::Space - A collection of various  items
 Where a L<Geo::Surface|Geo::Surface> can only contains sets of nested polygons, the
 Space can contain anything you like: lines, points, and unrelated polygons.
 
-See L<documentation in the base class|Geo::Shape/"DESCRIPTION">.
+Extends L<"DESCRIPTION" in Geo::Shape|Geo::Shape/"DESCRIPTION">.
  
 =head1 METHODS
 
-See L<documentation in the base class|Geo::Shape/"METHODS">.
+Extends L<"METHODS" in Geo::Shape|Geo::Shape/"METHODS">.
  
 =head2 Constructors
 
-See L<documentation in the base class|Geo::Shape/"Constructors">.
+Extends L<"Constructors" in Geo::Shape|Geo::Shape/"Constructors">.
  
 =over 4
 
-=item $obj-E<gt>B<new>([$components], [%options])
+=item $obj-E<gt>B<new>([$components], %options)
 
-=item Geo::Space-E<gt>B<new>([$components], [%options])
+=item Geo::Space-E<gt>B<new>([$components], %options)
 
 When called as instance method, some defaults are copied from the
 object where the call is made upon.  Usually called as class method.
@@ -55,7 +55,7 @@ L<Geo::Point|Geo::Point>, L<Geo::Line|Geo::Line>, L<Geo::Surface|Geo::Surface>, 
 
 =head2 Attributes
 
-See L<documentation in the base class|Geo::Shape/"Attributes">.
+Extends L<"Attributes" in Geo::Shape|Geo::Shape/"Attributes">.
  
 =over 4
 
@@ -97,33 +97,33 @@ components.
 
 =item $obj-E<gt>B<proj>()
 
-See L<Geo::Shape/"Attributes">
+Inherited, see L<Geo::Shape/"Attributes">
 
 =item $obj-E<gt>B<proj4>()
 
-See L<Geo::Shape/"Attributes">
+Inherited, see L<Geo::Shape/"Attributes">
 
 =back
 
 =head2 Projections
 
-See L<documentation in the base class|Geo::Shape/"Projections">.
+Extends L<"Projections" in Geo::Shape|Geo::Shape/"Projections">.
  
 =over 4
 
-=item $obj-E<gt>B<in>($label|'utm')
+=item $obj-E<gt>B<in>(<$label|'utm'>)
 
-See L<Geo::Shape/"Projections">
+Inherited, see L<Geo::Shape/"Projections">
 
-=item $obj-E<gt>B<projectOn>($nick, $points)
+=item $obj-E<gt>B<projectOn>($nick, @points)
 
-See L<Geo::Shape/"Projections">
+Inherited, see L<Geo::Shape/"Projections">
 
 =back
 
 =head2 Geometry
 
-See L<documentation in the base class|Geo::Shape/"Geometry">.
+Extends L<"Geometry" in Geo::Shape|Geo::Shape/"Geometry">.
  
 =over 4
 
@@ -134,21 +134,21 @@ the points are in some orthogonal projection.
 
 =item $obj-E<gt>B<bbox>()
 
-See L<Geo::Shape/"Geometry">
+Inherited, see L<Geo::Shape/"Geometry">
 
 =item $obj-E<gt>B<bboxCenter>()
 
-See L<Geo::Shape/"Geometry">
+Inherited, see L<Geo::Shape/"Geometry">
 
 =item $obj-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
 =item Geo::Space-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
-See L<Geo::Shape/"Geometry">
+Inherited, see L<Geo::Shape/"Geometry">
 
 =item $obj-E<gt>B<distance>($object, [$unit])
 
-See L<Geo::Shape/"Geometry">
+Inherited, see L<Geo::Shape/"Geometry">
 
 =item $obj-E<gt>B<perimeter>()
 
@@ -159,7 +159,7 @@ orthogonal coordinate systems.
 
 =head2 Display
 
-See L<documentation in the base class|Geo::Shape/"Display">.
+Extends L<"Display" in Geo::Shape|Geo::Shape/"Display">.
  
 =over 4
 
@@ -167,19 +167,19 @@ See L<documentation in the base class|Geo::Shape/"Display">.
 
 =item Geo::Space-E<gt>B<deg2dm>($degrees, $pos, $neg)
 
-See L<Geo::Shape/"Display">
+Inherited, see L<Geo::Shape/"Display">
 
 =item $obj-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
 =item Geo::Space-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
-See L<Geo::Shape/"Display">
+Inherited, see L<Geo::Shape/"Display">
 
 =item $obj-E<gt>B<dms2deg>($dms)
 
 =item Geo::Space-E<gt>B<dms2deg>($dms)
 
-See L<Geo::Shape/"Display">
+Inherited, see L<Geo::Shape/"Display">
 
 =item $obj-E<gt>B<toString>([$projection])
 
@@ -192,17 +192,17 @@ example:
 
 =head1 OVERLOAD
 
-See L<documentation in the base class|Geo::Shape/"OVERLOAD">.
+Extends L<"OVERLOAD" in Geo::Shape|Geo::Shape/"OVERLOAD">.
  
 =over 4
 
-=item overload: B<'""' (stringification)>()
+=item overload: B<'""' (stringification)>
 
-See L<Geo::Shape/"OVERLOAD">
+Inherited, see L<Geo::Shape/"OVERLOAD">
 
-=item overload: B<'bool' (truth value)>()
+=item overload: B<'bool' (truth value)>
 
-See L<Geo::Shape/"OVERLOAD">
+Inherited, see L<Geo::Shape/"OVERLOAD">
 
 =back
 
@@ -221,8 +221,8 @@ The limitation is purely caused by lack of time to implement this.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.95,
-built on January 20, 2014. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.96,
+built on January 21, 2014. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,

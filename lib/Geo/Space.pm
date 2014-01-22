@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Space;
 use vars '$VERSION';
-$VERSION = '0.95';
+$VERSION = '0.96';
 
 use base 'Geo::Shape';
 
@@ -53,13 +53,13 @@ sub component(@)
 sub nrComponents() { scalar @{shift->{GS_comp}} }
 
 
-sub points()     { grep {$_->isa('Geo::Points')} shift->components }
+sub points()     { grep $_->isa('Geo::Points'), shift->components }
 
 
 sub onlyPoints() { not first {! $_->isa('Geo::Points')} shift->components }
 
 
-sub lines()      { grep {$_->isa('Geo::Line')} shift->components }
+sub lines()      { grep $_->isa('Geo::Line'), shift->components }
 
 
 sub onlyLines()  { not first {! $_->isa('Geo::Line')} shift->components }
@@ -86,15 +86,15 @@ sub in($)
 
 sub bbox()
 {   my $self = shift;
-    my @bboxes = map { [$_->bbox] } $self->components;
-    polygon_bbox(map { ([$_->[0], $_->[1]], [$_->[2], $_->[3]]) } @bboxes);
+    my @bboxes = map [$_->bbox], $self->components;
+    polygon_bbox(map +([$_->[0], $_->[1]], [$_->[2], $_->[3]]), @bboxes);
 }
 
 
-sub area() { sum map { $_->area } shift->components }
+sub area() { sum map $_->area, shift->components }
 
 
-sub perimeter() { sum map { $_->perimeter } shift->components }
+sub perimeter() { sum map $_->perimeter, shift->components }
 
 
 sub toString(;$)

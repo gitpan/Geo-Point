@@ -28,21 +28,21 @@ Geo::Line - a sequence of connected points
 A 2-dimensional sequence of connected points.  The points will be forced
 to use the same projection.
 
-See L<documentation in the base class|Math::Polygon/"DESCRIPTION">.
+Extends L<"DESCRIPTION" in Math::Polygon|Math::Polygon/"DESCRIPTION">.
  
-See L<documentation in the base class|Geo::Shape/"DESCRIPTION">.
+Extends L<"DESCRIPTION" in Geo::Shape|Geo::Shape/"DESCRIPTION">.
  
 =head1 METHODS
 
-See L<documentation in the base class|Math::Polygon/"METHODS">.
+Extends L<"METHODS" in Math::Polygon|Math::Polygon/"METHODS">.
  
-See L<documentation in the base class|Geo::Shape/"METHODS">.
+Extends L<"METHODS" in Geo::Shape|Geo::Shape/"METHODS">.
  
 =head2 Constructors
 
-See L<documentation in the base class|Math::Polygon/"Constructors">.
+Extends L<"Constructors" in Math::Polygon|Math::Polygon/"Constructors">.
  
-See L<documentation in the base class|Geo::Shape/"Constructors">.
+Extends L<"Constructors" in Geo::Shape|Geo::Shape/"Constructors">.
  
 =over 4
 
@@ -156,9 +156,9 @@ Don't forget the C<eval> when you call this method.
 
 =head2 Attributes
 
-See L<documentation in the base class|Math::Polygon/"Attributes">.
+Extends L<"Attributes" in Math::Polygon|Math::Polygon/"Attributes">.
  
-See L<documentation in the base class|Geo::Shape/"Attributes">.
+Extends L<"Attributes" in Geo::Shape|Geo::Shape/"Attributes">.
  
 =over 4
 
@@ -189,51 +189,51 @@ first point is the last.
 
 =item $obj-E<gt>B<nrPoints>()
 
-See L<Math::Polygon/"Attributes">
+Inherited, see L<Math::Polygon/"Attributes">
 
 =item $obj-E<gt>B<order>()
 
-See L<Math::Polygon/"Attributes">
+Inherited, see L<Math::Polygon/"Attributes">
 
-=item $obj-E<gt>B<point>(INDEX, [INDEX, ...])
+=item $obj-E<gt>B<point>($index, [$index,...])
 
-See L<Math::Polygon/"Attributes">
+Inherited, see L<Math::Polygon/"Attributes">
 
 =item $obj-E<gt>B<points>()
 
-See L<Math::Polygon/"Attributes">
+Inherited, see L<Math::Polygon/"Attributes">
 
 =item $obj-E<gt>B<proj>()
 
-See L<Geo::Shape/"Attributes">
+Inherited, see L<Geo::Shape/"Attributes">
 
 =item $obj-E<gt>B<proj4>()
 
-See L<Geo::Shape/"Attributes">
+Inherited, see L<Geo::Shape/"Attributes">
 
 =back
 
 =head2 Projections
 
-See L<documentation in the base class|Geo::Shape/"Projections">.
+Extends L<"Projections" in Geo::Shape|Geo::Shape/"Projections">.
  
 =over 4
 
-=item $obj-E<gt>B<in>($label|'utm')
+=item $obj-E<gt>B<in>(<$label|'utm'>)
 
-See L<Geo::Shape/"Projections">
+Inherited, see L<Geo::Shape/"Projections">
 
-=item $obj-E<gt>B<projectOn>($nick, $points)
+=item $obj-E<gt>B<projectOn>($nick, @points)
 
-See L<Geo::Shape/"Projections">
+Inherited, see L<Geo::Shape/"Projections">
 
 =back
 
 =head2 Geometry
 
-See L<documentation in the base class|Math::Polygon/"Geometry">.
+Extends L<"Geometry" in Math::Polygon|Math::Polygon/"Geometry">.
  
-See L<documentation in the base class|Geo::Shape/"Geometry">.
+Extends L<"Geometry" in Geo::Shape|Geo::Shape/"Geometry">.
  
 =over 4
 
@@ -249,21 +249,21 @@ open line pieces.
 
 =item $obj-E<gt>B<bboxCenter>()
 
-See L<Geo::Shape/"Geometry">
+Inherited, see L<Geo::Shape/"Geometry">
 
 =item $obj-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
 =item Geo::Line-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
-See L<Geo::Shape/"Geometry">
+Inherited, see L<Geo::Shape/"Geometry">
 
-=item $obj-E<gt>B<beautify>(OPTIONS)
+=item $obj-E<gt>B<beautify>(%options)
 
-See L<Math::Polygon/"Geometry">
+Inherited, see L<Math::Polygon/"Geometry">
 
 =item $obj-E<gt>B<centroid>()
 
-See L<Math::Polygon/"Geometry">
+Inherited, see L<Math::Polygon/"Geometry">
 
 =item $obj-E<gt>B<clip>(<$xmin,$xmax,$ymin,$ymax>|$object)
 
@@ -277,31 +277,31 @@ that may change.
 
 =item $obj-E<gt>B<clockwise>()
 
-See L<Math::Polygon/"Geometry">
+Inherited, see L<Math::Polygon/"Geometry">
 
-=item $obj-E<gt>B<contains>(POINT)
+=item $obj-E<gt>B<contains>($point)
 
-See L<Math::Polygon/"Geometry">
+Inherited, see L<Math::Polygon/"Geometry">
 
 =item $obj-E<gt>B<counterClockwise>()
 
-See L<Math::Polygon/"Geometry">
+Inherited, see L<Math::Polygon/"Geometry">
 
 =item $obj-E<gt>B<distance>($object, [$unit])
 
-See L<Geo::Shape/"Geometry">
+Inherited, see L<Geo::Shape/"Geometry">
 
-=item $obj-E<gt>B<equal>((OTHER|ARRAY, [TOLERANCE])|POINTS)
+=item $obj-E<gt>B<equal>(<$other | ARRAY,[$tolerance]> | $points)
 
-See L<Math::Polygon/"Geometry">
+Inherited, see L<Math::Polygon/"Geometry">
 
 =item $obj-E<gt>B<isClockwise>()
 
-See L<Math::Polygon/"Geometry">
+Inherited, see L<Math::Polygon/"Geometry">
 
 =item $obj-E<gt>B<isClosed>()
 
-See L<Math::Polygon/"Geometry">
+Inherited, see L<Math::Polygon/"Geometry">
 
 =item $obj-E<gt>B<length>()
 
@@ -313,69 +313,69 @@ The length of the line, only useful in a orthogonal coordinate system
 The length of the line on the ring.  A check is performed that the ring
 is closed, but further this returns the result of L<length()|Geo::Line/"Geometry">
 
-=item $obj-E<gt>B<same>((OTHER|ARRAY, [TOLERANCE])|POINTS)
+=item $obj-E<gt>B<same>(<$other | ARRAY,[$tolerance]> | $points)
 
-See L<Math::Polygon/"Geometry">
+Inherited, see L<Math::Polygon/"Geometry">
 
 =item $obj-E<gt>B<startMinXY>()
 
-See L<Math::Polygon/"Geometry">
+Inherited, see L<Math::Polygon/"Geometry">
 
 =back
 
 =head2 Transformations
 
-See L<documentation in the base class|Math::Polygon/"Transformations">.
+Extends L<"Transformations" in Math::Polygon|Math::Polygon/"Transformations">.
  
 =over 4
 
-=item $obj-E<gt>B<grid>(OPTIONS)
+=item $obj-E<gt>B<grid>(%options)
 
-See L<Math::Polygon/"Transformations">
+Inherited, see L<Math::Polygon/"Transformations">
 
-=item $obj-E<gt>B<mirror>(OPTIONS)
+=item $obj-E<gt>B<mirror>(%options)
 
-See L<Math::Polygon/"Transformations">
+Inherited, see L<Math::Polygon/"Transformations">
 
-=item $obj-E<gt>B<move>(OPTIONS)
+=item $obj-E<gt>B<move>(%options)
 
-See L<Math::Polygon/"Transformations">
+Inherited, see L<Math::Polygon/"Transformations">
 
-=item $obj-E<gt>B<resize>(OPTIONS)
+=item $obj-E<gt>B<resize>(%options)
 
-See L<Math::Polygon/"Transformations">
+Inherited, see L<Math::Polygon/"Transformations">
 
-=item $obj-E<gt>B<rotate>(OPTIONS)
+=item $obj-E<gt>B<rotate>(%options)
 
-See L<Math::Polygon/"Transformations">
+Inherited, see L<Math::Polygon/"Transformations">
 
-=item $obj-E<gt>B<simplify>(OPTIONS)
+=item $obj-E<gt>B<simplify>(%options)
 
-See L<Math::Polygon/"Transformations">
+Inherited, see L<Math::Polygon/"Transformations">
 
 =back
 
 =head2 Clipping
 
-See L<documentation in the base class|Math::Polygon/"Clipping">.
+Extends L<"Clipping" in Math::Polygon|Math::Polygon/"Clipping">.
  
 =over 4
 
-=item $obj-E<gt>B<fillClip1>(BOX)
+=item $obj-E<gt>B<fillClip1>($box)
 
-See L<Math::Polygon/"Clipping">
+Inherited, see L<Math::Polygon/"Clipping">
 
-=item $obj-E<gt>B<lineClip>(BOX)
+=item $obj-E<gt>B<lineClip>($box)
 
-See L<Math::Polygon/"Clipping">
+Inherited, see L<Math::Polygon/"Clipping">
 
 =back
 
 =head2 Display
 
-See L<documentation in the base class|Math::Polygon/"Display">.
+Extends L<"Display" in Math::Polygon|Math::Polygon/"Display">.
  
-See L<documentation in the base class|Geo::Shape/"Display">.
+Extends L<"Display" in Geo::Shape|Geo::Shape/"Display">.
  
 =over 4
 
@@ -383,23 +383,23 @@ See L<documentation in the base class|Geo::Shape/"Display">.
 
 =item Geo::Line-E<gt>B<deg2dm>($degrees, $pos, $neg)
 
-See L<Geo::Shape/"Display">
+Inherited, see L<Geo::Shape/"Display">
 
 =item $obj-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
 =item Geo::Line-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
-See L<Geo::Shape/"Display">
+Inherited, see L<Geo::Shape/"Display">
 
 =item $obj-E<gt>B<dms2deg>($dms)
 
 =item Geo::Line-E<gt>B<dms2deg>($dms)
 
-See L<Geo::Shape/"Display">
+Inherited, see L<Geo::Shape/"Display">
 
 =item $obj-E<gt>B<string>()
 
-See L<Math::Polygon/"Display">
+Inherited, see L<Math::Polygon/"Display">
 
 =item $obj-E<gt>B<toString>([$projection])
 
@@ -410,17 +410,17 @@ stringification.  The old method named C<string> is deprecated.
 
 =head1 OVERLOAD
 
-See L<documentation in the base class|Geo::Shape/"OVERLOAD">.
+Extends L<"OVERLOAD" in Geo::Shape|Geo::Shape/"OVERLOAD">.
  
 =over 4
 
-=item overload: B<'""' (stringification)>()
+=item overload: B<'""' (stringification)>
 
-See L<Geo::Shape/"OVERLOAD">
+Inherited, see L<Geo::Shape/"OVERLOAD">
 
-=item overload: B<'bool' (truth value)>()
+=item overload: B<'bool' (truth value)>
 
-See L<Geo::Shape/"OVERLOAD">
+Inherited, see L<Geo::Shape/"OVERLOAD">
 
 =back
 
@@ -446,8 +446,8 @@ The limitation is purely caused by lack of time to implement this.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.95,
-built on January 20, 2014. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.96,
+built on January 21, 2014. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,

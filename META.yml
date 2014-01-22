@@ -23,4 +23,4 @@ requires:
   Math::Polygon: 1.01
   Math::Trig: 1
   Test::More: 0.47
-version: 0.95
+version: 0.96

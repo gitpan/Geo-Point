@@ -37,15 +37,15 @@ organization reversed.  This package tries to hide this from your
 program by providing abstract accessors L<latlong()|Geo::Point/"Constructors">, L<longlat()|Geo::Point/"Constructors">,
 L<xy()|Geo::Point/"Constructors">, and L<yx()|Geo::Point/"Constructors">.
 
-See L<documentation in the base class|Geo::Shape/"DESCRIPTION">.
+Extends L<"DESCRIPTION" in Geo::Shape|Geo::Shape/"DESCRIPTION">.
  
 =head1 METHODS
 
-See L<documentation in the base class|Geo::Shape/"METHODS">.
+Extends L<"METHODS" in Geo::Shape|Geo::Shape/"METHODS">.
  
 =head2 Constructors
 
-See L<documentation in the base class|Geo::Shape/"Constructors">.
+Extends L<"Constructors" in Geo::Shape|Geo::Shape/"Constructors">.
  
 =over 4
 
@@ -56,17 +56,18 @@ a comma (preferrably), or blanks.  When the coordinates end on NSEW, the
 order does not matter, otherwise lat-long or xy order is presumed.
 
 This routine is very smart.  It understands:
- PROJLABEL VALUE VALUE
- PROJLABEL: VALUE VALUE
- PROJLABEL, VALUE, VALUE
- PROJLABEL: VALUE, VALUE
- VALUE VALUE
- VALUE, VALUE
- utm: ZONE, VALUE, VALUE   # also without commas and ':'
- utm: VALUE, VALUE, ZONE   # also without commas and ':'
- utm: VALUE, VALUE         # also without commas and ':'
- ZONE, VALUE, VALUE        # also without commas and ':'
- VALUE, VALUE, ZONE        # also without commas and ':'
+
+  PROJLABEL VALUE VALUE
+  PROJLABEL: VALUE VALUE
+  PROJLABEL, VALUE, VALUE
+  PROJLABEL: VALUE, VALUE
+  VALUE VALUE
+  VALUE, VALUE
+  utm: ZONE, VALUE, VALUE   # also without commas and ':'
+  utm: VALUE, VALUE, ZONE   # also without commas and ':'
+  utm: VALUE, VALUE         # also without commas and ':'
+  ZONE, VALUE, VALUE        # also without commas and ':'
+  VALUE, VALUE, ZONE        # also without commas and ':'
 
 The VALUE must be suitable for projection.  If only two values are
 provided, a C<d>, single or double quote, or trailing/leading C<e>, C<w>,
@@ -87,9 +88,9 @@ example: point from string
  my $p = eval { Geo::Point->fromString($x) };
  warn $@ if $@;
 
-=item $obj-E<gt>B<latlong>([$lat, $long, [$proj] ] | [$proj])
+=item $obj-E<gt>B<latlong>([ $lat,$long,[$proj] ] | [$proj])
 
-=item Geo::Point-E<gt>B<latlong>([$lat, $long, [$proj] ] | [$proj])
+=item Geo::Point-E<gt>B<latlong>([ $lat,$long,[$proj] ] | [$proj])
 
 When called as class method, you create a new point.  Provide a LATitude
 and LONGitude. The optional PROJection tells in which coordinate system.
@@ -110,9 +111,9 @@ example: latlong as instance method
 
  my ($lat, $long) = $gp->latlong('wgs84');
 
-=item $obj-E<gt>B<longlat>([$long, $lat, [$proj] ] | [$proj])
+=item $obj-E<gt>B<longlat>([ $long,$lat,[$proj] ] | [$proj])
 
-=item Geo::Point-E<gt>B<longlat>([$long, $lat, [$proj] ] | [$proj])
+=item Geo::Point-E<gt>B<longlat>([ $long,$lat,[$proj] ] | [$proj])
 
 Like L<latlong()|Geo::Point/"Constructors">, but with the coordinates reversed.  Some applications
 prefer this.
@@ -150,7 +151,7 @@ prefer this.
 
 =item Geo::Point-E<gt>B<xy>([$x, $y, [$proj] ] | [$proj])
 
-Like L<latlong()|Geo::Point/"Constructors"> but now for carthesian projections.  Usually, the coordinate
+Like L<longlat()|Geo::Point/"Constructors"> but now for carthesian projections.  Usually, the coordinate
 order is reversed.  See also L<yx()|Geo::Point/"Constructors">.
 
 =item $obj-E<gt>B<yx>([$y, $x, [$proj] ] | [$proj])
@@ -164,17 +165,17 @@ coordinate order is reversed.  See also L<xy()|Geo::Point/"Constructors">.
 
 =head2 Attributes
 
-See L<documentation in the base class|Geo::Shape/"Attributes">.
+Extends L<"Attributes" in Geo::Shape|Geo::Shape/"Attributes">.
  
 =over 4
 
 =item $obj-E<gt>B<proj>()
 
-See L<Geo::Shape/"Attributes">
+Inherited, see L<Geo::Shape/"Attributes">
 
 =item $obj-E<gt>B<proj4>()
 
-See L<Geo::Shape/"Attributes">
+Inherited, see L<Geo::Shape/"Attributes">
 
 =back
 
@@ -201,28 +202,28 @@ in the right coordinate systems.
 
 =head2 Projections
 
-See L<documentation in the base class|Geo::Shape/"Projections">.
+Extends L<"Projections" in Geo::Shape|Geo::Shape/"Projections">.
  
 =over 4
 
-=item $obj-E<gt>B<in>($label|'utm')
+=item $obj-E<gt>B<in>(<$label|'utm'>)
 
-See L<Geo::Shape/"Projections">
+Inherited, see L<Geo::Shape/"Projections">
 
 =item $obj-E<gt>B<normalize>()
 
 Be sure the that coordinates are between -180/180 longitude, -90/90
 lattitude.  No changes for non-latlong projections.
 
-=item $obj-E<gt>B<projectOn>($nick, $points)
+=item $obj-E<gt>B<projectOn>($nick, @points)
 
-See L<Geo::Shape/"Projections">
+Inherited, see L<Geo::Shape/"Projections">
 
 =back
 
 =head2 Geometry
 
-See L<documentation in the base class|Geo::Shape/"Geometry">.
+Extends L<"Geometry" in Geo::Shape|Geo::Shape/"Geometry">.
  
 =over 4
 
@@ -236,17 +237,17 @@ The bounding box of a point contains twice itself.
 
 =item $obj-E<gt>B<bboxCenter>()
 
-See L<Geo::Shape/"Geometry">
+Inherited, see L<Geo::Shape/"Geometry">
 
 =item $obj-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
 =item Geo::Point-E<gt>B<bboxRing>([$xmin, $ymin, $xmax, $ymax, [$proj]])
 
-See L<Geo::Shape/"Geometry">
+Inherited, see L<Geo::Shape/"Geometry">
 
 =item $obj-E<gt>B<distance>($object, [$unit])
 
-See L<Geo::Shape/"Geometry">
+Inherited, see L<Geo::Shape/"Geometry">
 
 =item $obj-E<gt>B<distancePointPoint>($geodist, $units, $point)
 
@@ -271,7 +272,7 @@ Always returns zero.
 
 =head2 Display
 
-See L<documentation in the base class|Geo::Shape/"Display">.
+Extends L<"Display" in Geo::Shape|Geo::Shape/"Display">.
  
 =over 4
 
@@ -289,13 +290,13 @@ used.
 
 =item Geo::Point-E<gt>B<deg2dm>($degrees, $pos, $neg)
 
-See L<Geo::Shape/"Display">
+Inherited, see L<Geo::Shape/"Display">
 
 =item $obj-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
 =item Geo::Point-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
-See L<Geo::Shape/"Display">
+Inherited, see L<Geo::Shape/"Display">
 
 =item $obj-E<gt>B<dm>([$projection])
 
@@ -319,7 +320,7 @@ characters, which may confuse HTML (see L<dmsHTML()|Geo::Point/"Display">).
 
 =item Geo::Point-E<gt>B<dms2deg>($dms)
 
-See L<Geo::Shape/"Display">
+Inherited, see L<Geo::Shape/"Display">
 
 =item $obj-E<gt>B<dmsHTML>([$projection])
 
@@ -355,17 +356,17 @@ example:
 
 =head1 OVERLOAD
 
-See L<documentation in the base class|Geo::Shape/"OVERLOAD">.
+Extends L<"OVERLOAD" in Geo::Shape|Geo::Shape/"OVERLOAD">.
  
 =over 4
 
-=item overload: B<'""' (stringification)>()
+=item overload: B<'""' (stringification)>
 
-See L<Geo::Shape/"OVERLOAD">
+Inherited, see L<Geo::Shape/"OVERLOAD">
 
-=item overload: B<'bool' (truth value)>()
+=item overload: B<'bool' (truth value)>
 
-See L<Geo::Shape/"OVERLOAD">
+Inherited, see L<Geo::Shape/"OVERLOAD">
 
 =back
 
@@ -419,8 +420,8 @@ L<Geo::Proj::new()|Geo::Proj/"Constructors"> about how to defined them.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.95,
-built on January 20, 2014. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.96,
+built on January 21, 2014. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,

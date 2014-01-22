@@ -8,7 +8,7 @@ use warnings;
 
 package Geo::Line;
 use vars '$VERSION';
-$VERSION = '0.95';
+$VERSION = '0.96';
 
 use base qw/Geo::Shape Math::Polygon/;
 

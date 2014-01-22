@@ -54,8 +54,8 @@ Create a new object.
 
 =item $obj-E<gt>B<proj>()
 
-Returns the nickname of the projection used by the component.  Be
-warned: this is not a L<Geo::Point|Geo::Point> object, but just a label.
+Returns the nickname of the projection used by the component.
+B<Be warned:> this is not a L<Geo::Point|Geo::Point> object, but just a label.
 
 =item $obj-E<gt>B<proj4>()
 
@@ -67,7 +67,7 @@ Returns the proj4 object which handles the projection.
 
 =over 4
 
-=item $obj-E<gt>B<in>($label|'utm')
+=item $obj-E<gt>B<in>(<$label|'utm'>)
 
 The coordinates of this point in a certain projection, refered to with
 the $label.  The projection is defined with L<new()|Geo::Shape/"Constructors">.  When simply
@@ -89,13 +89,13 @@ example:
   my $label    = $p_utm->proj;
   my ($datum, $zone) = $label =~ m/^utm-(\w+)-(\d+)$/;
 
-=item $obj-E<gt>B<projectOn>($nick, $points)
+=item $obj-E<gt>B<projectOn>($nick, @points)
 
-The $points are ARRAYS with each an X and Y coordinate of a single
-point in space.  A list of transformed $points is returned, which is empty
-if no change is needed.  The returned list is preceded by a projection
-$nick which is the result, usually the same as the provided $nick, but in
-some cases (for instance UTM) it may be different.
+The @points are ARRAYs with each an X and Y coordinate of a single
+point in space.  A list of transformed points is returned, which is empty
+if no change is needed.  The returned list is preceded by the projection
+nick of the result; usually the same as the provided $nick, but in
+some cases (for instance UTM) it may differ.
 
 =back
 
@@ -166,10 +166,13 @@ example:
 
 =item Geo::Shape-E<gt>B<deg2dms>($degrees, $pos, $neg)
 
+Translate floating point $degrees into a "degrees minutes seconds"
+notation.  An attempt is made to handle rounding errors.
+
 example: 
 
- print $point->deg2dms(0.12, 'e', 'w');
- print Geo::Shape->deg2dms(0.12, 'e', 'w');
+ print $point->deg2dms(-12.34, 'E', 'W');'     # --> 12d20'24"W
+ print Geo::Shape->deg2dms(52.1234, 'E', 'W'); # --> 52d07'24"E
 
 =item $obj-E<gt>B<dms2deg>($dms)
 
@@ -184,12 +187,12 @@ Accepts for instance 3d12'24.123, 3d12"E, 3.12314w, n2.14, s3d12",
 
 =over 4
 
-=item overload: B<'""' (stringification)>()
+=item overload: B<'""' (stringification)>
 
 Returns a string "$proj($lat,$long)" or "$proj($x,$y)".  The C<$proj>
-is the label you have assigned to the projection.  See Geo::Shape subroutine projection.
+is the nickname you have assigned to the projection.
 
-=item overload: B<'bool' (truth value)>()
+=item overload: B<'bool' (truth value)>
 
 A point is always true: defined.
 
@@ -210,8 +213,8 @@ The limitation is purely caused by lack of time to implement this.
 
 =head1 SEE ALSO
 
-This module is part of Geo-Point distribution version 0.95,
-built on January 20, 2014. Website: F<http://perl.overmeer.net/geo/>
+This module is part of Geo-Point distribution version 0.96,
+built on January 21, 2014. Website: F<http://perl.overmeer.net/geo/>
 All modules in this suite:
 L</Geo::Point>,
 L</Geo::Proj4>,
